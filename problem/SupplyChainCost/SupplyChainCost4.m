@@ -95,7 +95,7 @@ classdef SupplyChainCost4 < GenericOptimizationProblem
                 %%% mu and sigma for lead time distributions
                 for i=1:ech.ns
                     for j=1:ech.nd
-                        ech.mu(i,j) = randi([ech.LN(i,j) ech.LX(i,j)]); %TODO: discuss with Ali bey
+                        ech.mu(i,j) = randi([ech.LN(i,j) ech.LX(i,j)]); %TODO: this can be a contribution to the original study?
                         diff = ech.LX(i,j)-ech.LN(i,j);
                         ech.sigma(i,j) = randi([diff 2*diff]);
                     end
@@ -246,7 +246,7 @@ classdef SupplyChainCost4 < GenericOptimizationProblem
             val  = - self.getcost(position); %%% height is the negative of cost.
         end
         
-        %%cost of the supply chain
+        %% cost of the supply chain
         function cost = getcost(self,position)
             cost=0;
             chain = self.vec2struct(position);
@@ -255,7 +255,7 @@ classdef SupplyChainCost4 < GenericOptimizationProblem
             for e=1:numel(self.eche)
                 costmat=(chain.dists{e} .* self.eche{e}.CStPnt) ./ (self.eche{e}.Reliability .* self.eche{e}.er) ...
                     + self.eche{e}.Ploss .* (chain.dists{e} .* self.eche{e}.LossCoef) .* self.eche{e}.er; %equations 4, 9, and 10
-                cost = cost + sum(sum(costmat));
+                cost = cost + sum(sum(costmat));!!!!!
             end
             
             %%% Plant production cost (section 3.2.5)
