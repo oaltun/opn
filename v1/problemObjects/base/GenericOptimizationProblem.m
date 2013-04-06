@@ -28,7 +28,7 @@ classdef GenericOptimizationProblem < handle
         %set default values for class fields.
         function setdefaults(self)
             self.name = 'Generic Optimization Problem';
-            self.visualiser = DummyVisualiser;
+            %self.visualiser = DummyVisualiser;
         end
         
         %%
