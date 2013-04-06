@@ -12,10 +12,10 @@ classdef TwoDFunVisualiser<Visualiser
         lb
         ub
         step
-        maxval
     end
     
     properties(SetAccess=private)
+        maxval
         zz
         xx1
         xx2
@@ -71,7 +71,7 @@ classdef TwoDFunVisualiser<Visualiser
         %%
         function drawposition(self,p)
         f = self.fun(p);
-        plot3(p(2), p(1), f, 'o','markersize',3, 'markerfacecolor','blue', 'color','blue','markeredgecolor', 'black');
+        plot3(p(1), p(2), f, 'o','markersize',3, 'markerfacecolor','blue', 'color','blue','markeredgecolor', 'black');
         if self.isanimate
             pause(self.pauseduration)
         end
@@ -80,7 +80,7 @@ classdef TwoDFunVisualiser<Visualiser
         %% draw a global best
         function drawbest(self,p)
         f = self.fun(p);
-        plot3(p(2), p(1), f, 'o','markersize',10, 'markerfacecolor','red', 'color','red','markeredgecolor', 'black');
+        plot3(p(1), p(2), f, 'o','markersize',10, 'markerfacecolor','red', 'color','red','markeredgecolor', 'black');
         if self.isanimate
             pause(self.pauseduration)
         end
