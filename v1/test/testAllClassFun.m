@@ -15,13 +15,15 @@ rng('default') %reset random number generator. We want to get the same result on
 problemlist = {};
 
 %problemlist{end+1} = Island('name','Island');
-problemlist{end+1} = SupplyChainCost4;
-% problemlist{end+1} = NegativeRastriginProblem;
+%problemlist{end+1} = SupplyChainCost4;
+ problemlist{end+1} = NegativeRastriginProblem;
 
 %% prepare list of algorithms
 algorithmlist = {};
 
-algorithmlist{end+1} = HillClimbing('nneighbor', 20);
+algorithmlist{end+1} = MultipleHillClimbing('nneighbor', 10);
+
+%algorithmlist{end+1} = HillClimbing('nneighbor', 20);
 % 
 % algorithmlist{end+1}=CuckooSearch;
 % 
@@ -37,12 +39,12 @@ algorithmlist{end+1} = HillClimbing('nneighbor', 20);
 %     'maxruns',100);
 % 
 % 
-algorithmlist{end+1} = MultiRunnerAlgorithm(...
-    'algorithm',HillClimbing,...
-    'name','multiHcMaxtime',...
-    'terminationcriteria','maxtime',...
-    'maxtime',5 ...
-    );
+% algorithmlist{end+1} = MultiRunnerAlgorithm(...
+%     'algorithm',HillClimbing,...
+%     'name','multiHcMaxtime',...
+%     'terminationcriteria','maxtime',...
+%     'maxtime',5 ...
+%     );
 % 
 % 
 % 

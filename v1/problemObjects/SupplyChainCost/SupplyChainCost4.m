@@ -249,6 +249,14 @@ classdef SupplyChainCost4 < GenericOptimizationProblem
             %             self.reset;
             
             
+                        %%% capacity of suppliers must be more
+            %%% or equal to demanders.
+            if sum(self.S) < sum(self.M)...
+                || sum(self.P) < sum(self.M)...
+                || sum(self.W) <sum(self.M)...
+                error('suppliers do not have the capacity enough.')
+            end
+            
         end %end function constructor
         
         %         %%
