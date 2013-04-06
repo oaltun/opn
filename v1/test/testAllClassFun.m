@@ -6,7 +6,7 @@ disp('start')
 addpath(genpath('..'))
 %% options is collected in the struct called self
 self.isdraw = true; %should the paths and other visualisations be drawn
-self.isanimate = false; %should the drawing be slow, like an animation?
+self.isanimate = true; %should the drawing be slow, like an animation?
 
 %% initialization
 rng('default') %reset random number generator. We want to get the same result on each run.
@@ -14,35 +14,35 @@ rng('default') %reset random number generator. We want to get the same result on
 %% prepare list of problems
 problemlist = {};
 
-problemlist{end+1} = Island('name','Island');
-% problemlist{end+1} = SupplyChainCost4;
-problemlist{end+1} = NegativeRastriginProblem;
+%problemlist{end+1} = Island('name','Island');
+problemlist{end+1} = SupplyChainCost4;
+% problemlist{end+1} = NegativeRastriginProblem;
 
 %% prepare list of algorithms
 algorithmlist = {};
 
-% algorithmlist{end+1} = HillClimbing;
+algorithmlist{end+1} = HillClimbing('nneighbor', 20);
 % 
-algorithmlist{end+1}=CuckooSearch;
+% algorithmlist{end+1}=CuckooSearch;
 % 
 % algorithmlist{end+1} = ParticleSwarmOptimization('niter',3);
 %  
-% %algorithmlist{end+1}=FireFlyAlgorithm;
+% algorithmlist{end+1}=FireFlyAlgorithm;
 % 
 % 
 %  
 % algorithmlist{end+1} = MultiRunnerAlgorithm(...
 %     'algorithm',HillClimbing,...
 %     'name','multiHcMaxrun', ...
-%     'maxruns',10);
+%     'maxruns',100);
 % 
 % 
-% algorithmlist{end+1} = MultiRunnerAlgorithm(...
-%     'algorithm',HillClimbing,...
-%     'name','multiHcMaxtime',...
-%     'terminationcriteria','maxtime',...
-%     'maxtime',5 ...
-%     );
+algorithmlist{end+1} = MultiRunnerAlgorithm(...
+    'algorithm',HillClimbing,...
+    'name','multiHcMaxtime',...
+    'terminationcriteria','maxtime',...
+    'maxtime',5 ...
+    );
 % 
 % 
 % 
