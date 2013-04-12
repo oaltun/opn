@@ -65,7 +65,12 @@ classdef TwoDFunVisualiser<Visualiser
         xlabel('x1')
         ylabel('x2')
         zlabel('height')
-        
+%         camproj('perspective')
+         box on
+%         axis tight
+%         grid on
+%         axis vis3d
+%         cameratoolbar('setmode','orbit')
         end
         
         %%
