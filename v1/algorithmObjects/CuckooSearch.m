@@ -55,7 +55,7 @@ classdef CuckooSearch < OptimizationAlgorithm
         
         %%
         % actual algorithm is implemented in this function. change it.
-        function [position height] = search(self, varargin)
+        function [bestposition bestheight] = search(self, varargin)
             % check property values before we start algorithm
             self.checkproperties;
             
@@ -77,17 +77,18 @@ classdef CuckooSearch < OptimizationAlgorithm
             for i=1:n
                 f(i)=self.problem.height(x(i,:));
             end
-
+            
             
             %%%TODO: instead of fixed number of iterations, stop the search
             %%%when the average or maximum distance to the global best
             %%%becomes too little. TODO: stop when the points start
             %%%to move too little. E.g. their total velocity becomes 1/100
             %%%of first iteration?
+            bestheight=-inf;
+            bestposition=[];
             
             %%%iterations
-            for iter=1:self.niter %for each breeding year
-                
+            while iscontinue(self.count, self.stop) %for each breeding year
                 %%%find the best nest. needed for self.fly
                 [tmp order]=sort(f);
                 best=x(order(end),:);
@@ -134,13 +135,13 @@ classdef CuckooSearch < OptimizationAlgorithm
                     xold=x(ni,:); %cache old position for visualisation
                     
                     %%%% find new nest and lay a new egg.
-%                     %%% use the [Fileexchange] approach.
-%                     K=rand(size(xold))>self.pa;
-%                     xnew=xold+(rand*x(randi(n),:)-x(randi(n),:)).*K;
-%                     x(ni,:)=self.problem.fixposition(xnew);
+                    %                     %%% use the [Fileexchange] approach.
+                    %                     K=rand(size(xold))>self.pa;
+                    %                     xnew=xold+(rand*x(randi(n),:)-x(randi(n),:)).*K;
+                    %                     x(ni,:)=self.problem.fixposition(xnew);
                     %%% do a levy flight as [Yang 2010] says:
                     x(ni,:) = self.fly(xold, best); %TODO: we can try to find the best nest after each bird move.
-
+                    
                     %%%% height of new nest
                     f(ni)   = self.problem.height(x(ni,:));
                     
@@ -151,18 +152,32 @@ classdef CuckooSearch < OptimizationAlgorithm
                     end
                 end
                 
+                
+                %%% TODO: instead of sort use max
+                %%% find the best nest and its height
+                [~, order]=sort(f); %highest goes to bottom
+                best=order(end);
+                bestheight=f(best);
+                bestposition = x(best, :);
+                if isempty(bestposition)
+                    1
+                end
+                
+                %%% book keep
+                self.count.iteration=self.count.iteration + 1;
+                self.count.maxheight=bestheight;
+                self.count.time = cputime - self.tstart;
+                
+                self.log(end+1)=self.count;
+                self.count
             end
             
             
             
-            %%% find the best nest and its height
-            [tmp order]=sort(f); %highest goes to bottom
-            best=order(end);
-            height=f(best);
-            position = x(best, :);
+            
             
             if self.isdraw
-                self.problem.visualiser.drawbest(position);
+                self.problem.visualiser.drawbest(bestposition);
             end
             
         end

@@ -1,6 +1,7 @@
 classdef GenericOptimizationProblem < handle
     %%%user needs to supply all following:
-    %%%(instead of supplying heightfun, user can
+    %%%(except heightfun. instead of supplying
+    %%%heightfun, user can 
     %%%subclass this and overwrite height
     %%%function.)
     properties

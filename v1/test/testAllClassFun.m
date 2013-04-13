@@ -5,8 +5,10 @@ disp('start')
 %% add the directories for the classes and functions used to the matlab search path
 addpath(genpath('..'))
 %% options is collected in the struct called self
-self.isdraw = true; %should the paths and other visualisations be drawn
-self.isanimate = true; %should the drawing be slow, like an animation?
+self.isdraw = false; %should the paths and other visualisations be drawn
+self.isanimate = false; %should the drawing be slow, like an animation?
+
+self.time = 5
 
 %% initialization
 rng('default') %reset random number generator. We want to get the same result on each run.
@@ -14,18 +16,18 @@ rng('default') %reset random number generator. We want to get the same result on
 %% prepare list of problems
 problemlist = {};
 
-% problemlist{end+1} = Island('name','Island');
+ problemlist{end+1} = Island('name','Island');
 % problemlist{end+1} = SupplyChainCost4;
  problemlist{end+1} = NegativeRastriginProblem;
 
 %% prepare list of algorithms
 algorithmlist = {};
 
- algorithmlist{end+1} = MultipleHillClimbing('nneighbor', 10, 'npositions', 3);
+% algorithmlist{end+1} = SerialHillClimbing('nneighbor', 10, 'npositions', 3);
 % 
 % algorithmlist{end+1} = HillClimbing('nneighbor', 20);
 % 
-% algorithmlist{end+1} = CuckooSearch;
+algorithmlist{end+1} = CuckooSearch;
 % 
 % algorithmlist{end+1} = ParticleSwarmOptimization('niter',3);
 %  
@@ -74,7 +76,7 @@ for p=1:numel(problemlist)
         algorithm.problem = problem;
         
         algorithm.positions = rowfun(@(a) randin(problem.lb, problem.ub), vert(1:algorithm.npositions));
-        
+        algorithm.stop.time = self.time;
         %%% run the algorithm on the problem. the
         %%% algorithm.run calls 
         %%% algorithm.search
@@ -96,10 +98,25 @@ for p=1:numel(problemlist)
         result(r).runcnt=other.runcnt;
         result(r).timecnt=other.timecnt;
         result(r).timeavg=other.timeavg;
+        result(r).algolog = algorithm.log;
         
         %%uncomment if other stuff is needed.
         %resultOther(r).other = other;
     end
+end
+
+
+%% draw maxheight
+figure
+hold on
+for r=1:numel(result)
+    log = result(r).algolog;
+    times=[log.time]
+    iterations=[log.iteration]
+    heights=[log.maxheight]
+    
+    plot(times,heights);
+    %TODO: make the graph better.
 end
 
 %% save and review results
