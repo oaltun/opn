@@ -59,13 +59,13 @@ for p=1:numel(problemlist)
     problem = problemlist{p}; %for each problem
     for a=1:numel(algorithmlist)
         algorithm = algorithmlist{a}; %for each algorithm
-        
-        disp([problem.name ' with ' algorithm.name])
+        graphtitle=[problem.name ' with ' algorithm.name];
+        disp(graphtitle)
         
         %%prepare the visualiser
         if self.isdraw
 %             problem.isdraw = self.isdraw;
-            problem.visualiser.title = [problem.name ' with ' algorithm.name];
+            problem.visualiser.title = graphtitle;
             problem.visualiser.init;
             problem.visualiser.isanimate = self.isanimate;
         end
@@ -99,6 +99,7 @@ for p=1:numel(problemlist)
         result(r).timecnt=other.timecnt;
         result(r).timeavg=other.timeavg;
         result(r).algolog = algorithm.log;
+        result(r).graphtitle=graphtitle;
         
         %%uncomment if other stuff is needed.
         %resultOther(r).other = other;
@@ -106,18 +107,35 @@ for p=1:numel(problemlist)
 end
 
 
-%% draw maxheight
+%% draw height-time grapth
 figure
 hold on
+legends={};
+
+%%% prepare some styles to use
+ls = {'-','--', ':', '-.'}';
+lw = {1,3,5,7}';
+[lsi,lwi]=ndgrid(1:numel(ls),1:numel(lw));
+%markers = {'+','o','*','.','x','s','d','^','v','>','<','p','h'}';
+
+%styles=styles(randperm(numel(styles)));
+
 for r=1:numel(result)
     log = result(r).algolog;
-    times=[log.time]
-    iterations=[log.iteration]
-    heights=[log.maxheight]
     
-    plot(times,heights);
+    times=[log.time];
+    iterations=[log.iteration];
+    heights=[log.maxheight];
+    
+    
+    hplot = plot(times,heights,'linestyle',ls{lsi(r)},'linewidth',lw{lwi(r)});
+    
+    legends{r,1} = result(r).graphtitle;
     %TODO: make the graph better.
 end
+xlabel('time')
+ylabel('height')
+legend(legends)
 
 %% save and review results
 

@@ -1,4 +1,5 @@
 function problem = NegativeRastriginProblem
+    
 fun= @(a) -rastriginsFunction(a);
 lb = [-5.12 -5.12];
 ub = -lb;

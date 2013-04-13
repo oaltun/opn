@@ -78,14 +78,21 @@ classdef CuckooSearch < OptimizationAlgorithm
                 f(i)=self.problem.height(x(i,:));
             end
             
+            %%% note best positions
+            [m ind]=max(f);
+            bestheight=m;
+            bestposition=x(ind,:);
+            
+            self.count.maxheight = m;
+            self.count.time      = cputime-self.tstart;
+            self.log=self.count;
             
             %%%TODO: instead of fixed number of iterations, stop the search
             %%%when the average or maximum distance to the global best
             %%%becomes too little. TODO: stop when the points start
             %%%to move too little. E.g. their total velocity becomes 1/100
             %%%of first iteration?
-            bestheight=-inf;
-            bestposition=[];
+            
             
             %%%iterations
             while iscontinue(self.count, self.stop) %for each breeding year
@@ -159,9 +166,7 @@ classdef CuckooSearch < OptimizationAlgorithm
                 best=order(end);
                 bestheight=f(best);
                 bestposition = x(best, :);
-                if isempty(bestposition)
-                    1
-                end
+                
                 
                 %%% book keep
                 self.count.iteration=self.count.iteration + 1;

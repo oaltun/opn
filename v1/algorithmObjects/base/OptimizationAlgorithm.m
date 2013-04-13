@@ -14,7 +14,7 @@ classdef OptimizationAlgorithm<handle
         neg2posfun 
         
         count = struct('iteration', 0,   'time', 0, 'maxheight', -inf);
-        stop =  struct('iteration', inf, 'time', 1, 'maxheight',  inf); %TODO: also add minaveragestep
+        stop =  struct('iteration', inf, 'time', 5, 'maxheight',  inf); %TODO: also add minaveragestep
         
         log
         tstart
@@ -30,10 +30,12 @@ classdef OptimizationAlgorithm<handle
             self.count.iteration=0;
             self.count.time=0;
             self.count.maxheight=-inf;
+            
             self.tstart = cputime;
             self.log = self.count;
             
             [position height]= self.search(varargin{:});
+            
             others.algorithm = self;
             others.runcnt=1;
             others.timecnt=toc(tstartt);
