@@ -1,21 +1,10 @@
 
-function [costs varargout]=costs6(solutions,upreq,downreq,ncar)
-minstd=1;
-
-nsolutions=size(solutions,1);
-
-gettimes=0;
-if nargout>1
-    gettimes = 1;
-end
-
-times=zeros(ncar,nsolutions);
-
-nupreq=numel(upreq);
-
-for isol=1:nsolutions
-    solution = solutions(isol,:); %this solution
-    %solution = [2 2 3 2 3]; %this solution
+function cost=liftsyscost(problem,solution,upreq,downreq,ncar)
+    
+    times=zeros(ncar,1);
+    
+    nupreq=numel(upreq);
+    
     solup   = solution(1:nupreq); %assignments for the up requests in this solution
     soldown = solution(nupreq+1:end); %assignments for the down requests in this solution
     for icar=1:ncar
@@ -34,19 +23,18 @@ for isol=1:nsolutions
                 + 3 * (max(down_cagri) -  min(down_cagri))...
                 + 3 * (length(up_cagri) + length(down_cagri)-1);
         end
-
-        times(icar,isol)=liftruntime;
+        
+        times(icar,1) = liftruntime;
     end %for each car
-end %for each solution
-
-%costs= (mean(times)+max(times)-min(times))';
-costs= (mean(times)+ 1.5*(max(times)-min(times)))';
-%costs= (max(times))';
-
-if gettimes
-    varargout{1}=times';
-end
-
+    
+    %cost= (mean(times) + max(times) - min(times))';
+    cost= mean(times) + 1.5*(max(times) - min(times));
+    %cost= (max(times))';
+    
+    if problem.data.logtimes
+        problem.data.lifttimes=times;
+    end
+    
 end %function
 
 

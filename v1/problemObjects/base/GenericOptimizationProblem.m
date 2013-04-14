@@ -1,7 +1,7 @@
 classdef GenericOptimizationProblem < handle
     %%%user needs to supply all following:
     %%%(except heightfun. instead of supplying
-    %%%heightfun, user can 
+    %%%heightfun, user can
     %%%subclass this and overwrite height
     %%%function.)
     properties
@@ -14,11 +14,25 @@ classdef GenericOptimizationProblem < handle
     
     
     properties
+        %%% if there are non continuous coordinates, or
+        %%% special constraints on coordinate values,
+        %%% use needs to supply fixpositionfun
+        fixpositionfun;
+        
+        %%% a generic place to put any info needed.
+        %%% Eg. for logs, problem specific options,
+        %%% etc.
+        data
+    end
+    
+    properties
         isdraw=false;
     end
+    
     methods
         %%
-        %standart constructor. no need to change it. change setdefaults and
+        %standart constructor. no need to change
+        %it. change setdefaults and 
         %reset functions.
         function self = GenericOptimizationProblem(varargin)
             self.setdefaults;
@@ -60,7 +74,7 @@ classdef GenericOptimizationProblem < handle
         
         %%
         function val =  height(self, position)
-            val = self.heightfun(position);
+            val = self.heightfun(self.fixposition(position));
         end
         
         %%
@@ -82,16 +96,13 @@ classdef GenericOptimizationProblem < handle
         end
         
         %%
-        %%% you are given a possibly problematic position: Out of bounds, or violating some
-        %%% constraints. fix it with the least possible change to it.
+        
         function fixed = fixposition(self,position)
-            fixed=position;
-            
-            ubviolator=position>self.ub;
-            fixed(ubviolator)=self.ub(ubviolator);
-            
-            lbviolator=position<self.lb;
-            fixed(lbviolator)=self.lb(lbviolator);
+            if not(isempty(self.fixpositionfun))
+                fixed = self.fixpositionfun(position);
+            else
+                fixed=position;
+            end
         end
         
         %%

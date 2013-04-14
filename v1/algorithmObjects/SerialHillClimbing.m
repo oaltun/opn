@@ -77,11 +77,11 @@ classdef SerialHillClimbing < OptimizationAlgorithm
                     self.problem.visualiser.drawbest(current)
                 end
                 
-
-                  if self.problem.height(current)>bestheight
-                      bestheight = self.problem.height(current);
-                      bestposition = current;
-                  end
+                
+                if self.problem.height(current)>bestheight
+                    bestheight = self.problem.height(current);
+                    bestposition = current;
+                end
             end
             
             
