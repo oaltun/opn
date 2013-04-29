@@ -55,37 +55,30 @@ classdef CuckooSearch < OptimizationAlgorithm
         
         %%
         % actual algorithm is implemented in this function. change it.
-        function [bestposition bestheight] = search(self, varargin)
-            % check property values before we start algorithm
-            self.checkproperties;
+        function [bestpos bestheight] = search(self, varargin)
             
-            %%% in this function, change below this line:
-            if self.isdraw
-                %line color
-                self.problem.visualiser.pathcolor = [rand rand rand];
-            end
+            %%% easier names
+            vis = self.problem.visualiser; %visualiser object
+            x   = self.positions; %initial positions (of nests)
             
             %%% number of host nests
             n = size(self.positions,1);
             
-            %%% initial positions of the host nests.
-            x = self.positions;
-            
-            
-            %%% heights of initial positions.
-            f=zeros(n,1); %allocate memory
-            for i=1:n
-                f(i)=self.problem.height(x(i,:));
-            end
+            %%% heights of initial positions
+            f = rowfun(@(row) self.problem.height(row), x);
             
             %%% note best positions
             [m ind]=max(f);
-            bestheight=m;
-            bestposition=x(ind,:);
+            [bestpos bestheight] = self.bookkeep(x(ind,:), m);
             
-            self.count.maxheight = m;
-            self.count.time      = cputime-self.tstart;
-            self.log=self.count;
+            %%%draw initial positions
+            if self.isdraw 
+                vis.pathcolor ='green';
+                for i=1:size(x,1)
+                    vis.drawposition(x(i,:));
+                end
+            end
+            
             
             %%%TODO: instead of fixed number of iterations, stop the search
             %%%when the average or maximum distance to the global best
@@ -94,10 +87,12 @@ classdef CuckooSearch < OptimizationAlgorithm
             %%%of first iteration?
             
             
-            %%%iterations
-            while iscontinue(self.count, self.stop) %for each breeding year
+            %%% main loop
+            while iscontinue(self.count, self.stop)
+                %%% a new breeding year!
+                
                 %%%find the best nest. needed for self.fly
-                [tmp order]=sort(f);
+                [~, order]=sort(f);
                 best=x(order(end),:);
                 order = order(:)';
                 
@@ -111,78 +106,60 @@ classdef CuckooSearch < OptimizationAlgorithm
                     if f(i)<=fnew
                         
                         if self.isdraw %do visualisation if necessary
-                            self.problem.visualiser.pathcolor = 'blue';
-                            
-                            self.problem.visualiser.drawpath(xnew,x(i,:));
-                            self.problem.visualiser.drawposition(xnew);
+                            vis.pathcolor = 'green';
+                            vis.drawpath(xnew,x(i,:));
                         end
                         
                         %%% move to new nest
                         x(i,:)=xnew;
                         f(i)=fnew;
+                        
+                        if fnew>bestheight
+                            [bestpos bestheight] = self.bookkeep(xnew, fnew);
+                        end
+                        
                     end
                 end
                 
                 %%%% eggs in the worst self.pa percent of nests fail. for
                 %%%% those, the cuckoos find new hosts and lay eggs there.
-                
-                %find how many nests are too bad
-                %TODO: this part is currently same as the [Fileexchange]
-                %approach. But I think pseudo code in the paper should be
-                %different.
-                %TODO: keep track of global best in some variable.
                 nbad = round(self.pa *n);
-                %nbad=n;
                 
                 %%%% cuckoo lays egg to somewhere else for each bad nest
-                [tmp order]=sort(f);
+                [~, order]=sort(f);
                 best = x(order(end), :); %best is in the bottom
                 for i=1:nbad
                     ni=order(nbad); %index of the bad nest
                     xold=x(ni,:); %cache old position for visualisation
                     
-                    %%%% find new nest and lay a new egg.
-                    %                     %%% use the [Fileexchange] approach.
-                    %                     K=rand(size(xold))>self.pa;
-                    %                     xnew=xold+(rand*x(randi(n),:)-x(randi(n),:)).*K;
-                    %                     x(ni,:)=self.problem.fixposition(xnew);
                     %%% do a levy flight as [Yang 2010] says:
                     x(ni,:) = self.fly(xold, best); %TODO: we can try to find the best nest after each bird move.
-                    
-                    %%%% height of new nest
                     f(ni)   = self.problem.height(x(ni,:));
                     
+                    if f(ni)>bestheight
+                        [bestpos bestheight] = self.bookkeep(x(ni,:), f(ni));
+                    end
+                    
                     if self.isdraw %do visualisation if necessary
-                        self.problem.visualiser.pathcolor ='green';
-                        self.problem.visualiser.drawpath(xold,x(ni,:));
-                        self.problem.visualiser.drawposition(x(ni,:));
+                        vis.pathcolor ='red';
+                        vis.drawpath(xold,x(ni,:));
+                        %vis.drawposition(x(ni,:));
                     end
                 end
                 
                 
-                %%% TODO: instead of sort use max
-                %%% find the best nest and its height
-                [~, order]=sort(f); %highest goes to bottom
-                best=order(end);
-                bestheight=f(best);
-                bestposition = x(best, :);
-                
-                
-                %%% book keep
-                self.count.iteration=self.count.iteration + 1;
-                self.count.maxheight=bestheight;
-                self.count.time = cputime - self.tstart;
-                
-                self.log(end+1)=self.count;
-                self.count
+                %%% important: update the
+                %%% iteration count after each
+                %%% iteration.
+                self.iteration=self.iteration+1;
+                [bestpos bestheight] = self.bookkeep(bestpos, bestheight);
+
             end
             
             
-            
-            
-            
             if self.isdraw
-                self.problem.visualiser.drawbest(bestposition);
+                vis.pathcolor='blue';
+                vis.drawbest(bestpos);
             end
             
         end
@@ -209,19 +186,5 @@ classdef CuckooSearch < OptimizationAlgorithm
             
         end
         
-        
-        %%
-        % change this function if needed. It is called from the search
-        % function, and gives error if there are missing properties, or if
-        % there are any other problems.
-        function checkproperties(self)
-            dbstop if error
-            if isempty(self.positions)
-                error('self.position is empty');
-            end
-            if isempty(self.problem)
-                error('self.problem is empty');
-            end
-        end
     end
 end

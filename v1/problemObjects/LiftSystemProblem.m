@@ -13,9 +13,6 @@ function problem = LiftSystemProblem(varargin)
     request      = self.request;
     nlifts       = self.nlifts;
     
-    
-    
-    
     %%% prepare arguments to constructor
     floorswr = find(request); %floors with requests:
     
@@ -48,6 +45,7 @@ function problem = LiftSystemProblem(varargin)
     
     problem.heightfun= @(solution) -liftsyscost(problem,solution,upreq,downreq,nlifts);
     
+    %%% assign some preferences in problem.data
     problem.data.logtimes = self.logtimes;
 end
 

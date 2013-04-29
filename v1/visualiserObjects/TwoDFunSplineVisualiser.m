@@ -4,7 +4,7 @@
 %   step
 %todo (maybe): re draw everything at the end, with
 %   new points calculated.
-classdef TwoDFunVisualiser<Visualiser
+classdef TwoDFunSplineVisualiser<Visualiser
     properties
         fun %function to visualise
         %x1 %the x range e.g. 0:.001:1
@@ -24,7 +24,7 @@ classdef TwoDFunVisualiser<Visualiser
     
     methods
         %%
-        function self = TwoDFunVisualiser(varargin)
+        function self = TwoDFunSplineVisualiser(varargin)
         
         %%% overwrite
         for i=1:2:numel(varargin)
@@ -76,7 +76,7 @@ classdef TwoDFunVisualiser<Visualiser
         %%
         function drawposition(self,p)
         f = self.fun(p);
-        plot3(p(1), p(2), f, 'o','markersize',3, 'markerfacecolor','blue', 'color','blue','markeredgecolor', 'black');
+        plot3(p(1), p(2), f, 'o','markersize',3, 'markerfacecolor',self.pathcolor, 'color',self.pathcolor,'markeredgecolor', 'black');
         if self.isanimate
             pause(self.pauseduration)
         end
@@ -85,7 +85,7 @@ classdef TwoDFunVisualiser<Visualiser
         %% draw a global best
         function drawbest(self,p)
         f = self.fun(p);
-        plot3(p(1), p(2), f, 'o','markersize',10, 'markerfacecolor','red', 'color','red','markeredgecolor', 'black');
+        plot3(p(1), p(2), f, 'o','markersize',10, 'markerfacecolor',self.pathcolor, 'color',self.pathcolor,'markeredgecolor', 'black');
         if self.isanimate
             pause(self.pauseduration)
         end
@@ -93,22 +93,11 @@ classdef TwoDFunVisualiser<Visualiser
         
         %%
         function drawpath(self,p1,p2,varargin)
+               
+        %
+        connectbyspline([p1 self.fun(p1)],[p2 self.fun(p2)],30,'color',self.pathcolor,'linewidth',1);
         
-        args = {'-', 'color', self.pathcolor,'linewidth',2};
-        m=self.maxval;
-        f1 = self.fun(p1);
-        f2 = self.fun(p2);
-        
-        %draw line between old and new positions in air
-        connectbl([p1 m],[p2 m],args{:});
-        
-        %draw vertical lines
-        connectbl([p1 m],[p1 f1],args{:})
-        connectbl([p2 m],[p2 f2],args{:})
-        
-        %draw points
-        drawposition(self,p1)
-        drawposition(self,p2)
+
         
         if self.isanimate
             pause(self.pauseduration)

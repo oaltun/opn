@@ -1,51 +1,46 @@
 function main
 clc %clear command line
 close all %close all figures
+
 disp('start')
 %% add the directories for the classes and functions used to the matlab search path
 addpath(genpath('..'))
 %% options is collected in the struct called self
-self.isdraw = false; %should the paths and other visualisations be drawn
-self.isanimate = false; %should the drawing be slow, like an animation?
-
-self.time = 25;
+self.isdraw = true; %should the paths and other visualisations be drawn
+self.isanimate = true; %should the drawing be slow, like an animation?
+self.isplot = false;
+self.istable = true;
+self.stop.time = 5;
 
 %% initialization
-rng('default') %reset random number generator. We want to get the same result on each run.
+%rand('state',time) 
+rng('shuffle')%randomize random numbers
+%rng('default')%reset random number generator. We want to get the same result on each run.
 
 %% prepare list of problems
 problemlist = {};
 
-% problemlist{end+1} = Island('name','Island');
-% problemlist{end+1} = SupplyChainCost4;
-% problemlist{end+1} = NegativeRastriginProblem;
+ problemlist{end+1} = Island('name','Island');
+ problemlist{end+1} = SupplyChainCost4;
+ problemlist{end+1} = NegativeRastriginProblem;
  problemlist{end+1} = LiftSystemProblem;
- 
+
+% %%
+% stop=self.stop;
+% stop.time = 10*self.stop.time;
+% problemlist{end+1} = CuckooSearchProblem(...
+%     'problem',NegativeRastriginProblem,...
+%     'isdraw',self.isdraw,...
+%     'algorithmStop', stop );
+
+
 %% prepare list of algorithms
 algorithmlist = {};
 
-% algorithmlist{end+1} = SerialHillClimbing('nneighbor', 10, 'npositions', 3);
-% 
-% algorithmlist{end+1} = HillClimbing('nneighbor', 20);
-% 
-algorithmlist{end+1} = CuckooSearch;
-% 
-% algorithmlist{end+1} = ParticleSwarmOptimization('niter',3);
-%  
-% %algorithmlist{end+1} = FireFlyAlgorithm;
-% 
-% algorithmlist{end+1} = MultiRunnerAlgorithm(...
-%     'algorithm',HillClimbing,...
-%     'name','multiHcMaxrun', ...
-%     'maxruns',100);
-% 
-% algorithmlist{end+1} = MultiRunnerAlgorithm(...
-%     'algorithm',HillClimbing,...
-%     'name','multiHcMaxtime',...
-%     'terminationcriteria','maxtime',...
-%     'maxtime',5 ...
-%     );
-% 
+algorithmlist{end+1} = CuckooSearch('name','CSout');
+ 
+algorithmlist{end+1} = ParticleSwarmOptimization;
+
 % algorithmlist{end+1} = MultiRunnerAlgorithm(...
 %     'algorithm', ParticleSwarmOptimization('niter',10), ...
 %     'name', 'MultiPSO',...
@@ -77,7 +72,7 @@ for p=1:numel(problemlist)
         algorithm.problem = problem;
         
         algorithm.positions = rowfun(@(a) randin(problem.lb, problem.ub), vert(1:algorithm.npositions));
-        algorithm.stop.time = self.time;
+        algorithm.stop = self.stop;
         %%% run the algorithm on the problem. the
         %%% algorithm.run calls 
         %%% algorithm.search
@@ -99,7 +94,7 @@ for p=1:numel(problemlist)
         result(r).runcnt=other.runcnt;
         result(r).timecnt=other.timecnt;
         result(r).timeavg=other.timeavg;
-        result(r).algolog = algorithm.log;
+        result(r).count = algorithm.log.count;
         result(r).graphtitle=graphtitle;
         
         %%uncomment if other stuff is needed.
@@ -122,11 +117,11 @@ lw = {2,3,4,5}';
 %styles=styles(randperm(numel(styles)));
 
 for r=1:numel(result)
-    log = result(r).algolog;
+    log = result(r).count;
     
     times=[log.time];
     iterations=[log.iteration];
-    heights=[log.maxheight];
+    heights=[log.bestheight];
     
     
     hplot = plot(times,heights,'linestyle',ls{lsi(r)},'linewidth',lw{lwi(r)});

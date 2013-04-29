@@ -13,11 +13,12 @@ classdef OptimizationAlgorithm<handle
         selectfun      %function for selecting the parents that will have child. Or for selecting the positions that will be tweaked.
         neg2posfun 
         
-        count = struct('iteration', 0,   'time', 0, 'maxheight', -inf);
-        stop =  struct('iteration', inf, 'time', 5, 'maxheight',  inf); %TODO: also add minaveragestep
+        count = struct('time', 0, 'bestheight', -inf,'iteration', 0  );
+        stop  = struct('time', 5, 'bestheight',  inf,'iteration', inf); %TODO: also add minaveragestep
         
         log
         tstart
+        iteration
     end
     
     methods
@@ -27,15 +28,20 @@ classdef OptimizationAlgorithm<handle
         function [position, height, others] = run(self, varargin)
             tstartt = tic;
             
+            %%% initialization part
             self.count.iteration=0;
             self.count.time=0;
-            self.count.maxheight=-inf;
+            self.count.bestheight=-inf;
+            
+            self.iteration=0;
             
             self.tstart = cputime;
-            self.log = self.count;
+            self.log.count = self.count;
             
+            %%% call the search function
             [position height]= self.search(varargin{:});
             
+            %%% book keeping
             others.algorithm = self;
             others.runcnt=1;
             others.timecnt=toc(tstartt);
@@ -45,6 +51,16 @@ classdef OptimizationAlgorithm<handle
             self.positions(1,:) = position;
         end %function run
         
+        %%
+        function [bestpos bestheight] = bookkeep(self,bestpos,bestheight)
+            self.count.time = cputime-self.tstart;
+            self.count.iteration=self.iteration;
+            self.count.bestheight=bestheight;
+            
+            self.log.count(end+1)=self.count;
+            self.name
+            self.count
+        end
     end
     
 
