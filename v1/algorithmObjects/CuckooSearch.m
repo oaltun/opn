@@ -21,8 +21,8 @@ classdef CuckooSearch < OptimizationAlgorithm
     
     properties
         pa
-        beta=3/2; %value taken from Fileexchange
-        stepfactor=0.01; %value taken from Fileexchange
+        beta=3/2;        % value taken from Fileexchange
+        stepfactor=0.01; % value taken from Fileexchange
         sigma;
         niter %number of iterations
         fixfun = @fixbound2bound;

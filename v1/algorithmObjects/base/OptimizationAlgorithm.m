@@ -5,38 +5,31 @@ classdef OptimizationAlgorithm<handle
         isdraw=false;
         hasrunner=false;  %is this algorithm being run by a MultiRunnerAlgorithm instance?
         isrunner = false; %is this algo itself a a MultiRunnerAlgorithm
-
+        
         positions     %positions (or solutions, or states, or chromozomes) that we start search.
         npositions=1; %natural number of positions this algorithm works with. E.g. hill climbing and simulated annealing has this only 1. PSO may have a default particle count.
-    
+        
         fixboundsfun = @fixbound2bound; %fixes the out of bounds positions
         selectfun      %function for selecting the parents that will have child. Or for selecting the positions that will be tweaked.
-        neg2posfun 
+        neg2posfun
         
         count = struct('time', 0, 'bestheight', -inf,'iteration', 0  );
         stop  = struct('time', 5, 'bestheight',  inf,'iteration', inf); %TODO: also add minaveragestep
         
         log
-        tstart
-        iteration
+        tstart = cputime;
+        iteration = 0;
+        bestheight=-inf;
+        
+        debug=false
     end
     
     methods
-
+        
         
         %%
         function [position, height, others] = run(self, varargin)
             tstartt = tic;
-            
-            %%% initialization part
-            self.count.iteration=0;
-            self.count.time=0;
-            self.count.bestheight=-inf;
-            
-            self.iteration=0;
-            
-            self.tstart = cputime;
-            self.log.count = self.count;
             
             %%% call the search function
             [position height]= self.search(varargin{:});
@@ -53,15 +46,30 @@ classdef OptimizationAlgorithm<handle
         
         %%
         function [bestpos bestheight] = bookkeep(self,bestpos,bestheight)
-            self.count.time = cputime-self.tstart;
-            self.count.iteration=self.iteration;
-            self.count.bestheight=bestheight;
+            if bestheight>=self.bestheight
+                self.bestheight=bestheight;
+
+                %%%update count
+                self.count.time = cputime-self.tstart;
+                self.count.iteration=self.iteration;
+                self.count.bestheight=bestheight;
+                self.count.bestpos = bestpos;
+                
+                %%%append it to log.count list
+                if isfield(self.log,'count')
+                    self.log.count(end+1)=self.count;
+                else
+                    self.log.count=self.count;
+                end
+            end
             
-            self.log.count(end+1)=self.count;
-            self.name
-            self.count
+            if self.debug
+                disp('best:')
+                self.count
+            end
+            
         end
     end
     
-
+    
 end

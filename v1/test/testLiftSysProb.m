@@ -7,10 +7,11 @@ disp('start')
 addpath(genpath('..'))
 %% options is collected in the struct called self
 self.isdraw = true; %should the paths and other visualisations be drawn
-self.isanimate = true; %should the drawing be slow, like an animation?
+self.isanimate = false; %should the drawing be slow, like an animation?
 self.isplot = false;
 self.istable = true;
-self.stop.time = 5;
+%self.stop.time = 5;
+self.stop.iteration=300;
 
 %% initialization
 %rand('state',time) 
@@ -20,16 +21,25 @@ rng('shuffle')%randomize random numbers
 %% prepare list of problems
 problemlist = {};
 
- problemlist{end+1} = Island('name','Island');
- problemlist{end+1} = SupplyChainCost4;
- problemlist{end+1} = NegativeRastriginProblem;
- problemlist{end+1} = LiftSystemProblem;
+%  problemlist{end+1} = @() Island('name','Island');
+%  problemlist{end+1} = @() SupplyChainCost4;
+  problemlist{end+1} = @() NegativeRastriginProblem;
+%  problemlist{end+1} = @() LiftSystemProblem;
 
-% %%
+%%
+%what to optimize?
+
+% parameters = {'w','psip','psig','maxstepdivisor'};
+% lb = [0 0 0 1];
+% ub = [1 1 1 100];
 % stop=self.stop;
-% stop.time = 10*self.stop.time;
-% problemlist{end+1} = CuckooSearchProblem(...
-%     'problem',NegativeRastriginProblem,...
+% %stop.time = self.stop.time;
+% 
+% problemlist{end+1} = @() OptimizerOptimizerProblem(...
+%     'algorithm', @() ParticleSwarmOptimization('name','PSOin'),...
+%     'problem',@() SupplyChainCost4,...
+%     'parameters', parameters,...
+%     'lb',lb,'ub',ub,...
 %     'isdraw',self.isdraw,...
 %     'algorithmStop', stop );
 
@@ -37,11 +47,11 @@ problemlist = {};
 %% prepare list of algorithms
 algorithmlist = {};
 
-algorithmlist{end+1} = CuckooSearch('name','CSout');
+%algorithmlist{end+1} = @() CuckooSearch('name','CSout','debug',true);
  
-algorithmlist{end+1} = ParticleSwarmOptimization;
+algorithmlist{end+1} = @() ParticleSwarmOptimization('w',.90,'psip',0,'psig',0.60,'maxstepdivisor',70);
 
-% algorithmlist{end+1} = MultiRunnerAlgorithm(...
+% algorithmlist{end+1} = @() MultiRunnerAlgorithm(...
 %     'algorithm', ParticleSwarmOptimization('niter',10), ...
 %     'name', 'MultiPSO',...
 %     'terminationcriteria', 'maxruns',...
@@ -51,10 +61,13 @@ algorithmlist{end+1} = ParticleSwarmOptimization;
 result = struct([]); %for holding results of algorithm runs.
 resultOther = struct([]);%#ok<NASGU> %for other stuff algorithmlist return
 r=0; %result idx
-for p=1:numel(problemlist)
-    problem = problemlist{p}; %for each problem
-    for a=1:numel(algorithmlist)
-        algorithm = algorithmlist{a}; %for each algorithm
+for p=1:numel(problemlist)%for each problem
+    problem = problemlist{p}(); %construct a new problem
+
+    for a=1:numel(algorithmlist)%for each algorithm
+
+        algorithm = algorithmlist{a}(); %construct a new algorithm
+        
         graphtitle=[problem.name ' with ' algorithm.name];
         disp(graphtitle)
         
