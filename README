@@ -4,7 +4,7 @@ This is a package of Metaheuristic algorithms and problems that can be
 solved by these algorithms.
 
 Installation/Running:
------------------------
+---------------------
 Download / clone. Run 'test/testAll.m' or other *.m files in the 'test' 
 directory to see what the package does.
 

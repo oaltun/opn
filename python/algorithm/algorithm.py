@@ -1,3 +1,0 @@
-
-class algorithm:
-	pass
