@@ -17,6 +17,7 @@ classdef FireFlyAlgorithm < OptimizationAlgorithm
         % constructor.
         function self=FireFlyAlgorithm(varargin)
             %%% set default property values
+            %denemeeeeeeeeeeeeee
             self.name = 'FA';
            % self.beta0 =1000; %beta0=1(attractiveness coefficient) in original algorithm which depends on search area,
             ...10000 is taken to increase attractiveness in our search area.
