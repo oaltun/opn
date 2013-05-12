@@ -1,12 +1,15 @@
 from pymeta.utils.pymetautils import randin, Default
 import numpy as np
 class GenericOptimizationProblem(Default):
-    heightfun = lambda x: x[0]
-    lb=np.array([]); #must be a numpy array
-    ub=np.array([]); #must be a numpy array
-    name='?'
-    visualiser=[]  
-        
+    def __init__(self,**kwargs):
+        Default.__init__(self) #inherit
+        self.heightfun = None; ##defaults
+        self.lb = None
+        self.ub = None
+        self.name = None
+        self.visualiser = None
+        self.__dict__.update(**kwargs) #overwrite
+
     def height(self,position):
         return self.heightfun(self.fixposition(position))
     

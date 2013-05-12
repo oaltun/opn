@@ -1,56 +1,40 @@
 import time
 from pymeta.utils.pymetautils import Default
 
+
+
 class OptimizationAlgorithm(Default):
-	name = '?'
-	problem = []
-	isdraw = False
-	#hasrunner = False
-	#isrunner = False
-	
-	positions = []
-	npositions = 1
-	
-	# fixboundsfun = fixbound2bound
-	# selectfun = tournamentselection
-	# neg2posfun = 
-	
-	cnt  = {'time':0, 'bestheight': float('-inf'), 'iteration':0 }
-	stop = {'time':0, 'bestheight': float('inf'), 'iteration':float('inf') }  # TODO: also add minavaragestep
-	
-	log = []
-	tstart = time.time()
-	#iteration = 0
-	bestheight = float('-inf')
-	
-	debug = False
-		
+	def __init__(self):
+		Default.__init__(self)
+
+		self.name = '?'
+		self.problem = None;
+		self.positions = None;
+		self.stop=	{'time':0, 'maxhei': float('inf'), 'iteration':float('inf') }  # TODO: also add minavaragestep
+		self.debug = False
+		self.log =[]
+		#self.__dict__.update(**kwargs)
+				
 	def run(self):
-		tstartt = time.time()
-		position, height = self.search()  # call the actual search function
-		others = {}  # # book keeping stuff
-		others['algorithm'] = self  
-		others['runcnt'] = 1
-		others['timecnt'] = time.time() - tstartt
-		others['timeavg'] = others['timecnt'];
-		self.positions[0] = position  # overwrite positions[0]
-		return (position, height, others)
-								
-	def bookkeep(self, bestpos, bestheight, iteration):
-		self.cnt['time'] = time.time() - self.tstart  # # update cnt
-		self.cnt['iteration'] = iteration
-		self.cnt['bestheight'] = bestheight
-		self.cnt['bestpos'] = bestpos
-		self.log.append(self.cnt.copy())  # update log
-		self.bestheight = bestheight  # update self.bestheight
-		if self.debug:
-			print 'best:', self.cnt
-		return (bestpos, bestheight)
+		tstart = time.time()	
 	
-	def iscontinue(self):
+		cnt = {'time':0, 'maxhei': float('-inf'), 'iteration':0 }
+		loop = self.search()  # call the actual search function
+		while self.iscontinue(cnt,self.stop):
+			bestpos, maxhei, iteration = loop.next()
+			cnt={'time':time.time()-tstart,	'iteration':iteration,'maxhei':maxhei,'bestpos':bestpos}
+			self.log.append(cnt)
+			#if self.isdraw and run_draw, draw a path between old and new positions of the changed positions.
+
+		if self.isdraw: self.problem.visualiser.drawbest(bestpos)
+
+		return cnt.copy()
+						
+	
+	def iscontinue(self,cnt,stop):
 		tf = True
-		for key in self.stop:
-			if self.cnt[key] > self.stop[key]:
+		for key in stop:
+			if cnt[key] > stop[key]:
 				tf = False
 				break
 		return tf
