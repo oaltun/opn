@@ -88,10 +88,13 @@ class TwoDFunVisualiser(OptimizationVisualiser):
         self.fig = mlab.figure(size=(800, 800),bgcolor=(1,1,1),fgcolor=(0,0,0))
         visual.set_viewer(self.fig)
         self.surf = mlab.surf(x, y,z,colormap='gray',opacity=.5)
+        
+        ## add info
         mlab.axes(ranges=self.ranges)
         mlab.view(0, 0,.25)
         mlab.outline()
-        
+        #mlab.title(self.title,line_width=.5,opacity=.9, size=2,height=5)
+        mlab.title(self.title)
         #mlab.show()
 
     def drawbest(self,p):

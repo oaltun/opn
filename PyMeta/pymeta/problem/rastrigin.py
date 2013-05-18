@@ -4,11 +4,11 @@ from pymeta.problem.problembase import GenericOptimizationProblem
 from pymeta.visualiser.funvis import TwoDFunVisualiser
 
 class NegativeRastriginProblem(GenericOptimizationProblem):
-	def __init__(self, dim=2, bound=5.12):
+	def __init__(self, dim=2, bound=5.12,name='NRP'):
 		GenericOptimizationProblem.__init__(self)
 		self.ub = bound * ones(dim)
 		self.lb = -1 * self.ub
-		self.name='NRastrigin'
+		self.name=name
 		self.visualiser = TwoDFunVisualiser(fun=self.height,lb=self.lb,ub=self.ub,step=(self.ub-self.lb)/100)
 		
 	def height(self, x):
