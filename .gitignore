@@ -2,3 +2,7 @@
 test/results.csv
 test/results.html
 example_alien
+*.pyc
+ .*
+ !/.gitignore
+ dist/
