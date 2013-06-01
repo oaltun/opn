@@ -13,6 +13,7 @@ from mayavi import mlab
 import time
 from scipy import interpolate
 from tvtk.tools import visual
+import wx
 
 #mpl.rcParams['legend.fontsize']=10
 
@@ -55,6 +56,8 @@ class TwoDFunVisualiser(OptimizationVisualiser):
         self.ub = None
         self.step = None
         self.__dict__.update(**kwargs)  # overwrite
+        wx.Yield()
+        
         
     def init(self):
         ## prepare the surface data:
@@ -85,24 +88,26 @@ class TwoDFunVisualiser(OptimizationVisualiser):
         y=ysc.reshape(shape)
 
         # # draw the surface
-        self.fig = mlab.figure(size=(800, 800),bgcolor=(1,1,1),fgcolor=(0,0,0))
+        self.fig = mlab.figure(size=(400, 400),bgcolor=(1,1,1),fgcolor=(0,0,0))
         visual.set_viewer(self.fig)
         self.surf = mlab.surf(x, y,z,colormap='gray',opacity=.5)
         
         ## add info
         mlab.axes(ranges=self.ranges)
-        mlab.view(0, 0,.25)
+        #mlab.view(0, 0,.25)
         mlab.outline()
         #mlab.title(self.title,line_width=.5,opacity=.9, size=2,height=5)
         mlab.title(self.title)
         #mlab.show()
-
+        wx.Yield()
+        
     def drawbest(self,p):
         pass
     
     def drawposition(self,p,**kwargs):
         pz = np.hstack((p,self.fun(p))) * self.scaler
         mlab.points3d(pz[0],pz[1],pz[2],**kwargs)
+        wx.Yield()
     
     def drawpath(self,p1,p2,**kwargs):
         if np.all(np.equal(p1,p2)):
@@ -112,9 +117,10 @@ class TwoDFunVisualiser(OptimizationVisualiser):
         #xyz=np.vstack((pz1,pz2))
         xyz=connectbycurve(pz1,pz2)
         mlab.plot3d(xyz[:,0], xyz[:,1], xyz[:,2], figure=self.fig,**kwargs)
-
+        wx.Yield()
         if self.isanimate:
-            time.sleep(0.10)
+            time.sleep(0.010)
+            wx.Yield()
     
             
     def show(self):
