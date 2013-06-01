@@ -1,4 +1,5 @@
 *.asv
+
 test/results.csv
 test/results.html
 example_alien
@@ -6,3 +7,4 @@ example_alien
  .*
  !/.gitignore
  dist/
+PyMeta/.settings
