@@ -32,7 +32,7 @@ class BacterialForagingOptimizationAlgoritm(OptimizationAlgorithm):
         self.w_attr = -0.2
         self.h_rep = 0.1
         self.w_rep = -10 
-        
+        self.best = None
         
         self.__dict__.update(**kwargs)
         
@@ -53,7 +53,7 @@ class BacterialForagingOptimizationAlgoritm(OptimizationAlgorithm):
         costc = np.array([cost(pos) for pos in cells])  # the cost of the positions
         healthc = costc.copy()
         idbest = costc.argmax()   # the index of the more healthy position
-        self.best = None
+        
         
         colors=[];
         bestcolor = (1,1,0)
