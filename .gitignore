@@ -1,10 +1,9 @@
 *.asv
-
 test/results.csv
 test/results.html
 example_alien
 *.pyc
- .*
- !/.gitignore
- dist/
+.*
+!/.gitignore
+dist/
 PyMeta/.settings
