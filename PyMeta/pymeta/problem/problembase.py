@@ -8,19 +8,31 @@ class GenericOptimizationProblem( Default ):
         self.ub = None
         self.name = None
         self.visualiser = None
+        self.minimize = False  # set true if this is a minimization problem
+
         self.__dict__.update( **kwargs )  # overwrite
         self._assessmentcnt = 0
-
-    def height( self, position ):
-        h = self.heightfun( self.fixposition( position ) )
-        self._assessmentcnt = self._assessmentcnt + 1; print self.assessmentcnt(), h
-        return h
 
     def assessmentcnt( self ):
         return self._assessmentcnt
 
+    def height( self, position ):
+        h = self.heightfun( self.fixposition( position ) )
+        self._assessmentcnt = self._assessmentcnt + 1;
+        if self.minimize:
+            print self.assessmentcnt(), -h
+        else:
+            print self.assessmentcnt(), h
+        return h
+
     def cost( self, position ):
         return -1 * ( self.height( position ) )
+
+    def heightfun( self, x ):
+        return -self.costfun( x )
+
+#     def costfun( self, x ):
+#         return -self.heightfun( x )
 
     def randpos( self ):
         return randin( self.lb, self.ub )
