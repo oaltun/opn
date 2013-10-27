@@ -17,23 +17,37 @@ class OptimizationAlgorithm( Default ):
 		self.log = []
 		self.maxstepdivisor = 100;
 		self.minimize = False
-		self._poscolors = []  # a list of colors. it will be initialized by the system.
+		# self._poscolors = []  # a list of colors. it will be initialized by the system.
 
 		# self.__dict__.update(**kwargs)
 
+	def f( self, poslist ):
+
+		# ## which will we be using? cost or quality
+		if self.minimize:
+			obf = self.problem.cost
+		else:
+			obf = self.problem.quality
+
+
+		# ## get f and fixed positions
+		if poslist.ndim == 1:
+			xfix = self.problem.fixposition( self.problem.fixbounds( poslist ) )
+			ffix = obf( poslist )
+			return ( ffix , xfix )  # TODO: (xfix,ffix) olarak deðiþtir
+		elif poslist.ndim == 2:
+			xfix = np.empty_like( poslist )
+			for i in xrange( poslist.shape[0] ):
+				xfix[i] = self.problem.fixposition( self.problem.fixbounds( poslist[i] ) )
+			ffix = np.array( [obf( pos ) for pos in xfix] )
+			return ( ffix, xfix )
+
+
+
 	def run( self ):
 
-		# ## start value for fbest changes according to problem type
-		if self.problem.minimize:
-			bestf = float( 'inf' )
-		else:
-			bestf = float( '-inf' )
 
-		# ## whether we use cost or height changes according to problem type
-		if self.minimize:
-			self.f = self.problem.cost  # if minimization algorithm, use cost
-		else:
-			self.f = self.problem.quality  # if maximization algorithm, use quality
+
 
 		# ## for deciding which value is better which to use? <= or =>?
 		if self.minimize:
@@ -41,39 +55,44 @@ class OptimizationAlgorithm( Default ):
 		else:
 			self.isbetter = lambda new, old: new >= old
 
-		# ## better names
-		self.x = self.positions  # positions are given name x in papers
+		# ## fix positions, also get their objective values
+		self.fx, self.x = self.f( self.positions )
+		self.positions = self.x
 
 		# ## possibly needed info
 		self.n = self.x.shape[0]  # number of positions
 		self.d = self.x.shape[1]  # number of dimensions on each position
 
 		# ## initialize some important holders
-		self.xbest = self.x[0].copy();  # best position
-		self.fbest = self.f( self.xbest )  # best value: global best value
-		self.fx = np.array( [self.f( pos ) for pos in self.x] )  # value of all positions
+		bestidx = 0
+		if self.minimize:
+			bestidx = self.fx.argmin()
+		else:
+			bestidx = self.fx.argmax()
+
+		self.xbest = self.x[bestidx].copy();  # best position
+		self.fbest = self.fx[bestidx]  # best value: global best value
 
 		self.maxstep = ( self.problem.ub - self.problem.lb ) / self.maxstepdivisor
 
 		# ## prepares colors for each position
 		self.prepareposcolors()
 
-
 		# ## main loop
 		self.problem.resetassessmentcnt()
 		self.iteration = 0;
 		tstart = time.time()
-		cnt = {'time':0, 'fbest': bestf, 'iteration':0, 'assessmentcnt':0 }
-		loop = self.search()
+		cnt = {'fbest': self.fbest, 'time':0, 'iteration':0, 'assessmentcnt':0 }
+		yielder = self.search()
 		while self.iscontinue( cnt, self.stop ):
 			self.iteration += 1
-			bestx, bestf, iteration = loop.next()  # call the actual search function
-			cnt = {'time':time.time() - tstart, 'iteration':iteration, 'fbest':bestf, 'xbest':bestx, 'assessmentcnt':self.problem.assessmentcnt()}
+			yielder.next()  # call the actual search function
+			cnt = {'fbest':self.fbest, 'xbest':self.xbest, 'time':time.time() - tstart, 'iteration':self.iteration, 'assessmentcnt':self.problem.assessmentcnt()}
 			self.log.append( cnt )
 
 		# ## draw final positions. this also prepares colors for each position
 		self.drawfinalpositions()
-		self.drawbest( bestx )
+		self.drawbest( self.xbest )
 
 		return cnt.copy()
 
@@ -87,17 +106,23 @@ class OptimizationAlgorithm( Default ):
 				break
 		return tf
 
+	def updatex( self, xnew, fnew, i ):
+		self.drawpath( self.x[i], xnew, i )
+		self.x[i] = xnew
+		self.fx[i] = fnew
+
+	def updatebest( self, xnew, fnew ):
+		self.drawpathbest( self.xbest, xnew )
+		self.xbest = xnew.copy()
+		self.fbest = fnew
+
 	def updateposnbest( self, xnew, fnew, i ):
 		""" if xnew is better than x, update x. if xnew is better than xbest, update xbest."""
 		if self.isbetter( fnew , self.fx[i] ):  # update position of this ascender
-			self.drawpath( self.x[i], xnew, i )
-			self.x[i] = xnew
-			self.fx[i] = fnew
+			self.updatex( xnew, fnew, i )
 
 			if self.isbetter( fnew, self.fbest ):  # update global best
-				self.drawpathbest( self.xbest, xnew )
-				self.xbest = xnew.copy()
-				self.fbest = fnew
+				self.updatebest( xnew, fnew )
 
 ################# start drawing related methods ###############################
 
@@ -107,6 +132,7 @@ class OptimizationAlgorithm( Default ):
 
 	def prepareposcolors( self ):
 		if self.isdraw:
+			self._poscolors = []
 			for _ in self.positions:
 				color = tuple( np.random.uniform( 0, 1, ( 3, ) ).tolist() )
 				self._poscolors.append( color )
