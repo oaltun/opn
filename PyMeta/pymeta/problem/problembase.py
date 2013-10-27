@@ -11,13 +11,21 @@ class GenericOptimizationProblem( Default ):
         self.minimize = False  # set true if this is a minimization problem
 
         self.__dict__.update( **kwargs )  # overwrite
+
         self._assessmentcnt = 0
 
     def assessmentcnt( self ):
         return self._assessmentcnt
 
+    def resetassessmentcnt( self ):
+        self._assessmentcnt = 0
+
+    def quality( self, position ):
+        return self.height( position )
+
     def height( self, position ):
-        h = self.heightfun( self.fixposition( position ) )
+
+        h = self.heightfun( position )
         self._assessmentcnt = self._assessmentcnt + 1;
         if self.minimize:
             print self.assessmentcnt(), -h
@@ -26,13 +34,14 @@ class GenericOptimizationProblem( Default ):
         return h
 
     def cost( self, position ):
-        return -1 * ( self.height( position ) )
+        h = self.height( position )
+        return -1 * h
 
     def heightfun( self, x ):
         return -self.costfun( x )
 
-#     def costfun( self, x ):
-#         return -self.heightfun( x )
+    def costfun( self, x ):
+        return -self.heightfun( x )
 
     def randpos( self ):
         return randin( self.lb, self.ub )
@@ -44,6 +53,9 @@ class GenericOptimizationProblem( Default ):
         for i in xrange( nrows ):
             mat[i] = self.randpos();
         return mat
+
+    def tweak( self, pos, maxstep ):
+        return pos + randin( -maxstep, maxstep )
 
     def pos2str( self, pos ):
         return str( pos )
