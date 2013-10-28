@@ -12,7 +12,7 @@ class OptimizationAlgorithm( Default ):
 		self.problem = None
 		self.positions = None
 		self.npositions = 20
-		self.stop = None  # 	{'time':0, 'fbest': float('inf'), 'iteration':float('inf') }  # TODO: also add minavaragestep
+		self.stop = None  # 	{'time':0, 'fbest': float('inf'), 'yieldcnt':float('inf') }  # TODO: also add minavaragestep
 		self.debug = False
 		self.log = []
 		self.maxstepdivisor = 100;
@@ -34,20 +34,17 @@ class OptimizationAlgorithm( Default ):
 		if poslist.ndim == 1:
 			xfix = self.problem.fixposition( self.problem.fixbounds( poslist ) )
 			ffix = obf( poslist )
-			return ( ffix , xfix )  # TODO: (xfix,ffix) olarak deðiþtir
+			return ( xfix, ffix )  # TODO: (xfix,ffix) olarak degistir
 		elif poslist.ndim == 2:
 			xfix = np.empty_like( poslist )
 			for i in xrange( poslist.shape[0] ):
 				xfix[i] = self.problem.fixposition( self.problem.fixbounds( poslist[i] ) )
 			ffix = np.array( [obf( pos ) for pos in xfix] )
-			return ( ffix, xfix )
+			return ( xfix, ffix )
 
 
 
 	def run( self ):
-
-
-
 
 		# ## for deciding which value is better which to use? <= or =>?
 		if self.minimize:
@@ -56,7 +53,7 @@ class OptimizationAlgorithm( Default ):
 			self.isbetter = lambda new, old: new >= old
 
 		# ## fix positions, also get their objective values
-		self.fx, self.x = self.f( self.positions )
+		self.x, self.fx = self.f( self.positions )
 		self.positions = self.x
 
 		# ## possibly needed info
@@ -80,14 +77,14 @@ class OptimizationAlgorithm( Default ):
 
 		# ## main loop
 		self.problem.resetassessmentcnt()
-		self.iteration = 0;
+		self.yieldcnt = 0;
 		tstart = time.time()
-		cnt = {'fbest': self.fbest, 'time':0, 'iteration':0, 'assessmentcnt':0 }
+		cnt = {'fbest': self.fbest, 'time':0, 'yieldcnt':0, 'assessmentcnt':0 }
 		yielder = self.search()
 		while self.iscontinue( cnt, self.stop ):
-			self.iteration += 1
+			self.yieldcnt += 1
 			yielder.next()  # call the actual search function
-			cnt = {'fbest':self.fbest, 'xbest':self.xbest, 'time':time.time() - tstart, 'iteration':self.iteration, 'assessmentcnt':self.problem.assessmentcnt()}
+			cnt = {'fbest':self.fbest, 'xbest':self.xbest, 'time':time.time() - tstart, 'yieldcnt':self.yieldcnt, 'assessmentcnt':self.problem.assessmentcnt()}
 			self.log.append( cnt )
 
 		# ## draw final positions. this also prepares colors for each position

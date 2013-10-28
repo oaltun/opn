@@ -1,4 +1,5 @@
 import numpy as np
+import wx
 
 from pymeta.algorithm.algorithmbase import OptimizationAlgorithm
 from pymeta.utils.pymetautils import randin
@@ -37,18 +38,25 @@ class ParticleSwarmOptimization( OptimizationAlgorithm ):
 
                 rp = np.random.uniform( 0, 1, xo.shape )  # # produce a new position
                 rg = np.random.uniform( 0, 1, xo.shape )
-                vtmp = vo * self.w + ( po - xo ) * rp * self.psip + ( self.xbest - xo ) * rg * self.psig  # new velocity
-
+                # new velocity
+                # TODO: restart randomly when po-xo is very close to xbest-xo. Or xnew is too close to xbest
+                vtmp = vo * self.w + ( po - xo ) * rp * self.psip + ( self.xbest - xo ) * rg * self.psig
                 xtmp = xo + vtmp
-                fnew, xnew = self.f( xtmp )
+                xnew, fnew = self.f( xtmp )  # correct position and get its f
 
                 self.updatex( xnew, fnew, i )
                 v[i] = xnew - xo  # correct velocity
 
                 if fnew > fp[i]:  # # update personal best
+                    self.drawpersonalbestpath( p[i], xnew, i )
                     p[i] = xnew.copy()
                     fp[i] = fnew
                     if fnew > self.fbest:  # #update global best
                         self.updatebest( xnew, fnew )
                         yield  # give control to caller. It will log and decide whether to stop.
 
+    def drawpersonalbestpath( self, oldpos, newpos, idx ):
+        """ draw a path from old pos to new pos for the position idx """
+        if self.isdraw:
+            self.problem.visualiser.drawpath( oldpos, newpos, color = ( 0, 0, 0 ), tube_radius = .1, opacity = .8 )  # draw the path;
+            wx.Yield()
