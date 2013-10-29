@@ -31,7 +31,6 @@ class HillAscend( OptimizationAlgorithm ):
                 yield  # let the controller decide whether stop or continue.
 
 
-# HillClimbing:
 class HillDescend( OptimizationAlgorithm ):
     def __init__( self, **kwargs ):
         OptimizationAlgorithm.__init__( self )  # inherit

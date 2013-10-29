@@ -15,9 +15,10 @@ class ParticleSwarmOptimization( OptimizationAlgorithm ):
         self.maxstepdivisor = 70
         self.name = 'PSO'
         self.npositions = 20
-        self.minimize = False
 
         self.__dict__.update( **kwargs )  # overwrite defaults with keyword arguments supplied by user
+
+        self.minimize = False
 
     def search( self ):
 
@@ -51,9 +52,8 @@ class ParticleSwarmOptimization( OptimizationAlgorithm ):
                     self.drawpersonalbestpath( p[i], xnew, i )
                     p[i] = xnew.copy()
                     fp[i] = fnew
-                    if fnew > self.fbest:  # #update global best
-                        self.updatebest( xnew, fnew )
-                        yield  # give control to caller. It will log and decide whether to stop.
+                    if fnew > self.fbest:  # #update global best and yield
+                        self.updatebest( xnew, fnew ) ; yield
 
     def drawpersonalbestpath( self, oldpos, newpos, idx ):
         """ draw a path from old pos to new pos for the position idx """

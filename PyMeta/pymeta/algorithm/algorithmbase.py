@@ -34,7 +34,7 @@ class OptimizationAlgorithm( Default ):
 		if poslist.ndim == 1:
 			xfix = self.problem.fixposition( self.problem.fixbounds( poslist ) )
 			ffix = obf( poslist )
-			return ( xfix, ffix )  # TODO: (xfix,ffix) olarak degistir
+			return ( xfix, ffix )
 		elif poslist.ndim == 2:
 			xfix = np.empty_like( poslist )
 			for i in xrange( poslist.shape[0] ):
@@ -66,7 +66,6 @@ class OptimizationAlgorithm( Default ):
 			bestidx = self.fx.argmin()
 		else:
 			bestidx = self.fx.argmax()
-
 		self.xbest = self.x[bestidx].copy();  # best position
 		self.fbest = self.fx[bestidx]  # best value: global best value
 
