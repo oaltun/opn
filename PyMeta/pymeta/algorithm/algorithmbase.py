@@ -13,7 +13,7 @@ class OptimizationAlgorithm( Default ):
 		self.positions = None
 		self.npositions = 20
 		self.stop = None  # 	{'time':0, 'fbest': float('inf'), 'yieldcnt':float('inf') }  # TODO: also add minavaragestep
-		self.debug = False
+		self.isdebug = False
 		self.log = []
 		self.maxstepdivisor = 100;
 		self.minimize = False

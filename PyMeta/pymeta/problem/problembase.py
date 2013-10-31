@@ -9,7 +9,7 @@ class GenericOptimizationProblem( Default ):
         self.name = None
         self.visualiser = None
         self.minimize = False  # set true if this is a minimization problem
-
+        self.isdebug = False
         self.__dict__.update( **kwargs )  # overwrite
 
         self._assessmentcnt = 0
@@ -27,10 +27,11 @@ class GenericOptimizationProblem( Default ):
 
         h = self.heightfun( position )
         self._assessmentcnt = self._assessmentcnt + 1;
-        if self.minimize:
-            print self.assessmentcnt(), -h
-        else:
-            print self.assessmentcnt(), h
+        if self.isdebug:
+            if self.minimize:
+                print self.assessmentcnt(), -h
+            else:
+                print self.assessmentcnt(), h
         return h
 
     def cost( self, position ):
