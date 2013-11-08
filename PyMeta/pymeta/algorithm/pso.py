@@ -28,9 +28,8 @@ class ParticleSwarmOptimization( OptimizationAlgorithm ):
 
         # ## main loop
         while True:
-            yield  # give control to caller. It will log and decide whether to stop.
-
             for i in xrange( self.n ):  # #for each particle
+                yield  # give control to caller. It will log and decide whether to stop.
 
                 # ## old values
                 xo = self.x[i].copy()
@@ -53,7 +52,7 @@ class ParticleSwarmOptimization( OptimizationAlgorithm ):
                     p[i] = xnew.copy()
                     fp[i] = fnew
                     if fnew > self.fbest:  # #update global best and yield
-                        self.updatebest( xnew, fnew ) ; yield
+                        self.updatebest( xnew, fnew )
 
     def drawpersonalbestpath( self, oldpos, newpos, idx ):
         """ draw a path from old pos to new pos for the position idx """
