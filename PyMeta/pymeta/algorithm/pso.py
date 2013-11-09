@@ -42,17 +42,17 @@ class ParticleSwarmOptimization( OptimizationAlgorithm ):
                 # TODO: restart randomly when po-xo is very close to xbest-xo. Or xnew is too close to xbest
                 vtmp = vo * self.w + ( po - xo ) * rp * self.psip + ( self.xbest - xo ) * rg * self.psig
                 xtmp = xo + vtmp
-                xnew, fnew = self.f( xtmp )  # correct position and get its f
 
+                xnew, fnew = self.f( xtmp );yield  # correct position, compute its f, and update self.fbest and self.xbest
                 self.updatex( xnew, fnew, i )
+
                 v[i] = xnew - xo  # correct velocity
 
                 if fnew > fp[i]:  # # update personal best
                     self.drawpersonalbestpath( p[i], xnew, i )
                     p[i] = xnew.copy()
                     fp[i] = fnew
-                    if fnew > self.fbest:  # #update global best and yield
-                        self.updatebest( xnew, fnew )
+
 
     def drawpersonalbestpath( self, oldpos, newpos, idx ):
         """ draw a path from old pos to new pos for the position idx """

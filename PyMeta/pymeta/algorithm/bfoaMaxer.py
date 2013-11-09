@@ -15,7 +15,7 @@ def compute_cell_interact( d, w, cells, i ):
     return s
 
 #####################################################################################
-class BacterialForagingOptimizationAlgoritm( OptimizationAlgorithm ):
+class BacterialForagingOptimizationAlgoritm2( OptimizationAlgorithm ):
     def __init__( self, **kwargs ):
 
         OptimizationAlgorithm.__init__( self )  # inherit
@@ -80,6 +80,7 @@ class BacterialForagingOptimizationAlgoritm( OptimizationAlgorithm ):
                 plt.show()
             iteration = iteration + 1
             print 'Iteration is : .............. : ', iteration
+
             for l in xrange( Ned ):
                 for k in xrange( Nre ):
                     c_best = None

@@ -17,18 +17,14 @@ class HillAscend( OptimizationAlgorithm ):
 
         # ## main loop
         while True:  # forever...
-            yield  # let the controller decide whether stop or continue.
-
             for i in xrange( self.n ):  # #for each climber i
-
-                # ## peek: take a look to a close to this position: xnew
+                yield
+                # ## peek: take a look to a close to this position: xtmp
                 xtmp = self.x[i] + randin( -self.maxstep, self.maxstep )
                 xnew, fnew = self.f( xtmp )
+                if self.isbetter( fnew, self.fx[i] ):
+                    self.updatex( xnew, fnew, i )
 
-                # if xnew is better than x[i], update x[i]. if xnew is better than xbest, update xbest.
-                self.updateposnbest( xnew, fnew, i )
-
-                yield  # let the controller decide whether stop or continue.
 
 
 class HillDescend( OptimizationAlgorithm ):
@@ -45,18 +41,13 @@ class HillDescend( OptimizationAlgorithm ):
 
         # ## main loop
         while True:  # forever...
-            yield  # let the controller decide whether stop or continue.
-
             for i in xrange( self.n ):  # #for each climber i
-
-                # ## peek: take a look to a close to this position: xnew
+                yield  # let the controller decide whether stop or continue.
+                # ## peek: take a look to a close to this position: xtmp
                 xtmp = self.x[i] + randin( -self.maxstep, self.maxstep )
                 xnew, fnew = self.f( xtmp )
-
-                # if xnew is better than x[i], update x[i]. if xnew is better than xbest, update xbest.
-                self.updateposnbest( xnew, fnew, i )
-
-                yield  # let the controller decide whether stop or continue.
+                if self.isbetter( fnew, self.fx[i] ):
+                    self.updatex( xnew, fnew, i )
 
 
 

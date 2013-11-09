@@ -34,12 +34,17 @@ class OptimizationAlgorithm( Default ):
 		if poslist.ndim == 1:
 			xfix = self.problem.fixposition( self.problem.fixbounds( poslist ) )
 			ffix = obf( poslist )
+			if hasattr( self, 'fbest' ):  # skip if not prepared yet
+				if self.isbetter( ffix, self.fbest ):  # update best if necessary
+					self.xbest = xfix.copy()
+					self.fbest = ffix
 			return ( xfix, ffix )
-		elif poslist.ndim == 2:
+
+		elif poslist.ndim == 2:  # recursively call itself
 			xfix = np.empty_like( poslist )
+			ffix = np.empty( poslist.shape[0] )
 			for i in xrange( poslist.shape[0] ):
-				xfix[i] = self.problem.fixposition( self.problem.fixbounds( poslist[i] ) )
-			ffix = np.array( [obf( pos ) for pos in xfix] )
+				xfix[i], ffix[i] = self.f( poslist[i] )
 			return ( xfix, ffix )
 
 
