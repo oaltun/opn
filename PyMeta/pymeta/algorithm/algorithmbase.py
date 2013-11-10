@@ -34,10 +34,16 @@ class OptimizationAlgorithm( Default ):
 		if poslist.ndim == 1:
 			xfix = self.problem.fixposition( self.problem.fixbounds( poslist ) )
 			ffix = obf( poslist )
+
+			if self.isdraw:
+				self.problem.visualiser.drawposition( xfix, color = ( .5, .5, .5 ), scale_factor = 1 )
+				wx.Yield()
+
 			if hasattr( self, 'fbest' ):  # skip if not prepared yet
 				if self.isbetter( ffix, self.fbest ):  # update best if necessary
 					self.xbest = xfix.copy()
 					self.fbest = ffix
+
 			return ( xfix, ffix )
 
 		elif poslist.ndim == 2:  # recursively call itself
@@ -91,7 +97,7 @@ class OptimizationAlgorithm( Default ):
 			cnt = {'fbest':self.fbest, 'xbest':self.xbest, 'time':time.time() - tstart, 'yieldcnt':self.yieldcnt, 'assessmentcnt':self.problem.assessmentcnt()}
 			self.log.append( cnt )
 
-		# ## draw final positions. this also prepares colors for each position
+		# ## draw final positions.
 		self.drawfinalpositions()
 		self.drawbest( self.xbest )
 
@@ -113,12 +119,14 @@ class OptimizationAlgorithm( Default ):
 		self.fx[i] = fnew
 
 	def updatebest( self, xnew, fnew ):
+		print( 'deprecated. self.xbest and self.fbest are updated automatically' )
 		self.drawpathbest( self.xbest, xnew )
 		self.xbest = xnew.copy()
 		self.fbest = fnew
 
 	def updateposnbest( self, xnew, fnew, i ):
 		""" if xnew is better than x, update x. if xnew is better than xbest, update xbest."""
+		print( 'deprecated. just use self.updatex' )
 		if self.isbetter( fnew , self.fx[i] ):  # update position of this ascender
 			self.updatex( xnew, fnew, i )
 
@@ -155,6 +163,7 @@ class OptimizationAlgorithm( Default ):
 		""" draw a path from old pos to new pos for the position idx """
 		if self.isdraw:
 			self.problem.visualiser.drawpath( oldpos, newpos, color = self._poscolors[idx], tube_radius = .3, opacity = .8 )  # draw the path;
+			self.problem.visualiser.drawposition( newpos, color = self._poscolors[idx], line_width = 5 )
 			wx.Yield()
 
 	def drawpathbest( self, oldpos, newpos ):
