@@ -1,7 +1,7 @@
 import time
 from pymeta.utils.pymetautils import Default
 import numpy as np
-
+from pymeta.utils.pymetautils import randin
 import wx
 
 class OptimizationAlgorithm( Default ):
@@ -16,6 +16,7 @@ class OptimizationAlgorithm( Default ):
 		self.isdebug = False
 		self.log = []
 		self.maxstepdivisor = 100;
+		self.hcmaxstepdivisor=200
 		self.minimize = False
 		# self._poscolors = []  # a list of colors. it will be initialized by the system.
 
@@ -70,7 +71,7 @@ class OptimizationAlgorithm( Default ):
 		# ## possibly needed info
 		self.n = self.x.shape[0]  # number of positions
 		self.d = self.x.shape[1]  # number of dimensions on each position
-
+		self.hclimit=2*self.d
 		# ## initialize some important holders
 		bestidx = 0
 		if self.minimize:
@@ -81,7 +82,7 @@ class OptimizationAlgorithm( Default ):
 		self.fbest = self.fx[bestidx]  # best value: global best value
 
 		self.maxstep = ( self.problem.ub - self.problem.lb ) / self.maxstepdivisor
-
+		self.hcmaxstep = ( self.problem.ub - self.problem.lb ) / self.hcmaxstepdivisor
 		# ## prepares colors for each position
 		self.prepareposcolors()
 
@@ -117,6 +118,17 @@ class OptimizationAlgorithm( Default ):
 		self.drawpath( self.x[i], xnew, i )
 		self.x[i] = xnew
 		self.fx[i] = fnew
+		
+	def hillclimb(self,i):
+		count=0
+		while (self.hclimit>=count):
+			xtmp = self.x[i] + randin( -self.hcmaxstep, self.hcmaxstep )
+			xnew, fnew = self.f( xtmp )
+			if self.isbetter(fnew,self.fx[i]): 
+				self.updatex(xnew,fnew,i)
+				count=0
+			else:
+				count+=1
 
 	def updatebest( self, xnew, fnew ):
 		print( 'deprecated. self.xbest and self.fbest are updated automatically' )
