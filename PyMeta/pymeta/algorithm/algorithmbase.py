@@ -18,32 +18,32 @@ class OptimizationAlgorithm(Default):
 		self.maxstepdivisor = 100;
 		self.hcmaxstepdivisor = 200
 		self.minimize = False
+		self._obfun = []
 		# self._poscolors = []  # a list of colors. it will be initialized by the system.
 
 		# self.__dict__.update(**kwargs)
 
 	def f(self, poslist):
 
-		# ## which will we be using? cost or quality
-		if self.minimize:
-			obf = self.problem.cost
-		else:
-			obf = self.problem.quality
-
-
 		# ## get f and fixed positions
 		if poslist.ndim == 1:
+			#### fix position
 			xfix = self.problem.fixposition(self.problem.fixbounds(poslist))
-			ffix = obf(poslist)
 
+			#### get its value
+			ffix = self._obfun(poslist)
+
+			#### draw the position
 			if self.isdraw:
 				self.problem.visualiser.drawposition(xfix, color = (.5, .5, .5), scale_factor = 1)
 				wx.Yield()
 
+			#### update best if necessary
 			if hasattr(self, 'fbest'):  # skip if not prepared yet
 				if self.isbetter(ffix, self.fbest):  # update best if necessary
 					self.updatebest(xfix, ffix)
 
+			### return
 			return (xfix, ffix)
 
 		elif poslist.ndim == 2:  # recursively call itself
@@ -57,11 +57,14 @@ class OptimizationAlgorithm(Default):
 
 	def run(self):
 
-		# ## for deciding which value is better which to use? <= or =>?
+
+		# ## for deciding which value is better, which to use?
 		if self.minimize:
 			self.isbetter = lambda new, old: new <= old
+			self._obfun = self.problem.cost
 		else:
 			self.isbetter = lambda new, old: new >= old
+			self._obfun = self.problem.quality
 
 		# ## fix positions, also get their objective values
 		self.x, self.fx = self.f(self.positions)
