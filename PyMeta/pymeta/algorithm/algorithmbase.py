@@ -4,9 +4,9 @@ import numpy as np
 from pymeta.utils.pymetautils import randin
 import wx
 
-class OptimizationAlgorithm( Default ):
-	def __init__( self ):
-		Default.__init__( self )
+class OptimizationAlgorithm(Default):
+	def __init__(self):
+		Default.__init__(self)
 
 		self.name = '?'
 		self.problem = None
@@ -22,7 +22,7 @@ class OptimizationAlgorithm( Default ):
 
 		# self.__dict__.update(**kwargs)
 
-	def f( self, poslist ):
+	def f(self, poslist):
 
 		# ## which will we be using? cost or quality
 		if self.minimize:
@@ -33,30 +33,29 @@ class OptimizationAlgorithm( Default ):
 
 		# ## get f and fixed positions
 		if poslist.ndim == 1:
-			xfix = self.problem.fixposition( self.problem.fixbounds( poslist ) )
-			ffix = obf( poslist )
+			xfix = self.problem.fixposition(self.problem.fixbounds(poslist))
+			ffix = obf(poslist)
 
 			if self.isdraw:
-				self.problem.visualiser.drawposition( xfix, color = ( .5, .5, .5 ), scale_factor = 1 )
+				self.problem.visualiser.drawposition(xfix, color = (.5, .5, .5), scale_factor = 1)
 				wx.Yield()
 
-			if hasattr( self, 'fbest' ):  # skip if not prepared yet
-				if self.isbetter( ffix, self.fbest ):  # update best if necessary
-					self.xbest = xfix.copy()
-					self.fbest = ffix
+			if hasattr(self, 'fbest'):  # skip if not prepared yet
+				if self.isbetter(ffix, self.fbest):  # update best if necessary
+					self.updatebest(xfix, ffix)
 
-			return ( xfix, ffix )
+			return (xfix, ffix)
 
 		elif poslist.ndim == 2:  # recursively call itself
-			xfix = np.empty_like( poslist )
-			ffix = np.empty( poslist.shape[0] )
-			for i in xrange( poslist.shape[0] ):
-				xfix[i], ffix[i] = self.f( poslist[i] )
-			return ( xfix, ffix )
+			xfix = np.empty_like(poslist)
+			ffix = np.empty(poslist.shape[0])
+			for i in xrange(poslist.shape[0]):
+				xfix[i], ffix[i] = self.f(poslist[i])
+			return (xfix, ffix)
 
 
 
-	def run( self ):
+	def run(self):
 
 		# ## for deciding which value is better which to use? <= or =>?
 		if self.minimize:
@@ -65,7 +64,7 @@ class OptimizationAlgorithm( Default ):
 			self.isbetter = lambda new, old: new >= old
 
 		# ## fix positions, also get their objective values
-		self.x, self.fx = self.f( self.positions )
+		self.x, self.fx = self.f(self.positions)
 		self.positions = self.x
 
 		# ## possibly needed info
@@ -82,8 +81,8 @@ class OptimizationAlgorithm( Default ):
 		self.xbest = self.x[bestidx].copy();  # best position
 		self.fbest = self.fx[bestidx]  # best value: global best value
 
-		self.maxstep = ( self.problem.ub - self.problem.lb ) / self.maxstepdivisor
-		self.hcmaxstep = ( self.problem.ub - self.problem.lb ) / self.hcmaxstepdivisor
+		self.maxstep = (self.problem.ub - self.problem.lb) / self.maxstepdivisor
+		self.hcmaxstep = (self.problem.ub - self.problem.lb) / self.hcmaxstepdivisor
 
 		# ## prepares colors for each position
 		self.prepareposcolors()
@@ -95,20 +94,20 @@ class OptimizationAlgorithm( Default ):
 		tstart = time.time()
 		cnt = {'fbest': self.fbest, 'time':0, 'yieldcnt':0, 'assessmentcnt':0 }
 		yielder = self.search()
-		while self.iscontinue( cnt, self.stop ):
+		while self.iscontinue(cnt, self.stop):
 			self.yieldcnt += 1
 			yielder.next()  # call the actual search function
 			cnt = {'fbest':self.fbest, 'xbest':self.xbest, 'time':time.time() - tstart, 'yieldcnt':self.yieldcnt, 'assessmentcnt':self.problem.assessmentcnt()}
-			self.log.append( cnt )
+			self.log.append(cnt)
 
 		# ## draw final positions.
 		self.drawfinalpositions()
-		self.drawbest( self.xbest )
+		self.drawbest(self.xbest)
 
 		return cnt.copy()
 
 
-	def iscontinue( self, cnt, stop ):
+	def iscontinue(self, cnt, stop):
 		""" decide whether we should continue searching. """
 		tf = True
 		for key in stop:
@@ -117,74 +116,80 @@ class OptimizationAlgorithm( Default ):
 				break
 		return tf
 
-	def updatex( self, xnew, fnew, i ):
-		self.drawpath( self.x[i], xnew, i )
+	def updatex(self, xnew, fnew, i):
+		self.drawpath(self.x[i], xnew, i)
 		self.x[i] = xnew
 		self.fx[i] = fnew
 
-	def hillclimb( self, i ):
+	def hillclimb(self, i, hclimit = -1):
 		count = 0
-		while ( self.hclimit >= count ):
-			xtmp = self.x[i] + randin( -self.hcmaxstep, self.hcmaxstep )
-			xnew, fnew = self.f( xtmp )
-			if self.isbetter( fnew, self.fx[i] ):
-				self.updatex( xnew, fnew, i )
+
+
+		if hclimit <= 0:
+			hclimit = self.hclimit
+
+		while (hclimit >= count):
+			xtmp = self.x[i] + randin(-self.hcmaxstep, self.hcmaxstep)
+			xnew, fnew = self.f(xtmp)
+			if self.isbetter(fnew, self.fx[i]):
+				self.updatex(xnew, fnew, i)
 				count = 0
 			else:
 				count += 1
 
-	def updatebest( self, xnew, fnew ):
-		print( 'deprecated. self.xbest and self.fbest are updated automatically' )
-		self.drawpathbest( self.xbest, xnew )
+		return self.x[i].copy(), self.fx[i]
+
+	def updatebest(self, xnew, fnew):
+		self.drawpathbest(self.xbest, xnew)
 		self.xbest = xnew.copy()
 		self.fbest = fnew
 
-	def updateposnbest( self, xnew, fnew, i ):
+	def updateposnbest(self, xnew, fnew, i):
 		""" if xnew is better than x, update x. if xnew is better than xbest, update xbest."""
-		print( 'deprecated. just use self.updatex' )
-		if self.isbetter( fnew , self.fx[i] ):  # update position of this ascender
-			self.updatex( xnew, fnew, i )
+		print('deprecated. just use self.updatex')
+		if self.isbetter(fnew , self.fx[i]):  # update position of this ascender
+			self.updatex(xnew, fnew, i)
 
-			if self.isbetter( fnew, self.fbest ):  # update global best
-				self.updatebest( xnew, fnew )
+			if self.isbetter(fnew, self.fbest):  # update global best
+				self.updatebest(xnew, fnew)
 
 ################# start drawing related methods ###############################
 
-	def bestcolor( self ):
-		return ( 1, 1, 0 )
+	def bestcolor(self):
+		return (1, 1, 0)
 
 
-	def prepareposcolors( self ):
+	def prepareposcolors(self):
 		if self.isdraw:
 			self._poscolors = []
 			for _ in self.positions:
-				color = tuple( np.random.uniform( 0, 1, ( 3, ) ).tolist() )
-				self._poscolors.append( color )
+				color = tuple(np.random.uniform(0, 1, (3,)).tolist())
+				self._poscolors.append(color)
 				wx.Yield()
 
 
-	def drawbest( self, pos ):
+	def drawbest(self, pos):
 		if self.isdraw:
-			self.problem.visualiser.drawposition( pos, color = self.bestcolor(), scale_factor = 5 )
+			self.problem.visualiser.drawposition(pos, color = self.bestcolor(), scale_factor = 5)
 			wx.Yield()
 
-	def drawfinalpositions( self ):
+	def drawfinalpositions(self):
 		if self.isdraw:
-			for i in xrange( self.n ):
-				self.problem.visualiser.drawposition( self.positions[i], color = self._poscolors[i] )
+			for i in xrange(self.n):
+				self.problem.visualiser.drawposition(self.positions[i], color = self._poscolors[i])
 				wx.Yield()  # let mlab interact with user
 
-	def drawpath( self, oldpos, newpos, idx ):
+	def drawpath(self, oldpos, newpos, idx):
 		""" draw a path from old pos to new pos for the position idx """
 		if self.isdraw:
-			self.problem.visualiser.drawpath( oldpos, newpos, color = self._poscolors[idx], tube_radius = .3, opacity = .8 )  # draw the path;
-			self.problem.visualiser.drawposition( newpos, color = self._poscolors[idx], line_width = 5 )
+			self.problem.visualiser.drawpath(oldpos, newpos, color = self._poscolors[idx], tube_radius = .3, opacity = .8)  # draw the path;
+			self.problem.visualiser.drawposition(newpos, color = self._poscolors[idx], line_width = 5)
 			wx.Yield()
 
-	def drawpathbest( self, oldpos, newpos ):
+	def drawpathbest(self, oldpos, newpos):
 		""" draw paths of the best."""
 		if self.isdraw:
-			self.problem.visualiser.drawpath( oldpos, newpos, color = self.bestcolor(), tube_radius = .3, opacity = .8 )  # draw the path;
+			self.problem.visualiser.drawpath(oldpos, newpos, color = self.bestcolor(), tube_radius = .3, opacity = .8)  # draw the path;
 			wx.Yield()
 ######################### end drawing related methods #########################
 

@@ -17,7 +17,6 @@ class GenericOptimizationProblem(Default):
     def setdims(self, dim):
         self.ub = np.ones(dim) * self.ub[0]
         self.lb = np.ones(dim) * self.lb[0]
-        self.name = self.name + ('(Dims=%d)' % dim)
 
     def dims(self):
         return len(self.ub)
