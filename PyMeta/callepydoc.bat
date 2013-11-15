@@ -1,0 +1,2 @@
+rem to use this batch file, first download and install these: epydoc, graphviz 
+epydoc.py --html -o doc pymeta -v --name PyMeta --url https://bitbucket.org/oaltun/metaheuristics --graph all --dotpath "C:\Program Files (x86)\Graphviz2.34\bin\dot.exe"
