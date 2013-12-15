@@ -19,6 +19,7 @@ class OptimizationAlgorithm(Default):
 		self.hcmaxstepdivisor = 200
 		self.minimize = False
 		self._obfun = []
+		self._drawbest = True
 		# self._poscolors = []  # a list of colors. it will be initialized by the system.
 
 		# self.__dict__.update(**kwargs)
@@ -39,9 +40,8 @@ class OptimizationAlgorithm(Default):
 				wx.Yield()
 
 			#### update best if necessary
-			if hasattr(self, 'fbest'):  # skip if not prepared yet
-				if self.isbetter(ffix, self.fbest):  # update best if necessary
-					self.updatebest(xfix, ffix)
+			if self.isbetter(ffix, self.fbest):  # update best if necessary
+				self.updatebest(xfix, ffix)
 
 			### return
 			return (xfix, ffix)
@@ -62,13 +62,18 @@ class OptimizationAlgorithm(Default):
 		if self.minimize:
 			self.isbetter = lambda new, old: new <= old
 			self._obfun = self.problem.cost
+			self.fbest = float('inf')
 		else:
 			self.isbetter = lambda new, old: new >= old
 			self._obfun = self.problem.quality
+			self.fbest = float('-inf')
 
 		# ## fix positions, also get their objective values
+		# ## dont draw the movement of best in this stage
+		self._drawbest = False
 		self.x, self.fx = self.f(self.positions)
 		self.positions = self.x
+		self._drawbest = True
 
 		# ## possibly needed info
 		self.n = self.x.shape[0]  # number of positions
@@ -95,12 +100,26 @@ class OptimizationAlgorithm(Default):
 		self.yieldcnt = 0;
 		self.log = [];
 		tstart = time.time()
-		cnt = {'fbest': self.fbest, 'time':0, 'yieldcnt':0, 'assessmentcnt':0 }
+		cnt = {'fbest': self.fbest,
+			'time':0,
+			'yieldcnt':0,
+			'assessmentcnt':0,
+			'nerror': float('-inf')}
 		yielder = self.search()
 		while self.iscontinue(cnt, self.stop):
 			self.yieldcnt += 1
 			yielder.next()  # call the actual search function
-			cnt = {'fbest':self.fbest, 'xbest':self.xbest, 'time':time.time() - tstart, 'yieldcnt':self.yieldcnt, 'assessmentcnt':self.problem.assessmentcnt()}
+
+			cnt = {'fbest':self.fbest,
+				'xbest':self.xbest,
+				'time':time.time() - tstart,
+				'yieldcnt':self.yieldcnt,
+				'assessmentcnt':self.problem.assessmentcnt()}
+
+			if ((self.problem.optimum is not None)
+				and ('nerror' in self.stop)):
+				cnt['nerror'] = -abs(self.fbest - self.problem.optimum)
+
 			self.log.append(cnt)
 
 		# ## draw final positions.
@@ -143,9 +162,16 @@ class OptimizationAlgorithm(Default):
 		return self.x[i].copy(), self.fx[i]
 
 	def updatebest(self, xnew, fnew):
-		self.drawpathbest(self.xbest, xnew)
+		#### draw the movement of best, if conditions hold
+		if ((self.fbest != float('inf')) and
+			(self.fbest != float('-inf')) and
+			self._drawbest
+			):
+			self.drawpathbest(self.xbest, xnew)
+
+		#### do actual updating
 		self.xbest = xnew.copy()
-		self.fbest = fnew
+		self.fbest = fnew.copy()
 
 	def updateposnbest(self, xnew, fnew, i):
 		""" if xnew is better than x, update x. if xnew is better than xbest, update xbest."""

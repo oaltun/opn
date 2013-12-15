@@ -10,6 +10,8 @@ class GenericOptimizationProblem(Default):
         self.visualiser = None
         self.minimize = False  # set true if this is a minimization problem
         self.isdebug = False
+        self.isdebugprintassessments = False
+        self.optimum = None  # theoretical best value, or optimum, for the problem
         self.__dict__.update(**kwargs)  # overwrite
 
         self._assessmentcnt = 0
@@ -34,7 +36,7 @@ class GenericOptimizationProblem(Default):
 
         h = self.heightfun(position)
         self._assessmentcnt = self._assessmentcnt + 1;
-        if self.isdebug:
+        if self.isdebugprintassessments:
             if self.minimize:
                 print self.assessmentcnt(), -h
             else:

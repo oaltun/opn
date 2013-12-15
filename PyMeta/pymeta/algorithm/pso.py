@@ -46,7 +46,7 @@ class ParticleSwarmOptimization(OptimizationAlgorithm):
                 vtmp = vo * self.w + (po - xo) * rp * self.psip + (self.xbest - xo) * rg * self.psig
                 xtmp = xo + vtmp
 
-                xnew, fnew = self.f(xtmp);yield  # correct position, compute its f, and update self.fbest and self.xbest
+                xnew, fnew = self.f(xtmp); yield  # correct position, compute its f, and update self.fbest and self.xbest
                 self.updatex(xnew, fnew, i)
 
                 v[i] = xnew - xo  # correct velocity
