@@ -100,33 +100,39 @@ class OptimizationAlgorithm(Default):
 		self.yieldcnt = 0;
 		self.log = [];
 		tstart = time.time()
-		cnt = {'fbest': self.fbest,
-			'time':0,
-			'yieldcnt':0,
+		cnt = {
+#			'fbest': self.fbest,
+#			'time':0,
+#			'yieldcnt':0,
 			'assessmentcnt':0,
-			'nerror': float('-inf')}
+			'nerror': float('-inf')
+			}
 		yielder = self.search()
+		oldbest = self.fbest
 		while self.iscontinue(cnt, self.stop):
 			self.yieldcnt += 1
-			yielder.next()  # call the actual search function
+			yielder.next()  # run the actual search function till next yield
 
-			cnt = {'fbest':self.fbest,
-				'xbest':self.xbest,
-				'time':time.time() - tstart,
-				'yieldcnt':self.yieldcnt,
-				'assessmentcnt':self.problem.assessmentcnt()}
+			cnt['assessmentcnt'] = self.problem.assessmentcnt()
 
-			if ((self.problem.optimum is not None)
-				and ('nerror' in self.stop)):
-				cnt['nerror'] = -abs(self.fbest - self.problem.optimum)
+			if oldbest != self.fbest:
+				oldbest = self.fbest
+				self.dolog()
+				if ((self.problem.optimum is not None) and ('nerror' in self.stop)):
+					cnt['nerror'] = -abs(self.fbest - self.problem.optimum)
+		self.dolog()
 
-			self.log.append(cnt)
 
 		# ## draw final positions.
 		self.drawfinalpositions()
 		self.drawbest(self.xbest)
 
-		return cnt.copy()
+
+		#return cnt.copy()
+
+	def dolog(self):
+		self.log.append({'assessmentcnt':self.problem.assessmentcnt(),
+									'fbest':self.fbest})
 
 
 	def iscontinue(self, cnt, stop):
