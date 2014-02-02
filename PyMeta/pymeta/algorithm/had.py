@@ -22,7 +22,7 @@ class HillAscend(OptimizationAlgorithm):
                 # ## peek: take a look to a close to this position: xtmp
                 xtmp = self.x[i] + randin(-self.maxstep, self.maxstep)
                 xnew, fnew = self.f(xtmp)
-                if self.isbetter(fnew, self.fx[i]):
+                if self.isbetterORequal(fnew, self.fx[i]):
                     self.updatex(xnew, fnew, i)
 
 
@@ -46,8 +46,10 @@ class HillDescend(OptimizationAlgorithm):
                 # ## peek: take a look to a close to this position: xtmp
                 xtmp = self.x[i] + randin(-self.maxstep, self.maxstep)
                 xnew, fnew = self.f(xtmp)
-                if self.isbetter(fnew, self.fx[i]):
+                if self.isbetterORequal(fnew, self.fx[i]):
                     self.updatex(xnew, fnew, i)
+
+
 
 
 

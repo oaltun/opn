@@ -1,17 +1,26 @@
 from pymeta.utils.pymetautils import randin, Default
 import numpy as np
+from pymeta import FixBounds
+
 class GenericOptimizationProblem(Default):
     def __init__(self, **kwargs):
         Default.__init__(self)  # inherit
-        # self.heightfun = None; ##defaults
+
         self.lb = None
         self.ub = None
         self.name = None
         self.visualiser = None
-        self.minimize = False  # set true if this is a minimization problem
+
+        # set true if this is a minimization problem
+        self.minimize = False
         self.isdebug = False
         self.isdebugprintassessments = False
-        self.optimum = None  # theoretical best value, or optimum, for the problem
+
+        # theoretical best value, or optimum,
+        # for the problem
+        self.optimum = None
+        self.fixboundsfun = FixBounds.to_edges
+
         self.__dict__.update(**kwargs)  # overwrite
 
         self._assessmentcnt = 0
@@ -71,13 +80,11 @@ class GenericOptimizationProblem(Default):
         return str(pos)
 
     def fixposition(self, pos):
-        """fix problems about position: invalid, etc."""
+        """fix problems about position:
+        invalid, etc."""
         return pos
 
     def fixbounds(self, pos):
-        """fix out of boundary situation"""
-        high = pos > self.ub
-        low = pos < self.lb
-        pos[high] = self.ub[high]
-        pos[low] = self.lb[low]
-        return pos
+        return self.fixboundsfun(
+            pos, self.lb, self.ub)
+

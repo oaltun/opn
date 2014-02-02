@@ -4,10 +4,11 @@ import os
 import collections
 
 def randin(lb, ub):
-	"""return random array with elements between the elements of
-	lb and ub. ub is not included."""
+	"""return random array with elements between the
+	elements of lb and ub. ub is not included."""
 
-	r = (ub - lb) * np.random.random(np.shape(lb)) + lb
+	r = ((ub - lb) * np.random.random(np.shape(lb))
+        + lb)
 	if r[0] is np.NAN:
 		print 'r is non'
 	return r

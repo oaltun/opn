@@ -3,12 +3,7 @@ Created on 10 May 2013
 
 @author: oguz
 '''
-from mpl_toolkits.mplot3d import Axes3D
-from matplotlib import cm
-from matplotlib.ticker import LinearLocator, FormatStrFormatter
-import matplotlib.pyplot as plt
 import numpy as np
-import matplotlib as mpl
 from mayavi import mlab
 import time
 from scipy import interpolate
@@ -100,7 +95,7 @@ class TwoDFunVisualiser(OptimizationVisualiser):
         mlab.outline()
         # mlab.title(self.title,line_width=.5,opacity=.9, size=2,height=5)
         mlab.title(self.title)
-        # mlab.show()
+        # mlab.show_graphs()
         wx.Yield()
 
     def drawbest(self, p):
@@ -126,5 +121,5 @@ class TwoDFunVisualiser(OptimizationVisualiser):
             wx.Yield()
 
 
-    def show(self):
-        mlab.show()
+    def show_graphs(self):
+        mlab.show_graphs()
