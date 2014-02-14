@@ -11,9 +11,10 @@ class ParticleSwarmOptimization(OptimizationAlgorithm):
     def __init__(self, **kwargs):
         OptimizationAlgorithm.__init__(self)  # inherit
 
-        self.w = 0.90  # # defaults
-        self.psip = 0.10
-        self.psig = 0.60
+        self.w = 0.90  # intertia weight
+        self.psip = 0.10  #cognitive parameter
+        self.psig = 0.60  #social parameter
+        self.conf = 1.0  #constriction factor
         self.maxstepdivisor = 70
         self.name = 'PSO'
         self.npositions = 20
@@ -39,12 +40,13 @@ class ParticleSwarmOptimization(OptimizationAlgorithm):
                 vo = v[i].copy()
                 po = p[i].copy()
 
-                rp = np.random.uniform(0, 1, xo.shape)  # # produce a new position
-                rg = np.random.uniform(0, 1, xo.shape)
+                rp = np.random.uniform(0, 1)  # # produce a new position
+                rg = np.random.uniform(0, 1)
                 # new velocity
                 # TODO: restart randomly when po-xo is very close to xbest-xo. Or xnew is too close to xbest
-                vtmp = vo * self.w + (po - xo) * rp * self.psip + (self.xbest - xo) * rg * self.psig
-                xtmp = xo + vtmp
+                vtmp = self.conf * (vo * self.w + (po - xo) * rp * self.psip + (self.xbest - xo) * rg * self.psig)
+                #xtmp = xo + vtmp
+                xtmp = self.problem.stepby(xo, vtmp)
 
                 xnew, fnew = self.f(xtmp); yield  # correct position, compute its f, and update self.fbest and self.xbest
                 self.updatex(xnew, fnew, i)
