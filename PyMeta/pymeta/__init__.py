@@ -32,10 +32,12 @@ matplotlib.use("QT4Agg")
 
 
 def dprint(msg):
-    frame = inspect.currentframe()
-    stack_trace = traceback.format_stack(frame)
-    pp(stack_trace)
-    print(str(msg))
+    pass
+
+#    frame = inspect.currentframe()
+#    stack_trace = traceback.format_stack(frame)
+#    pp(stack_trace)
+#    print(str(msg))
 
 
 def getlogger(filepath = '../tmp/log.txt', appname = 'PM'):
@@ -444,6 +446,7 @@ class OptimizationAlgorithm(Default):
         self.minimize = False
         self._obfun = []
         self._drawbest = True
+        self.warn_isbetter_deprecated = False
 
         # self.__dict__.update(**kwargs)
 
@@ -488,10 +491,11 @@ class OptimizationAlgorithm(Default):
         ## for deciding which value is better,
         ## which to use?
         def isbetter_deprecated(new, old):
-            print('Warning: self.isbetter() is ' +
-                'deprecated. Use ' +
-                'self.isbetterORequal() or ' +
-                'self.isbetterNOTequal().')
+            if self.warn_isbetter_deprecated:
+                print('Warning: self.isbetter() is ' +
+                    'deprecated. Use ' +
+                    'self.isbetterORequal() or ' +
+                    'self.isbetterNOTequal().')
             val = True
             if self.minimize:
                 val = (new <= old)
