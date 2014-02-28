@@ -30,6 +30,7 @@ class HillAscend(OptimizationAlgorithm):
                 if self.isbetterORequal(fnew, self.fx[i]):
                     self.updatex(xnew, fnew, i)
 
+HillClimbing = HillAscend
 
 # HillClimbing:
 class HillAscendRandomRestart(OptimizationAlgorithm):
@@ -71,6 +72,7 @@ class HillAscendRandomRestart(OptimizationAlgorithm):
                 else:
                     badtrial += 1
 
+HillClimbingRandomRestart = HillAscendRandomRestart
 
 
 
