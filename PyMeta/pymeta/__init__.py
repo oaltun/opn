@@ -29,6 +29,11 @@ from pprint import pprint as pp
 #matplotlib.use("QTAgg")
 matplotlib.use("QT4Agg")
 
+def mkdirfor(path):
+    dn = os.path.dirname(path)
+    if not os.path.isdir(dn):
+        os.makedirs(dn)
+
 
 
 def dprint(msg):
@@ -58,7 +63,7 @@ def getlogger(filepath = '../tmp/log.txt', appname = 'PM'):
     # add the Handler to the logger
     lgr.addHandler(fh)
     return lgr
-lgr = getlogger()
+
 
 
 def minval(a, b):
@@ -444,6 +449,8 @@ class OptimizationAlgorithm(Default):
         self.minimize = False
         self._obfun = []
         self._drawbest = True
+        self.deprecated_isbetter = False
+        self.warn_selfupdate = False
 
         # self.__dict__.update(**kwargs)
 
@@ -488,10 +495,11 @@ class OptimizationAlgorithm(Default):
         ## for deciding which value is better,
         ## which to use?
         def isbetter_deprecated(new, old):
-            print('Warning: self.isbetter() is ' +
-                'deprecated. Use ' +
-                'self.isbetterORequal() or ' +
-                'self.isbetterNOTequal().')
+            if self.deprecated_isbetter:
+                print('Warning: self.isbetter() is ' +
+                    'deprecated. Use ' +
+                    'self.isbetterORequal() or ' +
+                    'self.isbetterNOTequal().')
             val = True
             if self.minimize:
                 val = (new <= old)
@@ -619,10 +627,11 @@ class OptimizationAlgorithm(Default):
 
     def updatex(self, xnew, fnew, i):
         if np.array_equal(self.x[i], xnew):
-            dprint('updatex: warning! you are updating the x to the exact '
-                  'same value! There may be an error in your '
-                  'algorithm logic. You think you are modifying the x, but '
-                  'it is not being modified.')
+            if self.warn_selfupdate:
+                dprint('updatex: warning! you are updating the x to the exact '
+                      'same value! There may be an error in your '
+                      'algorithm logic. You think you are modifying the x, but '
+                      'it is not being modified.')
         self.drawpath(self.x[i], xnew, i)
         self.x[i] = xnew
         self.fx[i] = fnew
