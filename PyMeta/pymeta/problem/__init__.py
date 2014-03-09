@@ -1,1 +1,1 @@
-exec "import rastrigin"
+import benchmark, lift, supplychaincost

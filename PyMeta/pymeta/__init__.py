@@ -161,8 +161,8 @@ class SetupClass(type):
         # __init__'s as expected.
         self = super(SetupClass, cls).__call__(*args, **kwargs)
 
-        ## for each class in the class hierarchy (Default.setup() is last)
-        for base in cls.__mro__:
+        ## for each class in the class hierarchy (Default.setup() is first)
+        for base in reversed(cls.__mro__):
             setup = vars(base).get('setup')
             # in the general case, we have to use the descriptor protocol
             # to setup methods/staticmethods/classmethods properly
@@ -326,8 +326,6 @@ class OptimizationVisualiser(Default):
         #self.title='Optimization Visualization'
 
 
-
-#--------------------------------------FUNCTION VISIALISER-------------------
 def getcurveadder():
     npts = 100  # number of points to sample
 
@@ -365,6 +363,7 @@ class TwoDFunVisualiser(OptimizationVisualiser):
         self.ub = None
         self.step = None
         self.isanimate = False
+        self.problem = None
         self.__dict__.update(**kwargs)  # overwrite
 
         wx.Yield()
@@ -378,16 +377,20 @@ class TwoDFunVisualiser(OptimizationVisualiser):
         lb = self.lb; ub = self.ub; step = self.step  # # shorter names
 
         x, y = np.mgrid[lb[0]:ub[0]:step[0], lb[1]:ub[1]:step[1]]
-        def f(a, b): return self.fun(np.array(list((a, b))))
+        def valf(a, b):
+            return self.fun(np.array(list((a, b))).ravel())
         shape = x.shape
         x = x.reshape((-1, 1))
         y = y.reshape((-1, 1))
-        z = np.array([f(x[i], y[i]) for i in xrange(x.size)])
+        z = np.empty_like(x)
+        for i in xrange(x.size):
+            z[i] = valf(x[i], y[i])
+
         mins = np.array([np.min(a) for a in (x, y, z)])
         maxs = np.array([np.max(a) for a in (x, y, z)])
         self.ranges = np.array([(mins[a], maxs[a]) for a in xrange(3)]).ravel()
 
-        lens = np.array([100., 100., 20.])
+        lens = np.array([100., 100., 30.])
         self.scaler = lens / (maxs - mins)
 
         xsc = x * self.scaler[0]
@@ -424,9 +427,8 @@ class TwoDFunVisualiser(OptimizationVisualiser):
     def drawpath(self, p1, p2, **kwargs):
         if np.all(np.equal(p1, p2)):
             return
-        pz1 = np.hstack((p1, self.fun(p1))) * self.scaler
-        pz2 = np.hstack((p2, self.fun(p2))) * self.scaler
-        # xyz=np.vstack((pz1,pz2))
+        pz2 = np.hstack((p1, self.fun(p1))) * self.scaler
+        pz1 = np.hstack((p2, self.fun(p2))) * self.scaler
         xyz = connectbycurve(pz1, pz2)
         mlab.plot3d(xyz[:, 0], xyz[:, 1], xyz[:, 2], figure = self.fig,
             **kwargs)
@@ -440,10 +442,6 @@ class TwoDFunVisualiser(OptimizationVisualiser):
     def show_graphs(self):
         print('huh? ' + __file__)
         #mlab.show_graphs()
-
-
-
-#--------------------------------------FUNCTION VISIALISER-------------------
 
 
 class DummyVisualiser(OptimizationVisualiser):
@@ -564,13 +562,6 @@ class OptimizationAlgorithm(Default):
 
         self.positions = self.positions.astype(float)
 
-
-
-
-
-
-
-
         self.log = [];
         cnt = {
 #            'fbest': self.fbest,
@@ -672,10 +663,10 @@ class OptimizationAlgorithm(Default):
         if np.array_equal(self.x[i], xnew):
             if self.warn_selfupdate:
                 dprint('updatex: warning! you are updating the x to the exact '
-                      'same value! There may be an error in your '
-                      'algorithm logic. You think you are modifying the x, '
-                      'but '
-                      'it is not being modified.')
+                       'same value! There may be an error in your '
+                       'algorithm logic. You think you are modifying the x, '
+                       'but '
+                       'it is not being modified.')
         self.drawpath(self.x[i], xnew, i)
         self.x[i] = xnew
         self.fx[i] = fnew
@@ -760,27 +751,22 @@ class OptimizationAlgorithm(Default):
 
                 # let mlab interact with user
                 wx.Yield()
+
     def drawpath(self, oldpos, newpos, idx):
         """ draw a path from old pos to new pos for
         the position idx """
         if self.isdraw:
-            self.problem.visualiser.drawpath(
-                oldpos, newpos,
-                color = self._poscolors[idx],
-                tube_radius = .3, opacity = .8)
-            self.problem.visualiser.drawposition(
-                newpos, color = self._poscolors[idx],
-                line_width = 5)
+            self.problem.visualiser.drawpath(oldpos, newpos,
+                color = self._poscolors[idx], tube_radius = .3, opacity = .8)
+            self.problem.visualiser.drawposition(newpos,
+                color = self._poscolors[idx], line_width = 5)
             wx.Yield()
 
     def drawpathbest(self, oldpos, newpos):
         """ draw paths of the best."""
         if self.isdraw:
-            self.problem.visualiser.drawpath(
-                oldpos, newpos,
-                color = self.bestcolor(),
-                tube_radius = .3,
-                opacity = .8)  # draw the path;
+            self.problem.visualiser.drawpath(oldpos, newpos,
+                color = self.bestcolor(), tube_radius = .3, opacity = .8)
             wx.Yield()
 ###end drawing related methods ###
 
@@ -803,8 +789,8 @@ class OptimizationProblem(Default):
 
         # theoretical best value, or optimum,
         # for the problem
-        self.optimum = None
-        self.optimumsol = None
+
+
 
 
         self.ndims = None
@@ -838,8 +824,6 @@ class OptimizationProblem(Default):
         self.ub = self.ub.astype(float)
         self.lb = self.lb.astype(float)
 
-
-
         if self.ndims:
             print "setting dims"
             self.ub = np.ones(self.ndims) * self.ub[0]
@@ -849,19 +833,13 @@ class OptimizationProblem(Default):
         if self.isshift or self.isrotate:
             print "setting shifting"
             self.shiftvec = self.getshiftvec()
-            self.ub = self.shiftNrotate(self.ub)
-            self.lb = self.shiftNrotate(self.lb)
+#            self.ub = self.shiftNrotate(self.ub)
+#            self.lb = self.shiftNrotate(self.lb)
 
         if self.minimize:
             self.value = self.cost
         else:
             self.value = self.height
-
-#    def __setdims(self):
-#        if self.ndims:
-#            print "setting dims"
-#            self.ub = np.ones(self.ndims) * self.ub[0]
-#            self.lb = np.ones(self.ndims) * self.lb[0]
 
     def getdims(self):
         print "getdimscalled"
@@ -869,7 +847,15 @@ class OptimizationProblem(Default):
     dims = getdims
 
     def getshiftvec(self):
-        return randin(self.lb, self.ub)
+        #return np.array([4, 4])
+        #return randin(self.lb, self.ub)
+
+        #idea: when all x is shifted to x+adder, optimumsol is shifted to
+        #optimumsol-adder. So: lb <= optimumsol-adder <=ub. From there one
+        #can obtain optimumsol-ub <= adder <= optimumsol-lb
+        adder = randin(self.optimumsol - self.ub, self.optimumsol - self.lb)
+        dprint('shiftvec:' + str(adder))
+        return adder
 
     def assessmentcnt(self):
         return self._assessmentcnt
@@ -1002,10 +988,6 @@ class OptimizationProblem(Default):
 
         return pos
 
-
-
-
-
     def stepby(self, pos, step):
         t = self.stepbyfun(pos, step)
         f = self.fixposition(t)
@@ -1060,30 +1042,11 @@ class RandomSearch(OptimizationAlgorithm):
             yield
             self.f(self.problem.randpos())
 
+import algorithm
+import problem
+import visualiser
 
-
-
-if __name__ == '__main__':
-
-
-#    import numpy as np
-#    a = np.array([1, 2, 3],dtype=float
-#    a[1] = 3.3
-#    a[2] /= 50
-#    print(a)
-
-
-#    p = OptimizationProblem()
-#
-#    a = nparray([1, 2, 3, 4])
-#    print a
-#    p.tweak_buc(a)
-#    print a
-#    p.tweak_bucst(a)
-#
-#    print a
-
-
+def main():
 
     class Shouter:
         def __init__(self, name, shoutfun):
@@ -1102,29 +1065,5 @@ if __name__ == '__main__':
     s2 = Shouter('ali', Shouter.shoutfun2)
     s2.shout(s1)
 
-
-
-
-    print 1
-    print 2
-
-import algorithm
-import problem
-import visualiser
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+if __name__ == '__main__':
+    main()
