@@ -3,5 +3,5 @@
 *.aux
 *.synctex.gz
 graphics/*
-*/tmp/*
+tmp/
 

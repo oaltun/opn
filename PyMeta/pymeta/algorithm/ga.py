@@ -68,11 +68,11 @@ class GeneticAlgorithm(OptimizationAlgorithm):
             yield (bestpos, maxhei, iteration)  # give control to caller. It will log and decide whether to stop.
             if iteration > 999:
                 z = arange(iteration)
-                plt.plot(r, 'r-')
-                plt.title('Negative Rastrigin with Genetic Algorithm ')
-                plt.xlabel('Iterations')
-                plt.ylabel('Fitness')
-                plt.show()
+#                plt.plot(r, 'r-')
+#                plt.title('Negative Rastrigin with Genetic Algorithm ')
+#                plt.xlabel('Iterations')
+#                plt.ylabel('Fitness')
+#                plt.show()
 
             order = np.argsort(fx)[::-1]
 

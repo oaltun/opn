@@ -37,9 +37,9 @@ def mkdirfor(path):
 
 
 def dprint(msg):
-    frame = inspect.currentframe()
-    stack_trace = traceback.format_stack(frame)
-    pp(stack_trace)
+#    frame = inspect.currentframe()
+#    stack_trace = traceback.format_stack(frame)
+#    pp(stack_trace)
     print(str(msg))
 
 
@@ -151,7 +151,31 @@ def overwrite(orig, **options):
             orig[key] = options[key]
 
 
-class Default:
+
+class SetupClass(type):
+    """ answer from :
+        http://stackoverflow.com/questions/22261763
+    """
+    def __call__(cls, *args, **kwargs):
+        # create the instance as normal.  this will invokoe the class's
+        # __init__'s as expected.
+        self = super(SetupClass, cls).__call__(*args, **kwargs)
+
+        ## for each class in the class hierarchy (Default.setup() is last)
+        for base in cls.__mro__:
+            setup = vars(base).get('setup')
+            # in the general case, we have to use the descriptor protocol
+            # to setup methods/staticmethods/classmethods properly
+            if hasattr(setup, '__get__'):
+                setup = setup.__get__(self, cls)
+            if callable(setup):
+                setup()
+
+        return self
+
+
+class Default(object):
+    __metaclass__ = SetupClass
     def __init__(self):
         pass
 
@@ -167,6 +191,9 @@ class Default:
 
         overwrite(self.__dict__, **options)
 
+#    def setup(self, **kwargs):
+#        dprint('Default.setup')
+#        pass
 
 
 #     def __init__(self, **kwargs):
@@ -197,7 +224,9 @@ class Table:
         self.default_alignment = 'C'
         self.width = '\\linewidth'
         self.header_escape = {'#': '\#'}
-        self.order = collections.OrderedDict()  #TODO: make self.order readonly (by using property decorator?)
+
+        #TODO: make self.order readonly (by using property decorator?)
+        self.order = collections.OrderedDict()
         self.table = []
 
     def row(self):
@@ -208,7 +237,8 @@ class Table:
         self.table[-1][col] = dict(name = col, content = content, **kwargs)
 
     def latex_data(self, fid):
-        '''fid: file or similar. E.g. file or StringIO or ... any object that defines a proper write() method.'''
+        '''fid: file or similar. E.g. file or StringIO or ... any object
+        that defines a proper write() method.'''
         for irow in range(len(self.table)):
             lst = []
             for colname in self.order:
@@ -218,7 +248,8 @@ class Table:
             fid.write(' & '.join(lst) + '\\\\\n')
 
     def latex_header(self, fid):
-        fid.write(' & '.join((self.hesc(key) for key in self.order.keys())) + '\\\\\n')
+        fid.write(' & '.join((self.hesc(key) for key in self.order.keys())) +
+                  '\\\\\n')
 
     def latex_alignments_tabulary(self, fid):
         lst = []
@@ -299,7 +330,9 @@ class OptimizationVisualiser(Default):
 #--------------------------------------FUNCTION VISIALISER-------------------
 def getcurveadder():
     npts = 100  # number of points to sample
-    shape1 = np.array([0, .5, .75, .75, .5, 0])  # describe your shape in 1d like this
+
+    # describe your shape in 1d like this
+    shape1 = np.array([0, .5, .75, .75, .5, 0])
 
     # get the adder. This will be used to raise the z coords
     x = np.arange(shape1.size)
@@ -316,7 +349,8 @@ def connectbycurve(p1, p2, adder = getcurveadder()):
     amp = dist / 2
     npts = adder.size
     # get a line between points
-    shape3 = np.vstack([np.linspace(p1[dim], p2[dim], npts) for dim in xrange(3)]).T
+    shape3 = np.vstack(
+        [np.linspace(p1[dim], p2[dim], npts) for dim in xrange(3)]).T
     # raise the z coordinate
     shape3[:, -1] = shape3[:, -1] + adder[:, -1] * amp
     return shape3
@@ -365,7 +399,8 @@ class TwoDFunVisualiser(OptimizationVisualiser):
         y = ysc.reshape(shape)
 
         # # draw the surface
-        self.fig = mlab.figure(size = (400, 400), bgcolor = (1, 1, 1), fgcolor = (0, 0, 0))
+        self.fig = mlab.figure(size = (400, 400), bgcolor = (1, 1, 1),
+            fgcolor = (0, 0, 0))
         visual.set_viewer(self.fig)
         self.surf = mlab.surf(x, y, z, colormap = 'gray', opacity = .5)
 
@@ -393,7 +428,8 @@ class TwoDFunVisualiser(OptimizationVisualiser):
         pz2 = np.hstack((p2, self.fun(p2))) * self.scaler
         # xyz=np.vstack((pz1,pz2))
         xyz = connectbycurve(pz1, pz2)
-        mlab.plot3d(xyz[:, 0], xyz[:, 1], xyz[:, 2], figure = self.fig, **kwargs)
+        mlab.plot3d(xyz[:, 0], xyz[:, 1], xyz[:, 2], figure = self.fig,
+            **kwargs)
         wx.Yield()
         if self.isanimate:
             print('sleeping')
@@ -523,11 +559,18 @@ class OptimizationAlgorithm(Default):
             self._obfun = self.problem.quality
             self.fbest = float('-inf')
 
-
-        self.problem.ub = self.problem.ub.astype(float)
-        self.problem.lb = self.problem.lb.astype(float)
-        self.problem.positions = self.positions.astype(float)
         self.problem.resetassessmentcnt()
+#        self.problem.positions = self.problem.positions.astype(float)
+
+        self.positions = self.positions.astype(float)
+
+
+
+
+
+
+
+
         self.log = [];
         cnt = {
 #            'fbest': self.fbest,
@@ -630,7 +673,8 @@ class OptimizationAlgorithm(Default):
             if self.warn_selfupdate:
                 dprint('updatex: warning! you are updating the x to the exact '
                       'same value! There may be an error in your '
-                      'algorithm logic. You think you are modifying the x, but '
+                      'algorithm logic. You think you are modifying the x, '
+                      'but '
                       'it is not being modified.')
         self.drawpath(self.x[i], xnew, i)
         self.x[i] = xnew
@@ -743,11 +787,13 @@ class OptimizationAlgorithm(Default):
 
 class OptimizationProblem(Default):
     def __init__(self, **kwargs):
+        dprint('OptimizationProblem.__init__')
         Default.__init__(self)  # inherit
 
         self.lb = np.array([0, 0, 0, 0], dtype = float)
         self.ub = np.array([.1, 2, 3, 40], dtype = float)
         self.name = None
+        self.info = None
         self.visualiser = None
 
         # set true if this is a minimization problem
@@ -758,6 +804,10 @@ class OptimizationProblem(Default):
         # theoretical best value, or optimum,
         # for the problem
         self.optimum = None
+        self.optimumsol = None
+
+
+        self.ndims = None
 
         self.fixboundsfun = FixBounds.to_edges
 
@@ -769,18 +819,57 @@ class OptimizationProblem(Default):
 
         # method of stepping from x to x+v
         self.stepbymethod = 'adaptivenotsame'
+        self.configisdone = False
 
+        self.isshift = False
+        self.isrotate = False
+
+        #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         self.__dict__.update(**kwargs)  # overwrite
 
-        self.maxstep = (self.ub - self.lb) / 100  # maxstep is set by the algorithm on runtime
         self._assessmentcnt = 0
 
-    def setdims(self, dim):
-        self.ub = np.ones(dim) * self.ub[0]
-        self.lb = np.ones(dim) * self.lb[0]
+        # maxstep is set by the algorithm on runtime
+        self.maxstep = (self.ub - self.lb) / 100
+        self.shiftvec = None
 
-    def dims(self):
+    def setup(self, **kwargs):
+        dprint('OptimizationProblem.setup')
+        self.ub = self.ub.astype(float)
+        self.lb = self.lb.astype(float)
+
+
+
+        if self.ndims:
+            print "setting dims"
+            self.ub = np.ones(self.ndims) * self.ub[0]
+            self.lb = np.ones(self.ndims) * self.lb[0]
+            self.optimumsol = np.ones(self.ndims) * self.optimumsol[0]
+
+        if self.isshift or self.isrotate:
+            print "setting shifting"
+            self.shiftvec = self.getshiftvec()
+            self.ub = self.shiftNrotate(self.ub)
+            self.lb = self.shiftNrotate(self.lb)
+
+        if self.minimize:
+            self.value = self.cost
+        else:
+            self.value = self.height
+
+#    def __setdims(self):
+#        if self.ndims:
+#            print "setting dims"
+#            self.ub = np.ones(self.ndims) * self.ub[0]
+#            self.lb = np.ones(self.ndims) * self.lb[0]
+
+    def getdims(self):
+        print "getdimscalled"
         return len(self.ub)
+    dims = getdims
+
+    def getshiftvec(self):
+        return randin(self.lb, self.ub)
 
     def assessmentcnt(self):
         return self._assessmentcnt
@@ -792,6 +881,8 @@ class OptimizationProblem(Default):
         return self.height(position)
 
     def height(self, position):
+        if self.isshift or self.isrotate:
+            position = self.shiftNrotate(position)
 
         h = self.heightfun(position)
         self._assessmentcnt = self._assessmentcnt + 1;
@@ -940,6 +1031,8 @@ class OptimizationProblem(Default):
         return newpos
 
 
+    def shiftNrotate(self, pos):
+        return self.shiftvec + pos
 
 
 
@@ -1015,9 +1108,9 @@ if __name__ == '__main__':
     print 1
     print 2
 
-
-
-
+import algorithm
+import problem
+import visualiser
 
 
 
