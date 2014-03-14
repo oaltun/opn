@@ -7,6 +7,7 @@ import numpy as np
 
 # numpy must overwrite all
 from numpy import *
+
 class RealValuedFunctionProblem(pm.OptimizationProblem):
     def __init__(self, **kwargs):
         pm.OptimizationProblem.__init__(self, **kwargs)
@@ -44,6 +45,7 @@ class RastriginProblem(GenericOptimizationProblem):
         self.lb = -1 * self.ub
         self.name = 'Rastrigin'
         self.optimum = 0.0
+        self.optimumsol = np.zeros_like(self.ub)
         self.visualiser = TwoDFunVisualiser(fun = self.cost, lb = self.lb,
             ub = self.ub, step = (self.ub - self.lb) / 100.0)
         self.__dict__.update(**kwargs)  # #overwrite

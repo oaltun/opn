@@ -23,6 +23,7 @@ import matplotlib
 import inspect
 import traceback
 from pprint import pprint as pp
+import mlabwrap
 
 #matplotlib.use("wx")
 #matplotlib.use("TkAgg")
@@ -64,6 +65,39 @@ def getlogger(filepath = '../tmp/log.txt', appname = 'PM'):
     lgr.addHandler(fh)
     return lgr
 
+def rotationmatrixsuganthan(D, c, rotmatspath):
+    dprint('initing mlabwrap')
+    matlab = mlabwrap.init()
+    dprint('inited mlabwrap')
+    matlab.path(matlab.path(), rotmatspath)
+
+
+    if not isinstance(D, list):
+        D = [D]
+    if not isinstance(c, list):
+        c = [c]
+    print D
+    print c
+    M = matlab.rot_mats(D, c)
+
+    print M
+    print 2
+    return M
+
+
+def rotationmatrix(D, c):
+    """ Translated from the Matlab function rot_matrix of P. N. Suganthan"""
+
+    A = np.random.normal(0, 1, (D, D))
+    P, _ = np.linalg.qr(A)
+    A = np.random.normal(0, 1, (D, D))
+    Q, _ = np.linalg.qr(A)
+    u = np.random.uniform(0, 1, (1, D))
+    u = (u - u.min()) / (u.max() - u.min())
+    D = (c ** u).ravel()
+    D = np.diag(D)
+    M = P.dot(D).dot(Q)
+    return M
 
 
 def minval(a, b):
@@ -409,7 +443,7 @@ class TwoDFunVisualiser(OptimizationVisualiser):
 
         # # add info
         mlab.axes(ranges = self.ranges)
-        # mlab.view(0, 0,.25)
+        mlab.view(0, 60, .25)
         mlab.outline()
         # mlab.title(self.title,line_width=.5,opacity=.9, size=2,height=5)
         mlab.title(self.title)
@@ -790,9 +824,6 @@ class OptimizationProblem(Default):
         # theoretical best value, or optimum,
         # for the problem
 
-
-
-
         self.ndims = None
 
         self.fixboundsfun = FixBounds.to_edges
@@ -809,6 +840,9 @@ class OptimizationProblem(Default):
 
         self.isshift = False
         self.isrotate = False
+        self.rotmatrix_c = 2
+        self.isrotatesuganthan = False
+        self.rotmatspath = os.path.abspath('../../../../alien')
 
         #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         self.__dict__.update(**kwargs)  # overwrite
@@ -817,7 +851,7 @@ class OptimizationProblem(Default):
 
         # maxstep is set by the algorithm on runtime
         self.maxstep = (self.ub - self.lb) / 100
-        self.shiftvec = None
+        self.shiftvector = None
 
     def setup(self, **kwargs):
         dprint('OptimizationProblem.setup')
@@ -830,9 +864,12 @@ class OptimizationProblem(Default):
             self.lb = np.ones(self.ndims) * self.lb[0]
             self.optimumsol = np.ones(self.ndims) * self.optimumsol[0]
 
-        if self.isshift or self.isrotate:
+        if self.isshift:
             print "setting shifting"
-            self.shiftvec = self.getshiftvec()
+            self.shiftvector = self.getshiftvector()
+        if self.isrotate:
+            print "setting rotation"
+            self.rotationmatrix = self.getrotationmatrix()
 #            self.ub = self.shiftNrotate(self.ub)
 #            self.lb = self.shiftNrotate(self.lb)
 
@@ -846,7 +883,7 @@ class OptimizationProblem(Default):
         return len(self.ub)
     dims = getdims
 
-    def getshiftvec(self):
+    def getshiftvector(self):
         #return np.array([4, 4])
         #return randin(self.lb, self.ub)
 
@@ -854,9 +891,18 @@ class OptimizationProblem(Default):
         #optimumsol-adder. So: lb <= optimumsol-adder <=ub. From there one
         #can obtain optimumsol-ub <= adder <= optimumsol-lb
         adder = randin(self.optimumsol - self.ub, self.optimumsol - self.lb)
-        dprint('shiftvec:' + str(adder))
+        dprint('shiftvector:' + str(adder))
         return adder
 
+    def getrotationmatrix(self):
+        D = self.ub.size
+        c = self.rotmatrix_c
+        if self.isrotatesuganthan:
+            M = rotationmatrixsuganthan(D, c, self.rotmatspath)
+        else:
+            M = rotationmatrix(D, c)
+
+        return M
     def assessmentcnt(self):
         return self._assessmentcnt
 
@@ -1014,8 +1060,13 @@ class OptimizationProblem(Default):
 
 
     def shiftNrotate(self, pos):
-        return self.shiftvec + pos
+        if self.isshift:
+            pos = self.shiftvector + pos
 
+        if self.isrotate:
+            pos = pos.dot(self.rotationmatrix)
+
+        return pos
 
 
 class RandomSearch(OptimizationAlgorithm):
