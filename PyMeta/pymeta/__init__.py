@@ -7,11 +7,15 @@ REFERENCES
 """
 from __future__ import division
 
-import numpy as np
+import matplotlib
+#matplotlib.use("wx")
+#matplotlib.use("TkAgg")
+#matplotlib.use("QTAgg")
+matplotlib.use("QT4Agg")
+import matplotlib.pyplot as plt
+
 import wx
-import os
-import collections
-import random
+
 from random import randint
 import numbers
 from mayavi import mlab
@@ -19,16 +23,14 @@ import time
 from scipy import interpolate
 from tvtk.tools import visual
 import logging
-import matplotlib
-import inspect
 import traceback
-from pprint import pprint as pp
 import mlabwrap
+import os, sys, random, numpy as np, inspect, pickle, uuid, collections
+from pprint import pprint as pp
+from textwrap import wrap
+from inspect import getmembers, isroutine
 
-#matplotlib.use("wx")
-#matplotlib.use("TkAgg")
-#matplotlib.use("QTAgg")
-matplotlib.use("QT4Agg")
+
 
 def mkdirfor(path):
     dn = os.path.dirname(path)
@@ -661,7 +663,8 @@ class OptimizationAlgorithm(Default):
 
             if oldbest != self.fbest:
                 oldbest = self.fbest
-                if ((self.problem.optimum is not None)
+                if (hasattr(self.problem, 'optimum')
+                    and (self.problem.optimum is not None)
                     and ('nerror' in self.stop)):
                     cnt['nerror'] = -abs(self.fbest - self.problem.optimum)
         self.dolog()
@@ -823,6 +826,7 @@ class OptimizationProblem(Default):
 
         # theoretical best value, or optimum,
         # for the problem
+        self.optimum = None
 
         self.ndims = None
 
@@ -862,7 +866,10 @@ class OptimizationProblem(Default):
             print "setting dims"
             self.ub = np.ones(self.ndims) * self.ub[0]
             self.lb = np.ones(self.ndims) * self.lb[0]
-            self.optimumsol = np.ones(self.ndims) * self.optimumsol[0]
+            try:
+                self.optimumsol = np.ones(self.ndims) * self.optimumsol[0]
+            except:
+                pass
 
         if self.isshift:
             print "setting shifting"
@@ -1092,6 +1099,388 @@ class RandomSearch(OptimizationAlgorithm):
         while True:
             yield
             self.f(self.problem.randpos())
+
+
+
+
+
+class GenericExperiment(Default):
+    def __init__(self, **kwargs):
+        Default.__init__(self)
+        self.isdraw = True
+        self.isanimate = True
+        self.isplotconvergence = True
+        self.convergenceplottype = 'semilogy'
+        self.isdebug = False
+        self.stop = {'assessmentcnt':20}
+        self.ntrials = 2
+        self.problemlist = None
+        self.algorithmlist = None
+        self.returntrials = True
+        self.writetrials = False
+        self.writedir = '../tmp/results'
+        self.imdir = '../latex/graphics'
+        self.sep = '____',
+        self.dashes = [],
+        self.exptime = time.strftime("%Y%m%d_%H%M%S", time.gmtime())
+        self.tmpdir = os.getcwd() + '/../latex/tmp/'
+        self.expdir = self.tmpdir + self.exptime
+        self.ndims = None
+        self.__dict__.update(**kwargs)
+
+
+    def do(self):
+        results = []
+
+        #### re-check options
+        if self.ntrials > 1:
+            print('Warning: ntrials is higher than 1. So turning 3d drawing ' +
+                  'and animation off.')
+            self.isdraw = False
+            self.isanimate = False
+
+        self.expdir = os.path.normpath(self.expdir)
+
+        #### run multitrials for each problem-algorithm triple
+
+        for probleminfo in self.problemlist:
+            for algorithminfo in self.algorithmlist:
+                for trial in range(self.ntrials):
+
+                    problem = probleminfo['class'](ndims = self.ndims,
+                            **probleminfo)
+
+                    algorithm = algorithminfo['class'](**algorithminfo)
+
+                    log = self.runonce(algorithm, problem, trial)
+
+                    trialinfo = dict(algorithm = algorithm, problem = problem,
+                        trial = trial, log = log)
+
+                    if self.returntrials:
+                        results.append(trialinfo)
+                    if self.writetrials:
+                        self.write(trialinfo)
+        return results
+
+
+    def runonce(self, algorithm, problem, trial):
+
+        graphtitle = (problem.name + ' - ' + algorithm.name +
+                      ' - trial' + str(trial))
+        if self.isdebug:
+            print graphtitle
+
+        if self.isdraw:
+#            problem.visualiser = problem.visualiserclass(
+#                fun = problem.cost, lb = problem.lb, ub = problem.ub,
+#                step = (problem.ub - problem.lb) / 100)
+            problem.visualiser.title = graphtitle
+            problem.visualiser.init()
+            problem.visualiser.isanimate = self.isanimate
+
+        problem.isdebug = self.isdebug
+        problem.isdebugprintassessments = self.isdebugprintassessments
+
+        algorithm.isdraw = self.isdraw
+        algorithm.problem = problem
+        algorithm.positions = problem.randposn(algorithm.npositions)
+        algorithm.stop = self.stop
+        algorithm.isdebug = self.isdebug
+        log = algorithm.run()
+        return log
+
+
+
+    def write(self, t):
+        filename = self.sep.join(t['algorithm'].name, t['problem'].name,
+            #str(t['trial'])
+            uuid.uuid4()
+            )
+        with open(filename, 'wb') as fd:
+            pickle.dump(t, fd)
+
+    def read(self, filename):
+        with open(filename, 'rb') as fd:
+            return pickle.load(fd)
+
+
+    def mergetrials(self, runs):
+        merged = {'acnt':[], 'meanbest':[], 'stdbest':[]}
+        ## merge the events in the logs
+        event = []
+        for runidx, result in enumerate(runs):
+            for record in result['log']:
+                event.append(
+                    (record['assessmentcnt'], record['fbest'], runidx))
+
+        ## sort events by assessmentcnt
+        e = np.array(event)
+        event = e[e[:, 0].argsort()]
+
+        if self.isdebug:
+            print('event list:\n(assessmentcnt, fbest, trial)')
+            pp(event)
+
+        # start bests as NaNs.
+        bests = np.ones(len(runs)) * np.NAN
+
+        for e in event :
+            acnt, fbest, idx = e
+            bests[idx] = fbest
+            mean = bests.mean()
+            std = bests.std()
+
+            # skip until all runs start contributing to the statistics.
+            if not(np.isnan(np.sum(bests))):
+                merged['acnt'].append(acnt)
+                merged['meanbest'].append(mean)
+                merged['stdbest'].append(std)
+
+        return merged
+
+
+    def get_dash(self, i):
+        """ get a dash style for i th line in a plot """
+
+        ### prepare some nice dashes. First these will be used.
+        dash = [
+            [1, 0, 1, 0],  # no dash: a line
+            [2, 2],  # points
+
+            [8, 2],  # dashes
+            [8, 2, 2, 2],  # dash point
+            [8, 2, 2, 2, 2, 2],
+            [8, 2, 2, 2, 2, 2, 2, 2],
+            [8, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+
+            [8, 2, 8, 2, ],
+            [8, 2, 8, 2, 2, 2],
+            [8, 2, 8, 2, 2, 2, 2, 2],
+            [8, 2, 8, 2, 2, 2, 2, 2, 2, 2],
+            [8, 2, 8, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+
+            [8, 2, 8, 2, 8, 2],
+            [8, 2, 8, 2, 8, 2, 2, 2],
+            [8, 2, 8, 2, 8, 2, 2, 2, 2, 2],
+            [8, 2, 8, 2, 8, 2, 2, 2, 2, 2, 2, 2],
+            [8, 2, 8, 2, 8, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+            ]
+
+        if i < len(dash):
+            return dash[i]
+        else:
+            ### If there is no pre-styled dash for i, prepare one automatically
+            space = [32, 4]
+            zero = [8, 4]
+            one = [2, 4]
+
+            br = bin(i)
+
+            dashes = []
+            dashes.extend(space)
+            for i, e in enumerate(br):
+                if i > 1:
+                    if int(e) > 0:
+                        dashes.extend(one)
+                    else:
+                        dashes.extend(zero)
+
+            return dashes
+
+
+
+
+
+    def pairname(self, probname, algoname):
+        return probname + '______' + algoname
+
+
+    def report(self, results = None, group_by = 'algo'):
+        #### group results by algorithms, problems, and algorithm-problem pairs
+
+#        algos = collections.defaultdict(list)
+#        probs = collections.defaultdict(list)
+        self.merges = {}
+        self.results = results
+        self.algos = collections.OrderedDict()
+        self.probs = collections.OrderedDict()
+        self.trials = collections.defaultdict(list)
+        for result in results:
+            algoname = result['algorithm'].name
+            probname = result['problem'].name
+            trialname = self.pairname(probname, algoname)
+
+#            algos[algoname].append(result)
+#            probs[probname].append(result)^
+            self.algos[algoname] = result['algorithm']
+            self.probs[probname] = result['problem']
+            self.trials[trialname].append(result)
+
+        ## say we do 10 trials for each pair. We need to merge these 10 trials
+        ## into a single line in graphs.
+        for trialname in self.trials:
+            self.merges[trialname] = self.mergetrials(self.trials[trialname])
+
+        return self.report_results()
+
+
+
+    def report_results(self):
+        def savefigure(fig, figtype, name):
+            filename = (self.expdir + '/' + figtype + '/' + name)
+            mkdirfor(filename)
+            fig.savefig(filename + '.pdf', bbox_inches = 'tight')
+            fig.savefig(filename + '.png', bbox_inches = 'tight')
+
+            print('Saved ' + filename)
+
+        ## plot problem comparisons.
+        for name in self.algos:
+            fig = self.plot_convergence_probs(name)
+            #fig.canvas.set_window_title(name)
+            savefigure(fig, 'algorithm', name)
+
+        ## plot algo comparisons.
+        for name in self.probs:
+            fig = self.plot_convergence_algos(name)
+            #fig.canvas.set_window_title(name + ' ' + self.probs[name].info)
+            savefigure(fig, 'problem', name)
+            if self.probs[name].info is not None:
+                savefigure(fig, 'problem', name + ' ' + self.probs[name].info)
+
+
+    def plot_convergence_probs(self, algoname):
+        print("in plot convergence probs")
+        ## get algorithm:
+        algorithm = self.algos[algoname]
+
+        ### get a new figure and axis
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        #plt.title(algoname)
+        plt.xlabel('FES')
+        plt.ylabel(r'$f*$')
+
+        ### draw algorithms
+        plotidx = -1
+        for probname in self.probs:
+            ## gather info
+            plotidx += 1
+            problem = self.probs[probname]
+            pairname = self.pairname(probname, algoname)
+            y = self.merges[pairname]['meanbest']
+            x = self.merges[pairname]['acnt']
+            stdbest = self.merges[pairname]['stdbest']
+
+            ### negate best values if necessary
+            if algorithm.minimize != problem.minimize:
+                y = [-e for e in y]
+
+            plotargs = {'label': probname,
+                        'linewidth': 2,
+                        'color': 'black',
+                        'dashes': self.get_dash(plotidx)}
+
+            if self.convergenceplottype == 'semilogy':
+                ### if y has negative values, plot is more appropriate
+                if np.any(y < 0):
+                    self.convergenceplottype = 'plot'  #
+                else:
+                    plotargs['basey'] = 2
+                    h, = ax.semilogy(x, y, '--', **plotargs)
+
+            if self.convergenceplottype == 'plot':
+                h, = ax.plot(x, y, '--', **plotargs)
+
+        plt.legend(handlelength = 3)
+        return fig
+
+
+
+#        #### rearrange ylim
+#        ylim = list(ax.get_ylim())
+#        if ((problem.optimum is not None) and ('nerror' in self.stop)):
+#            if problem.minimize:
+#                ylim[0] = problem.optimum + (-(self.stop['nerror']))
+#            else:
+#                ylim[1] = problem.optimum - (-(self.stop['nerror']))
+#        ax.set_ylim(ylim)
+
+
+
+
+    def plot_convergence_algos(self, probname):
+        print('in plot convergence algos')
+        ## get problem:
+        problem = self.probs[probname]
+
+        ### get a new figure and axis
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        #plt.title(probname)
+        plt.xlabel('FES')
+        plt.ylabel(r'$f*$')
+
+        ### draw algorithms
+        algoidx = -1
+        for algoname in self.algos:
+            ## gather info
+            algoidx += 1
+            algorithm = self.algos[algoname]
+            pairname = self.pairname(probname, algoname)
+            y = self.merges[pairname]['meanbest']
+            x = self.merges[pairname]['acnt']
+            stdbest = self.merges[pairname]['stdbest']
+
+            ### negate best values if necessary
+            if algorithm.minimize != problem.minimize:
+                y = [-e for e in y]
+
+            plotargs = {'label': algoname,
+                        'linewidth': 2,
+                        'color': 'black',
+                        'dashes': self.get_dash(algoidx)}
+
+            if self.convergenceplottype == 'semilogy':
+                ### if y has negative values, plot is more appropriate
+                if np.any(y < 0):
+                    self.convergenceplottype = 'plot'  #
+                else:
+                    plotargs['basey'] = 2
+                    h, = ax.semilogy(x, y, '--', **plotargs)
+
+            if self.convergenceplottype == 'plot':
+                h, = ax.plot(x, y, '--', **plotargs)
+
+        plt.legend(handlelength = 3)
+
+
+
+        #### rearrange ylim
+        ylim = list(ax.get_ylim())
+        if ((problem.optimum is not None) and ('nerror' in self.stop)):
+            if problem.minimize:
+                ylim[0] = problem.optimum + (-(self.stop['nerror']))
+            else:
+                ylim[1] = problem.optimum - (-(self.stop['nerror']))
+        ax.set_ylim(ylim)
+
+        return fig
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 import algorithm
 import problem
