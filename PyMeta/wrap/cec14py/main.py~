@@ -1,0 +1,15 @@
+import cec
+import numpy as np
+
+print dir(cec)
+
+x= np.array([[1,2],[3,4]]).astype(float)
+func_num=1
+
+f=cec.value(x,func_num)
+
+print "x\n",x
+print "f\n",f
+
+
+#a=raw_input('enter char')

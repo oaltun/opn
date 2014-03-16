@@ -1,0 +1,1 @@
+See the comment at the beginning of cec14_test_func.c
