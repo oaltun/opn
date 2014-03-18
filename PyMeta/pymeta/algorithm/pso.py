@@ -116,3 +116,102 @@ class ParticleSwarmOptimizationHC(ParticleSwarmOptimization):
                     fp[i] = fnew
 
 
+#___________________________________________________________________
+# ref: wikipedia.com/Particle_swarm_optimization
+class ParticleSwarmOptimizationCustomDrawing(OptimizationAlgorithm):
+    def __init__(self, **kwargs):
+        OptimizationAlgorithm.__init__(self)  # inherit
+
+        self.w = 0.90  # intertia weight
+        self.psip = 0.10  #cognitive parameter
+        self.psig = 0.60  #social parameter
+        self.conf = 1.0  #constriction factor
+        self.maxstepdivisor = 70
+        self.name = 'PSO'
+        self.npositions = 20
+        self.customdraw = True
+
+        self.__dict__.update(**kwargs)  # overwrite defaults with keyword arguments supplied by user
+
+        self.minimize = False
+
+    def search(self):
+
+        ## if we want to do our own custom drawing:
+        if self.customdraw == True:
+
+            # shut down default automatic drawing. So that we can do our own
+            self.isdraw = False
+
+            # we will use self.problem.visualiser methods directly. let us
+            # give it an easier name.
+            vis = self.problem.visualiser
+
+            ## let the visualiser draw the surface:
+            # framework requiers vis to have a title
+            vis.title = 'PSO - ' + self.problem.name
+
+            # init() draws the surface. It accepts mlab.figure() keyword
+            # arguments as
+            # mlab_figure_opt dictionary. In the same way, it accepts
+            # mlab.surf(), mlab.axes(), mlab.view(), mlab.title(),
+            # mlab.outline() keyword arguments.
+            vis.init(mlab_figure_opt = {'bgcolor':(.5, .5, .5)},
+                     mlab_title_opt = {'size':0.4}
+                     )
+
+            ## reset the assessment count. It was incremented while drawing
+            ## the surface.
+            self.problem._assessmentcnt = 0
+
+
+
+
+        v = np.array([randin(-self.maxstep, self.maxstep) for _ in xrange(self.n)])  # initial velocities of the particles
+        p = self.x.copy()  # best known position of each particle. make a hard copy of x
+        fp = self.fx.copy()
+
+        ## draw initial positions of the particles. drawposition() can take
+        ## any keyword argument mlab.points3d() accepts. See its documentation
+        ## on
+        ## mayavi web site.
+        for e in self.x:
+            vis.drawposition(e, color = (1, 0, .5))
+
+
+
+        # ## main loop
+        while True:
+            for i in xrange(self.n):  # #for each particle
+                yield  # give control to caller. It will log and decide whether to stop.
+
+                # ## old values
+                xo = self.x[i].copy()
+                vo = v[i].copy()
+                po = p[i].copy()
+
+                rp = np.random.uniform(0, 1)  # # produce a new position
+                rg = np.random.uniform(0, 1)
+                # new velocity
+                # TODO: restart randomly when po-xo is very close to xbest-xo. Or xnew is too close to xbest
+                vtmp = self.conf * (vo * self.w + (po - xo) * rp * self.psip + (self.xbest - xo) * rg * self.psig)
+                #xtmp = xo + vtmp
+                xtmp = self.problem.stepby(xo, vtmp)
+
+                xnew, fnew = self.f(xtmp); yield  # correct position, compute its f, and update self.fbest and self.xbest
+
+                # just before updating the position, draw your path.
+                # drawpath accepts any argument mlab.plot3d accepts. See its
+                # documentation in mayavi web page.
+                vis.drawpath(self.x[i], xnew, color = (0.1, 1, 1),
+                    tube_radius = .3, opacity = .8)
+
+                self.updatex(xnew, fnew, i)
+
+                v[i] = xnew - xo  # correct velocity
+
+                if fnew > fp[i]:  # # update personal best
+                    p[i] = xnew.copy()
+                    fp[i] = fnew
+
+

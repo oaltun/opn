@@ -405,7 +405,16 @@ class TwoDFunVisualiser(OptimizationVisualiser):
         wx.Yield()
 
 
-    def init(self):
+    def init(self, **kwargs):
+        args = {}
+        args['mlab_figure_opt'] = {}
+        args['mlab_surf_opt'] = {}
+        args['mlab_axes_opt'] = {}
+        args['mlab_view_opt'] = {}
+        args['mlab_title_opt'] = {}
+        args['mlab_outline_opt'] = {}
+        args.update(kwargs)
+
         # # prepare the surface data:
 #         self.x = np.arange(self.lb[0], self.ub[0], self.step[0])
 #         self.y = np.arange(self.lb[1], self.ub[1], self.step[1])
@@ -437,23 +446,38 @@ class TwoDFunVisualiser(OptimizationVisualiser):
         x = xsc.reshape(shape)
         y = ysc.reshape(shape)
 
-        # # draw the surface
-        self.fig = mlab.figure(size = (400, 400), bgcolor = (1, 1, 1),
-            fgcolor = (0, 0, 0))
+        ## draw the surface
+        opt = dict(size = (400, 400), bgcolor = (1, 1, 1), fgcolor = (0, 0, 0))
+        opt.update(args['mlab_figure_opt'])
+        self.fig = mlab.figure(**opt)
+
         visual.set_viewer(self.fig)
-        self.surf = mlab.surf(x, y, z, colormap = 'gray', opacity = .5)
+
+        opt = dict(colormap = 'gray', opacity = .5)
+        opt.update(args['mlab_surf_opt'])
+        self.surf = mlab.surf(x, y, z, **opt)
 
         # # add info
-        mlab.axes(ranges = self.ranges)
-        mlab.view(0, 60, .25)
-        mlab.outline()
-        # mlab.title(self.title,line_width=.5,opacity=.9, size=2,height=5)
-        mlab.title(self.title)
+        opt = dict(ranges = self.ranges)
+        opt.update(args['mlab_axes_opt'])
+        mlab.axes(**opt)
+
+        opt = dict(azimuth = 0, elevation = 60, distance = 'auto')
+        opt.update(args['mlab_view_opt'])
+        mlab.view(**opt)
+
+        opt = {}
+        opt.update(args['mlab_outline_opt'])
+        mlab.outline(**opt)
+
+        opt = dict(line_width = .5, opacity = .9, size = 2, height = 5)
+        opt.update(args['mlab_title_opt'])
+        mlab.title(self.title, **opt)
         # mlab.show_graphs()
         wx.Yield()
 
-    def drawbest(self, p):
-        pass
+#    def drawbest(self, p):
+#        pass
 
     def drawposition(self, p, **kwargs):
         pz = np.hstack((p, self.fun(p))) * self.scaler
