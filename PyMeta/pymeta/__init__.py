@@ -1268,8 +1268,7 @@ class GenericExperiment(Default):
         """ get a dash style for i th line in a plot """
 
         ### prepare some nice dashes. First these will be used.
-        dash = [
-            [1, 0, 1, 0],  # no dash: a line
+        dash = [  # no dash: a line
             [2, 2],  # points
 
             [8, 2],  # dashes
