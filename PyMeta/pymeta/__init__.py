@@ -720,7 +720,7 @@ class OptimizationAlgorithm(Default):
                 break
         return tf
 
-    def updatex(self, xnew, fnew, i):
+    def updatex(self, xnew, fnew, i, isdraw = True):
         if np.array_equal(self.x[i], xnew):
             if self.warn_selfupdate:
                 dprint('updatex: warning! you are updating the x to the exact '
@@ -728,7 +728,8 @@ class OptimizationAlgorithm(Default):
                        'algorithm logic. You think you are modifying the x, '
                        'but '
                        'it is not being modified.')
-        self.drawpath(self.x[i], xnew, i)
+        if isdraw:
+            self.drawpath(self.x[i], xnew, i)
         self.x[i] = xnew
         self.fx[i] = fnew
 
