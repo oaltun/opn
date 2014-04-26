@@ -55,7 +55,7 @@ class HillAscendRandomRestart(OptimizationAlgorithm):
             xnew, fnew = self.f(xtmp)
             self.updatex(xnew, fnew, 0)
 
-            ## climb the point until we get self.limit unsudcessful trials to
+            ## climb the point until we get self.limit unsuccessful trials to
             ## climb
             badtrial = 0
             while badtrial < self.limit:
