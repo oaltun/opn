@@ -489,7 +489,7 @@ class TwoDFunVisualiser(OptimizationVisualiser):
             return
         pz2 = np.hstack((p1, self.fun(p1))) * self.scaler
         pz1 = np.hstack((p2, self.fun(p2))) * self.scaler
-        xyz = connectbycurve(pz1, pz2)
+        xyz = connectbycurve(pz2, pz1)
         mlab.plot3d(xyz[:, 0], xyz[:, 1], xyz[:, 2], figure = self.fig,
             **kwargs)
         wx.Yield()
