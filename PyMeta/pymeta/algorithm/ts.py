@@ -28,8 +28,7 @@ class TabuSearch(OptimizationAlgorithm):
         self.maxstepdivisor = 10
         self.tabulen = 100  #desired maximum tabu list length
         self.nt = 8  #number of tweaks desired to sample the gradient
-
-        self.real = True  # if true, position values are real. not discreet.
+        self.real = None
         self.tabudistdivisor = 100;
 
         # overwrite defaults with keyword arguments supplied by user
@@ -41,6 +40,10 @@ class TabuSearch(OptimizationAlgorithm):
         self.tabulist = collections.deque(maxlen = self.tabulen)
         self.tabu = lambda a: deque_has(self.tabulist, a)
 
+        # make sure user defined self.real. if self.real = True, position
+        # values are real, otherwise discreet.
+        if self.real is None:
+            raise Exception('Please assign True or False to parameter "real".')
 
 
     def search(self):
