@@ -84,9 +84,9 @@ class TabuSearch(OptimizationAlgorithm):
                 yield
 
                 ### sample the gradient
-                R, fR = mytweak(S)
+                R, fR = mytweak(S); yield
                 for _ in range(1, self.nt):
-                    W, fW = mytweak(S)
+                    W, fW = mytweak(S); yield
                     if not(tabu(W)) and (fW > fR or tabu(R)):
                         R = W
                         fR = fW

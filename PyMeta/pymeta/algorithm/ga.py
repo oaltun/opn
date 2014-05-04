@@ -67,7 +67,7 @@ class GeneticAlgorithm(OptimizationAlgorithm):
                 ca, cb = crossover(self.x[pa], self.x[pb])  #crossover
                 for c in (ca, cb):
                     if iq < nq:
-                        a, fa = mutate(c)  #mutate
+                        a, fa = mutate(c);yield  #mutate
                         q[iq] = a
                         fq[iq] = fa
                         iq += 1

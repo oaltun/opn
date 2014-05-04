@@ -865,6 +865,7 @@ class OptimizationProblem(Default):
 
         # method of stepping from x to x+v
         self.stepbymethod = 'adaptivenotsame'
+        self.stepbydivisor = 100.0
         self.configisdone = False
 
         self.isshift = False
@@ -1070,7 +1071,7 @@ class OptimizationProblem(Default):
         t = self.stepbyfun(pos, step)
         f = self.fixposition(t)
         if np.array_equal(pos, f):
-            raise Exception(str(self.tweakfun) + ' is could not change the '
+            print(' warning: ' + str(self.tweakfun) + ' could not change the '
                             'solution. baaad. solution was ' + str(pos) +
                             ' and step was ' + str(step))
         return f
@@ -1082,7 +1083,13 @@ class OptimizationProblem(Default):
                 t = pos + step
                 newpos = self.fixposition(t)
                 if not(np.array_equal(pos, newpos)): break
+                #too small step?
                 step = step * 2
+                srange = self.ub - self.lb
+                #too large step?
+                if any(step > srange):
+                    step = step / self.stepbydivisor
+
         elif self.stepbymethod == 'justsum':
             newpos = pos + step
         else:

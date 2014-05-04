@@ -45,7 +45,7 @@ class SimulatedAnnealingRandomRestart(OptimizationAlgorithm):
             while badtrial < self.limit:
                 xold = xnew.copy()
                 xtmp = self.problem.tweak(xnew)
-                xnew, fnew = self.f(xtmp)
+                xnew, fnew = self.f(xtmp);yield
 
                 if np.array_equal(xold, xnew):
                     raise Exception('whaat tweak gave same value???')
