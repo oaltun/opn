@@ -812,18 +812,7 @@ class OptimizationAlgorithm(Default):
 
         ## main loop
         self.yieldcnt = 0;
-        yielder = None
-        try:
-            yielder = self.find(self.problem,
-                                self.visualiser,
-                                self.x,
-                                self.fx,
-                                self.f,
-                                self.isdraw,
-                                self._poscolors)
-        except Exception as e:
-            print(e)
-            yielder = self.search()
+        yielder = self.search()
 
         oldbest = self.fbest
         while self.iscontinue(cnt, self.stop):
@@ -940,11 +929,11 @@ class OptimizationAlgorithm(Default):
 
     def prepareposcolors(self):
         if self.isdraw:
-            self._poscolors = []
+            self.poscolors = []
             for _ in self.positions:
                 color = tuple(np.random.uniform(
                     0, 1, (3,)).tolist())
-                self._poscolors.append(color)
+                self.poscolors.append(color)
 
 
     def drawbest(self, pos):
@@ -956,13 +945,13 @@ class OptimizationAlgorithm(Default):
             for i in xrange(self.n):
                 self.problem.visualiser.drawposition(
                     self.positions[i],
-                    color = self._poscolors[i])
+                    color = self.poscolors[i])
 
     def drawpath(self, oldpos, newpos, idx):
         """ draw a path from old pos to new pos for the position idx """
         if self.isdraw:
             self.problem.visualiser.drawpath(oldpos, newpos,
-                color = self._poscolors[idx])
+                color = self.poscolors[idx])
 
     def drawpathbest(self, oldpos, newpos):
         """ draw paths of the best."""

@@ -45,7 +45,9 @@ class ParticleSwarmOptimization(OptimizationAlgorithm):
                 rg = np.random.uniform(0, 1)
                 # new velocity
                 # TODO: restart randomly when po-xo is very close to xbest-xo. Or xnew is too close to xbest
-                vtmp = self.conf * (vo * self.w + (po - xo) * rp * self.psip + (self.xbest - xo) * rg * self.psig)
+                vtmp = self.conf * (vo * self.w +
+                                    (po - xo) * rp * self.psip +
+                                    (self.xbest - xo) * rg * self.psig)
                 #xtmp = xo + vtmp
                 xtmp = self.problem.stepby(xo, vtmp)
 
@@ -57,7 +59,7 @@ class ParticleSwarmOptimization(OptimizationAlgorithm):
 
                 if fnew > fp[i]:  # # update personal best
                     print 3
-                    self.drawpersonalbestpath(p[i], xnew, i)
+                    #self.drawpersonalbestpath(p[i], xnew, i)
                     p[i] = xnew.copy()
                     fp[i] = fnew
 
