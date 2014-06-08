@@ -32,6 +32,7 @@ class ParticleSwarmOptimization(OptimizationAlgorithm):
 
         # ## main loop
         while True:
+            print '1'
             for i in xrange(self.n):  # #for each particle
                 yield  # give control to caller. It will log and decide whether to stop.
 
@@ -50,10 +51,12 @@ class ParticleSwarmOptimization(OptimizationAlgorithm):
 
                 xnew, fnew = self.f(xtmp); yield  # correct position, compute its f, and update self.fbest and self.xbest
                 self.updatex(xnew, fnew, i)
+                print 2, self.problem.assessmentcnt()
 
                 v[i] = xnew - xo  # correct velocity
 
                 if fnew > fp[i]:  # # update personal best
+                    print 3
                     self.drawpersonalbestpath(p[i], xnew, i)
                     p[i] = xnew.copy()
                     fp[i] = fnew
@@ -62,7 +65,7 @@ class ParticleSwarmOptimization(OptimizationAlgorithm):
     def drawpersonalbestpath(self, oldpos, newpos, idx):
         """ draw a path from old pos to new pos for the position idx """
         if self.isdraw:
-            self.problem.visualiser.drawpath(oldpos, newpos, color = (0, 0, 0), tube_radius = .1, opacity = .8)  # draw the path;
+            self.problem.visualiser.drawpath(oldpos, newpos, color = (0, 0, 0))  # draw the path;
             wx.Yield()
 
 
@@ -203,8 +206,7 @@ class ParticleSwarmOptimizationCustomDrawing(OptimizationAlgorithm):
                 # just before updating the position, draw your path.
                 # drawpath accepts any argument mlab.plot3d accepts. See its
                 # documentation in mayavi web page.
-                vis.drawpath(self.x[i], xnew, color = (0.1, 1, 1),
-                    tube_radius = .3, opacity = .8)
+                vis.drawpath(self.x[i], xnew, color = (0.1, 1, 1))
 
                 self.updatex(xnew, fnew, i)
 

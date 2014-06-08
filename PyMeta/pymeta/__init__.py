@@ -11,8 +11,10 @@ import matplotlib
 #matplotlib.use("wx")
 #matplotlib.use("TkAgg")
 #matplotlib.use("QTAgg")
-matplotlib.use("QT4Agg")
+#matplotlib.use("QT4Agg")
 import matplotlib.pyplot as plt
+from matplotlib.path import Path
+import matplotlib.patches as patches
 
 import wx
 
@@ -29,6 +31,8 @@ import os, sys, random, numpy as np, inspect, pickle, uuid, collections
 from pprint import pprint as pp
 from textwrap import wrap
 from inspect import getmembers, isroutine
+import matplotlib.pyplot as plt
+import matplotlib.cm as cm
 
 
 
@@ -361,6 +365,17 @@ class OptimizationVisualiser(Default):
         Default.__init__(self)
         #self.title='Optimization Visualization'
 
+    def setup(self):
+        if self.problem is not None:
+            if self.problem.minimize:
+                self.fun = self.problem.cost
+            else:
+                self.fun = self.problem.quality
+
+            self.lb = self.problem.lb
+            self.ub = self.problem.ub
+            self.step = (self.ub - self.lb) / float(self.stepdivisor)
+
 
 def getcurveadder():
     npts = 100  # number of points to sample
@@ -391,7 +406,7 @@ def connectbycurve(p1, p2, adder = getcurveadder()):
 
 
 
-class TwoDFunVisualiser(OptimizationVisualiser):
+class TwoDFunVisualiser3D(OptimizationVisualiser):
     def __init__(self, **kwargs):
         OptimizationVisualiser.__init__(self)  # inherit
         self.fun = None  # # defaults
@@ -484,25 +499,150 @@ class TwoDFunVisualiser(OptimizationVisualiser):
         mlab.points3d(pz[0], pz[1], pz[2], **kwargs)
         wx.Yield()
 
+    def drawbest(self, p, *args, **kwargs):
+        self.drawposition(p, color = (1, 1, 0), scale_factor = 3)
+        wx.Yield()
+
     def drawpath(self, p1, p2, **kwargs):
         if np.all(np.equal(p1, p2)):
             return
+
+        op = dict()
+        op['tube_radius'] = .2
+        op['reset_zoom'] = False
+        op.update(**kwargs)
+
         pz2 = np.hstack((p1, self.fun(p1))) * self.scaler
         pz1 = np.hstack((p2, self.fun(p2))) * self.scaler
         xyz = connectbycurve(pz2, pz1)
-        mlab.plot3d(xyz[:, 0], xyz[:, 1], xyz[:, 2], figure = self.fig,
-            **kwargs)
+        mlab.plot3d(xyz[:, 0], xyz[:, 1], xyz[:, 2], figure = self.fig, **op)
         wx.Yield()
         if self.isanimate:
             print('sleeping')
             time.sleep(0.010)
             wx.Yield()
 
+    def drawpathbest(self, p1, p2, *args, **kwargs):
+        op = dict()
+        op['color'] = (1, 1, 0)
+        op['tube_radius'] = .5
+        op.update(**kwargs)
 
-    def show_graphs(self):
-        print('huh? ' + __file__)
-        #mlab.show_graphs()
+        self.drawpath(p1, p2, *args, **op)
 
+    def flush(self):
+        wx.Yield()
+
+
+
+class TwoDFunVisualiserColors(OptimizationVisualiser):
+    def __init__(self, **kwargs):
+        OptimizationVisualiser.__init__(self)  # inherit
+        self.fun = None  # # defaults
+        self.lb = None
+        self.ub = None
+        self.stepdivisor = 100
+        self.isanimate = False
+        self.problem = None
+        self.__dict__.update(**kwargs)  # overwrite
+
+
+        self.fig = None
+        self.ax = None
+        self.im = None
+        self.cb = None
+
+
+
+
+    def init(self, **kwargs):
+        #### shorter names
+        lb = self.lb;
+        ub = self.ub;
+        step = self.step
+
+        #### prepare the surface data
+        x = np.arange(lb[0], ub[0], step[0])
+        y = np.arange(lb[1], ub[1], step[1])
+        X, Y = np.meshgrid(x, y)
+        sols = np.vstack((X.ravel(), Y.ravel())).T
+        Z = np.array([self.fun(np.array(i, order = 'C')) for i in sols])
+        Z = Z.reshape(X.shape)
+
+        #### show the surface
+        fig, ax = plt.subplots()
+        self.fig = fig
+        self.ax = ax
+
+        self.im = self.ax.imshow(
+            Z,
+            interpolation = 'bilinear',
+            origin = 'lower',
+            #cmap = cm.get_cmap('gist_yarg'),
+            cmap = cm.get_cmap('Greys_r'),
+            extent = (x[0], x[-1], y[0], y[-1]))
+        self.cb = self.fig.colorbar(self.im, use_gridspec = True)
+
+        plt.tight_layout()
+        self.ax.set_xlim(x[0], x[-1])
+        self.ax.set_ylim(y[0], y[-1])
+        plt.ion()
+        plt.show()
+        self.fig.canvas.flush_events()
+
+    def drawposition(self, pt, *args, **kwargs):
+        h = self.ax.plot(pt[0], pt[1], 'o', *args, **kwargs)
+        return h
+
+    def drawbest(self, pt, *args, **kwargs):
+        return self.ax.plot(pt[0], pt[1], 'x', *args, color = (1, 1, 0),
+            markersize = 9, **kwargs)
+
+    def drawpath(self, pt1, pt2, *args, **kwargs):
+        if np.all(np.equal(pt1, pt2)):
+            return
+        x = (pt1[0], pt2[0])
+        y = (pt1[1], pt2[1])
+        h = self.ax.plot(x, y, *args, **kwargs)
+        return h
+
+    def drawpathbest(self, pt1, pt2, *args, **kwargs):
+        op = dict()
+        op['color'] = (1, 1, 0)
+        op['linewidth'] = 2
+        op.update(**kwargs)
+
+        return self.drawpath(pt1, pt2, *args, **op)
+
+    def drawrange(self, pt, halfrange):
+        x1, y1 = pt - halfrange
+        x2, y2 = pt + halfrange
+        verts = [
+               (x1, y1),
+               (x1, y2),
+               (x2, y2),
+               (x2, y1),
+               (x1, y1),
+               ]
+        codes = [
+                 Path.MOVETO,
+                 Path.LINETO,
+                 Path.LINETO,
+                 Path.LINETO,
+                 Path.CLOSEPOLY,
+                 ]
+        path = Path(verts, codes)
+        patch = patches.PathPatch(path, lw = 1, facecolor = 'none')
+        self.ax.add_patch(patch)
+#        self.ax.set_xlim(x1, x2)
+#        self.ax.set_ylim(y1, y2)
+        return patch
+
+    def flush(self):
+        plt.draw()
+        self.fig.canvas.flush_events()
+
+TwoDFunVisualiser = TwoDFunVisualiser3D
 
 class DummyVisualiser(OptimizationVisualiser):
     def __init__(self, **kwargs):
@@ -545,30 +685,25 @@ class OptimizationAlgorithm(Default):
         self._drawbest = True
         self.deprecated_isbetter = False
         self.warn_selfupdate = False
+        self.visualiser = None
+        self.isdrawupdatex = True
 
         # self.__dict__.update(**kwargs)
+    def draw(self):
+        self.problem.visualiser.fig.draw()
+        self.problem.visualiser.fig.canvas.flush_events()
 
     def f(self, poslist):
         ## get f and fixed positions
         if poslist.ndim == 1:
             #### fix position
-            xfix = self.problem.fixposition(
-                self.problem.fixbounds(poslist))
+            xfix = self.problem.fixposition(self.problem.fixbounds(poslist))
 
             #### get its value
             ffix = self._obfun(xfix)
 
-            #### draw the position
-            if self.isdraw:
-                self.problem.visualiser.drawposition(
-                    xfix, color = (.5, .5, .5),
-                    scale_factor = 1)
-                wx.Yield()
-
-
             #### update best if necessary
-            if self.isbetterNOTequal(
-                ffix, self.fbest):
+            if self.isbetterNOTequal(ffix, self.fbest):
                 self.updatebest(xfix, ffix)
 
             ### return
@@ -589,8 +724,8 @@ class OptimizationAlgorithm(Default):
         ## for deciding which value is better,
         ## which to use?
         def isbetter_deprecated(new, old):
-            if self.deprecated_isbetter:
-                print('Warning: self.isbetter() is ' +
+
+            print('Warning: self.isbetter() is ' +
                     'deprecated. Use ' +
                     'self.isbetterORequal() or ' +
                     'self.isbetterNOTequal().')
@@ -616,6 +751,8 @@ class OptimizationAlgorithm(Default):
                 lambda new, old: new > old)
             self._obfun = self.problem.quality
             self.fbest = float('-inf')
+
+        self.visualiser = self.problem.visualiser
 
         self.problem.resetassessmentcnt()
 #        self.problem.positions = self.problem.positions.astype(float)
@@ -675,7 +812,19 @@ class OptimizationAlgorithm(Default):
 
         ## main loop
         self.yieldcnt = 0;
-        yielder = self.search()
+        yielder = None
+        try:
+            yielder = self.find(self.problem,
+                                self.visualiser,
+                                self.x,
+                                self.fx,
+                                self.f,
+                                self.isdraw,
+                                self._poscolors)
+        except Exception as e:
+            print(e)
+            yielder = self.search()
+
         oldbest = self.fbest
         while self.iscontinue(cnt, self.stop):
             self.yieldcnt += 1
@@ -720,7 +869,7 @@ class OptimizationAlgorithm(Default):
                 break
         return tf
 
-    def updatex(self, xnew, fnew, i, isdraw = True):
+    def updatex(self, xnew, fnew, i):
         if np.array_equal(self.x[i], xnew):
             if self.warn_selfupdate:
                 dprint('updatex: warning! you are updating the x to the exact '
@@ -728,8 +877,11 @@ class OptimizationAlgorithm(Default):
                        'algorithm logic. You think you are modifying the x, '
                        'but '
                        'it is not being modified.')
-        if isdraw:
+        if self.isdrawupdatex:
             self.drawpath(self.x[i], xnew, i)
+            self.drawbest(self.xbest)
+            self.problem.visualiser.flush()
+
         self.x[i] = xnew
         self.fx[i] = fnew
 
@@ -754,8 +906,7 @@ class OptimizationAlgorithm(Default):
         return self.x[i].copy(), self.fx[i]
 
     def updatebest(self, xnew, fnew):
-        #### draw the movement of best,
-        #### if conditions hold
+        #### draw the movement of best, if conditions hold
         if (self._drawbest and
             (self.fbest != float('inf')) and
             (self.fbest != float('-inf'))):
@@ -794,15 +945,11 @@ class OptimizationAlgorithm(Default):
                 color = tuple(np.random.uniform(
                     0, 1, (3,)).tolist())
                 self._poscolors.append(color)
-                wx.Yield()
 
 
     def drawbest(self, pos):
         if self.isdraw:
-            self.problem.visualiser.drawposition(
-                pos, color = self.bestcolor(),
-                scale_factor = 5)
-            wx.Yield()
+            self.problem.visualiser.drawbest(pos)
 
     def drawfinalpositions(self):
         if self.isdraw:
@@ -811,25 +958,17 @@ class OptimizationAlgorithm(Default):
                     self.positions[i],
                     color = self._poscolors[i])
 
-                # let mlab interact with user
-                wx.Yield()
-
     def drawpath(self, oldpos, newpos, idx):
-        """ draw a path from old pos to new pos for
-        the position idx """
+        """ draw a path from old pos to new pos for the position idx """
         if self.isdraw:
             self.problem.visualiser.drawpath(oldpos, newpos,
-                color = self._poscolors[idx], tube_radius = .3, opacity = .8)
-            self.problem.visualiser.drawposition(newpos,
-                color = self._poscolors[idx], line_width = 5)
-            wx.Yield()
+                color = self._poscolors[idx])
 
     def drawpathbest(self, oldpos, newpos):
         """ draw paths of the best."""
         if self.isdraw:
-            self.problem.visualiser.drawpath(oldpos, newpos,
-                color = self.bestcolor(), tube_radius = .3, opacity = .8)
-            wx.Yield()
+            self.problem.visualiser.drawpathbest(oldpos, newpos,
+                                             color = self.bestcolor())
 ###end drawing related methods ###
 
 
@@ -843,6 +982,7 @@ class OptimizationProblem(Default):
         self.name = None
         self.info = None
         self.visualiser = None
+        self.visualiser_class = None
 
         # set true if this is a minimization problem
         self.minimize = False
@@ -857,11 +997,13 @@ class OptimizationProblem(Default):
 
         self.fixboundsfun = FixBounds.to_edges
 
-        self.tweakmethod = 'adaptmaxstep'
+        self.tweakmethod = 'justsum'
         self.tweaksubmethod = 'bucclosed'
 
         # probability of adding noise to an element in solution vector
         self.tweakprob = 0.10
+
+        self.warnnotweak = False
 
         # method of stepping from x to x+v
         self.stepbymethod = 'adaptivenotsame'
@@ -910,6 +1052,12 @@ class OptimizationProblem(Default):
             self.value = self.cost
         else:
             self.value = self.height
+
+        try:
+            self.visualiser = self.visualiser_class(problem = self)
+        except Exception:
+            pass
+
 
     def getdims(self):
         print "getdimscalled"
@@ -994,8 +1142,8 @@ class OptimizationProblem(Default):
 
         t = self.tweakfun(pos)
         f = self.fixposition(t)
-        if np.array_equal(pos, f):
-            raise Exception(str(self.tweakfun) + ' is supposed to change the '
+        if self.warnnotweak and np.array_equal(pos, f):
+            print ('Warning: ' + str(self.tweakfun) + ' is supposed to change the '
                             'solution. But apparantly it can not :). '
                             'solution: ' + str(pos) + 'tweak:' + str(f))
         return f
@@ -1064,6 +1212,11 @@ class OptimizationProblem(Default):
                 pos[dim] = random.randint(self.lb[dim], self.ub[dim])
                 if not(np.array_equal(pos, apos)):
                     break
+        elif method == 'tweak1dim':
+            ''' tweaks only one random dimension '''
+            pos = apos.copy()
+            dim = random.randrange(self.ub.size)
+            pos[dim] = np.random.uniform(self.lb[dim], self.ub[dim])
 
         return pos
 
@@ -1140,6 +1293,7 @@ class GenericExperiment(Default):
     def __init__(self, **kwargs):
         Default.__init__(self)
         self.isdraw = True
+        self.isdrawupdatex = True
         self.isanimate = True
         self.isplotconvergence = True
         self.convergenceplottype = 'semilogy'
@@ -1183,6 +1337,7 @@ class GenericExperiment(Default):
                             **probleminfo)
 
                     algorithm = algorithminfo['class'](**algorithminfo)
+                    algorithm.isdrawupdatex = self.isdrawupdatex
 
                     log = self.runonce(algorithm, problem, trial)
 
@@ -1426,18 +1581,6 @@ class GenericExperiment(Default):
 
         plt.legend(handlelength = 3)
         return fig
-
-
-
-#        #### rearrange ylim
-#        ylim = list(ax.get_ylim())
-#        if ((problem.optimum is not None) and ('nerror' in self.stop)):
-#            if problem.minimize:
-#                ylim[0] = problem.optimum + (-(self.stop['nerror']))
-#            else:
-#                ylim[1] = problem.optimum - (-(self.stop['nerror']))
-#        ax.set_ylim(ylim)
-
 
 
 

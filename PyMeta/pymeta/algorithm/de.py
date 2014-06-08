@@ -37,7 +37,6 @@ class DifferentialEvolution(OptimizationAlgorithm):
 
         while True:  # for each generation
             yield
-
             q = self.x.copy()  # parents
             nq = q.shape[0]
             for i, e in enumerate(q):  # let parent have a child

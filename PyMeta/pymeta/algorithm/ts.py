@@ -65,7 +65,7 @@ class TabuSearch(OptimizationAlgorithm):
                 return xnew, fnew
 
         #while True:  # for each restart
-            yield
+        #    yield
 
 #            #reset color
 #            self._poscolors[0] = (np.random.uniform(),
