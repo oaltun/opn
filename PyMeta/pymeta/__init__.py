@@ -6,7 +6,7 @@ REFERENCES
     June, 2013
 """
 from __future__ import division
-
+import re
 import matplotlib
 #matplotlib.use("wx")
 #matplotlib.use("TkAgg")
@@ -646,6 +646,7 @@ TwoDFunVisualiser = TwoDFunVisualiser3D
 
 class DummyVisualiser(OptimizationVisualiser):
     def __init__(self, **kwargs):
+        self.problem = None
         pass
 
     def init(self):
@@ -662,6 +663,8 @@ class DummyVisualiser(OptimizationVisualiser):
 
     def show(self):
         pass
+    def flush(self):
+        pass
 
 
 class OptimizationAlgorithm(Default):
@@ -672,6 +675,7 @@ class OptimizationAlgorithm(Default):
         self.problem = None
         self.positions = None
         self.npositions = 20
+        self.poscolors = None
 
         # self.stop={'time':0, 'fbest': float('inf'),
         # 'yieldcnt':float('inf') }
@@ -720,6 +724,9 @@ class OptimizationAlgorithm(Default):
 
 
     def run(self):
+        if self.isdraw:
+            ## prepares colors for each position
+            self.poscolors = self.prepareposcolors()
 
         ## for deciding which value is better,
         ## which to use?
@@ -807,8 +814,7 @@ class OptimizationAlgorithm(Default):
         self.hcmaxstep = (
             (self.problem.ub - self.problem.lb) / self.hcmaxstepdivisor)
 
-        ## prepares colors for each position
-        self.prepareposcolors()
+
 
         ## main loop
         self.yieldcnt = 0;
@@ -928,12 +934,14 @@ class OptimizationAlgorithm(Default):
 
 
     def prepareposcolors(self):
+        poscolors = None
         if self.isdraw:
-            self.poscolors = []
+            poscolors = []
             for _ in self.positions:
-                color = tuple(np.random.uniform(
-                    0, 1, (3,)).tolist())
-                self.poscolors.append(color)
+                color = tuple(np.random.uniform(0, 1, (3,)).tolist())
+                poscolors.append(color)
+        return poscolors
+
 
 
     def drawbest(self, pos):
@@ -1301,6 +1309,8 @@ class GenericExperiment(Default):
         self.tmpdir = os.getcwd() + '/../latex/tmp/'
         self.expdir = self.tmpdir + self.exptime
         self.ndims = None
+        self.logfile = None
+        self.logfilepath = None
         self.__dict__.update(**kwargs)
 
 
@@ -1330,6 +1340,7 @@ class GenericExperiment(Default):
 
                     log = self.runonce(algorithm, problem, trial)
 
+
                     trialinfo = dict(algorithm = algorithm, problem = problem,
                         trial = trial, log = log)
 
@@ -1337,6 +1348,7 @@ class GenericExperiment(Default):
                         results.append(trialinfo)
                     if self.writetrials:
                         self.write(trialinfo)
+
         return results
 
 
@@ -1369,16 +1381,17 @@ class GenericExperiment(Default):
 
 
     def write(self, t):
-        filename = self.sep.join(t['algorithm'].name, t['problem'].name,
-            #str(t['trial'])
-            uuid.uuid4()
-            )
-        with open(filename, 'wb') as fd:
-            pickle.dump(t, fd)
-
-    def read(self, filename):
-        with open(filename, 'rb') as fd:
-            return pickle.load(fd)
+        pass
+#        filename = self.sep.join(t['algorithm'].name, t['problem'].name,
+#            #str(t['trial'])
+#            uuid.uuid4()
+#            )
+#        with open(filename, 'wb') as fd:
+#            pickle.dump(t, fd)
+#
+#    def read(self, filename):
+#        with open(filename, 'rb') as fd:
+#            return pickle.load(fd)
 
 
     def mergetrials(self, runs):
@@ -1471,7 +1484,9 @@ class GenericExperiment(Default):
         return probname + '______' + algoname
 
 
-    def report(self, results = None, group_by = 'algo'):
+    def report(self,
+               results = None,
+               group_by = 'algo'):
         #### group results by algorithms, problems, and algorithm-problem pairs
 
 #        algos = collections.defaultdict(list)
@@ -1485,9 +1500,6 @@ class GenericExperiment(Default):
             algoname = result['algorithm'].name
             probname = result['problem'].name
             trialname = self.pairname(probname, algoname)
-
-#            algos[algoname].append(result)
-#            probs[probname].append(result)^
             self.algos[algoname] = result['algorithm']
             self.probs[probname] = result['problem']
             self.trials[trialname].append(result)
@@ -1496,6 +1508,34 @@ class GenericExperiment(Default):
         ## into a single line in graphs.
         for trialname in self.trials:
             self.merges[trialname] = self.mergetrials(self.trials[trialname])
+
+        if self.logfile is not None:
+            print('Printing logfile: \n{}'.format(self.logfilepath))
+            for trialname in self.trials:
+                pname = re.sub('\_+', ' ', trialname)
+                pair = self.trials[trialname]
+
+                self.logfile.write('!--  pair {}\n\n'.format(pname))
+                for itrial, trial in enumerate(pair):
+                    self.logfile.write('!-- trial {} {} log = {}\n\n'.format(
+                            itrial, pname , trial['log']))
+                #self.logfile.write('!end trials {}\n\n'.format(pname))
+
+                #self.logfile.write('!begin merge {}\n\n'.format(pname))
+                self.logfile.write('!-- meanbest {} = {}\n\n'.format(
+                            pname, self.merges[trialname]['meanbest']))
+
+                self.logfile.write('!-- stdbest {} = {}\n\n'.format(
+                            pname, self.merges[trialname]['stdbest']))
+
+                self.logfile.write('!-- acnt {} = {}\n\n'.format(
+                            pname, self.merges[trialname]['acnt']))
+                #self.logfile.write('!end merge {}\n\n'.format(pname))
+                self.logfile.write('!-- --------------------------------------'
+                                   '-------------------------------------\n\n')
+
+
+
 
         return self.report_results()
 
@@ -1508,7 +1548,8 @@ class GenericExperiment(Default):
             fig.savefig(filename + '.pdf', bbox_inches = 'tight')
             fig.savefig(filename + '.png', bbox_inches = 'tight')
 
-            print('Saved ' + filename)
+            print('Saved figure ' + name + ' in:')
+            print(self.expdir + '/' + figtype)
 
         ## plot problem comparisons.
         for name in self.algos:
