@@ -1515,20 +1515,20 @@ class GenericExperiment(Default):
                 pname = re.sub('\_+', ' ', trialname)
                 pair = self.trials[trialname]
 
-                self.logfile.write('!--  pair {}\n\n'.format(pname))
+                self.logfile.write('!-- problem algorithm pair {}\n\n'.format(pname))
                 for itrial, trial in enumerate(pair):
                     self.logfile.write('!-- trial {} {} log = {}\n\n'.format(
                             itrial, pname , trial['log']))
                 #self.logfile.write('!end trials {}\n\n'.format(pname))
 
                 #self.logfile.write('!begin merge {}\n\n'.format(pname))
-                self.logfile.write('!-- meanbest {} = {}\n\n'.format(
+                self.logfile.write('!-- mean of fbest {} = {}\n\n'.format(
                             pname, self.merges[trialname]['meanbest']))
 
-                self.logfile.write('!-- stdbest {} = {}\n\n'.format(
+                self.logfile.write('!-- std of fbest {} = {}\n\n'.format(
                             pname, self.merges[trialname]['stdbest']))
 
-                self.logfile.write('!-- acnt {} = {}\n\n'.format(
+                self.logfile.write('!-- fes {} = {}\n\n'.format(
                             pname, self.merges[trialname]['acnt']))
                 #self.logfile.write('!end merge {}\n\n'.format(pname))
                 self.logfile.write('!-- --------------------------------------'
