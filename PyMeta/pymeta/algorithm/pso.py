@@ -5,6 +5,11 @@ from pymeta.algorithm.algorithmbase import OptimizationAlgorithm
 from pymeta.utils.pymetautils import randin
 
 
+def updatepersonalbest(xnew, fnew, i, p, fp):
+    p[i] = xnew.copy()
+    fp[i] = fnew.copy()
+
+
 #___________________________________________________________________
 # ref: wikipedia.com/Particle_swarm_optimization
 class ParticleSwarmOptimization(OptimizationAlgorithm):
@@ -84,8 +89,9 @@ class ParticleSwarmOptimization(OptimizationAlgorithm):
                 if fnew > fp[i]:  # # update personal best
                     print 3
                     #self.drawpersonalbestpath(p[i], xnew, i)
-                    p[i] = xnew.copy()
-                    fp[i] = fnew
+#                    p[i] = xnew.copy()
+#                    fp[i] = fnew.copy()
+                    updatepersonalbest(xnew, fnew, i, p, fp)
 
 
     def drawpersonalbestpath(self, oldpos, newpos, idx):

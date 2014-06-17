@@ -992,7 +992,9 @@ class OptimizationProblem(Default):
 
         self.ndims = None
 
-        self.fixboundsfun = FixBounds.to_edges
+#        self.fixboundsfun = FixBounds.to_edges
+        self.fixboundsfun = FixBounds.exceeder_random
+
 
         self.tweakmethod = 'justsum'
         self.tweaksubmethod = 'bucclosed'
