@@ -83,7 +83,7 @@ class ArtificialBeeColony(OptimizationAlgorithm):
                 if e >= self.limit:
                     xnew, fnew = f(self.problem.randpos()); yield
                     trial[i] = 0
-                    self.updatex(xnew, fnew, i, False)  # do not draw path
+                    self.updatex(xnew, fnew, i)  # do not draw path
 
                     #assign a new color, as old path is abandoned
                     if self.isdraw:
