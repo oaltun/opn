@@ -3,6 +3,8 @@ Welcome to the Metaheuristics Repository
 This is a package of Metaheuristic algorithms and problems that can be 
 solved by these algorithms.
 
+It is geared towards scientific experimentation and education.
 
+This is a software package still in alpha stage. We do not accept any kind of responsibility when used by others. 
 
-
+Licence is GPL.
