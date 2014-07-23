@@ -768,16 +768,12 @@ class OptimizationAlgorithm(Default):
 
         self.log = [];
         cnt = {
-#            'fbest': self.fbest,
-#            'time':0,
-#            'yieldcnt':0,
             'assessmentcnt':0,
-            'nerror': float('-inf'),
             'error':float('inf')
             }
 
 
-        ## fix positions, also get their objective
+        #### fix positions, also get their objective
         #### values. dont draw the movement of best
         #### in this stage
         self._drawbest = False
@@ -824,18 +820,21 @@ class OptimizationAlgorithm(Default):
         while self.iscontinue(cnt, self.stop):
             self.yieldcnt += 1
 
-            # run the actual search function till
-            # next yield
+            # run the actual search function till next yield
             yielder.next()
             cnt['assessmentcnt'] = self.problem.assessmentcnt()
 
             if oldbest != self.fbest:
                 oldbest = self.fbest
-                if (hasattr(self.problem, 'optimum')
-                    and (self.problem.optimum is not None)
-                    and ('nerror' in self.stop)):
-                    cnt['nerror'] = -abs(self.fbest - self.problem.optimum)
-        self.dolog()
+                try:
+                    cnt['error'] = abs(self.fbest - self.problem.optimum)
+                except:pass
+
+#                if (hasattr(self.problem, 'optimum')
+#                    and (self.problem.optimum is not None)
+#                    and ('error' in self.stop)):
+#                    cnt['error'] = abs(self.fbest - self.problem.optimum)
+        self.dolastlog()
 
 
         ## draw final positions.
@@ -852,17 +851,30 @@ class OptimizationAlgorithm(Default):
                 self.problem.assessmentcnt(),
             'fbest':self.fbest})
 
+    def dolastlog(self):
+        self.log.append({
+            'assessmentcnt':
+                self.problem.assessmentcnt(),
+            'fbest':self.fbest})
+
 
 
     def iscontinue(self, cnt, stop):
-        """ decide whether we should continue
-        searching. """
-        tf = True
-        for key in stop:
-            if cnt[key] > stop[key]:
-                tf = False
-                break
-        return tf
+        """ decide whether we should continue searching. """
+
+        cont = True
+
+        try:
+            if cnt['assessmentcnt'] >= stop['assessmentcnt']:
+                cont = False
+        except: pass
+
+#        try:
+#            if cnt['error'] <= stop['error']:
+#                cont = False
+#        except: pass
+
+        return cont
 
     def updatex(self, xnew, fnew, i):
         if np.array_equal(self.x[i], xnew):
@@ -1489,10 +1501,8 @@ class GenericExperiment(Default):
     def report(self,
                results = None,
                group_by = 'algo'):
-        #### group results by algorithms, problems, and algorithm-problem pairs
 
-#        algos = collections.defaultdict(list)
-#        probs = collections.defaultdict(list)
+        #### group results by algorithms, problems, and algorithm-problem pairs
         self.merges = {}
         self.results = results
         self.algos = collections.OrderedDict()
@@ -1513,17 +1523,25 @@ class GenericExperiment(Default):
 
         if self.logfile is not None:
             print('Printing logfile: \n{}'.format(self.logfilepath))
+
+            print('Printing problem info:')
+            for prob in self.probs:
+                self.logfile.write('!-- problem {} optimum {} minimize {}\n\n'.format(
+                        prob, self.probs[prob].optimum, self.probs[prob].minimize))
+
+            print('Printing algorithm info:')
+            for algo in self.algos:
+                self.logfile.write('!-- algorithm {} minimize {}\n\n'.format(
+                        algo, self.algos[algo].minimize))
+
+            print('Printing trial info')
             for trialname in self.trials:
                 pname = re.sub('\_+', ' ', trialname)
                 pair = self.trials[trialname]
 
-                self.logfile.write('!-- problem algorithm pair {}\n\n'.format(pname))
-                for itrial, trial in enumerate(pair):
-                    self.logfile.write('!-- trial {} {} log = {}\n\n'.format(
-                            itrial, pname , trial['log']))
-                #self.logfile.write('!end trials {}\n\n'.format(pname))
+                self.logfile.write('!-- pair {}\n\n'.format(
+                            pname))
 
-                #self.logfile.write('!begin merge {}\n\n'.format(pname))
                 self.logfile.write('!-- mean of fbest {} = {}\n\n'.format(
                             pname, self.merges[trialname]['meanbest']))
 
@@ -1532,11 +1550,13 @@ class GenericExperiment(Default):
 
                 self.logfile.write('!-- fes {} = {}\n\n'.format(
                             pname, self.merges[trialname]['acnt']))
-                #self.logfile.write('!end merge {}\n\n'.format(pname))
+
+                for itrial, trial in enumerate(pair):
+                    self.logfile.write('!-- trial {} {} log = {}\n\n'.format(
+                            itrial, pname , trial['log']))
+
                 self.logfile.write('!-- --------------------------------------'
                                    '-------------------------------------\n\n')
-
-
 
 
         return self.report_results()

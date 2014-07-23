@@ -37,30 +37,21 @@ class ParticleSwarmOptimization(OptimizationAlgorithm):
 
         # ## main loop
         while True:
-            print '1'
             for i in xrange(self.n):  # #for each particle
-                print 1.1
                 yield  # give control to caller. It will log and decide whether to stop.
-                print 1.2
                 # ## old values
                 xo = self.x[i].copy()
-                print 1.3
                 vo = v[i].copy()
-                print 1.4
                 po = p[i].copy()
-                print 1.5
 
                 rp = np.random.uniform(0, 1)  # # produce a new position
-                print 1.6
                 rg = np.random.uniform(0, 1)
-                print 1.7
                 # new velocity
                 # TODO: restart randomly when po-xo is very close to
                 # xbest-xo. Or xnew is too close to xbest
                 vtmp = self.conf * (vo * self.w +
                                     (po - xo) * rp * self.psip +
                                     (self.xbest - xo) * rg * self.psig)
-                print 1.8
                 xtmp = xo + vtmp
                 if np.array_equal(xtmp, xo):
                     print('xo:{}, vtmp:{}, xtmp:{}, lb:{}, ub:{}'.format(
@@ -68,26 +59,17 @@ class ParticleSwarmOptimization(OptimizationAlgorithm):
 
                     assert(False)
 
-
-                print 1.9
-
                 xnew, fnew = self.f(xtmp); yield
                 if np.array_equal(xnew, xo):
                     print('xo:{}, vtmp:{}, xtmp:{}, xnew:{}, lb:{}, ub:{}'.format(
                         xo, vtmp, xtmp, xnew, self.problem.lb, self.problem.ub))
                     #raise Exception('baaad')
 
-                print 1.10
                 self.updatex(xnew, fnew, i)
-                print 1.11
-
-                print 2, self.problem.assessmentcnt()
 
                 v[i] = xnew - xo  # correct velocity
-                print 2.1
 
                 if fnew > fp[i]:  # # update personal best
-                    print 3
                     #self.drawpersonalbestpath(p[i], xnew, i)
 #                    p[i] = xnew.copy()
 #                    fp[i] = fnew.copy()
