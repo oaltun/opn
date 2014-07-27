@@ -22,7 +22,7 @@ class Cec14SOOProblem(pm.OptimizationProblem):
         self.__dict__.update(**kwargs)  # #overwrite
         self.minimize = True
         self.name = self.name + str(self.func_num)
-        self.optimum = 0.0
+        self.optimum = self.func_num * 100.0
 
     # only gooddims are supported. See this code in cec14_test_func.c:
     #        if (!(nx==2||nx==10||nx==20||nx==30||nx==50||nx==100))
