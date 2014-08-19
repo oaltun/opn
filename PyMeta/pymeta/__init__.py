@@ -1160,6 +1160,9 @@ class OptimizationProblem(Default):
         return f
 
     def tweakfun(self, apos, method = None, submethod = None):
+        # TODO: instead of if method == ... use different methods. it is easier
+        # to debug.
+
         ## handle args
         if not(method):
             method = self.tweakmethod
