@@ -28,7 +28,7 @@
  *
  * See _cec14_test_func.pyx and setup.py to see how it was wrapped.
  *
- * Oguz Altun (email: oaltun@epoka.edu.al)
+ * Oguz Altun (email: oguz@ce.yildiz.edu.tr)
  * Mar. 16th 2014
  *
  */
