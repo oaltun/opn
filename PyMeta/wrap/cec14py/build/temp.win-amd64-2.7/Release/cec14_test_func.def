@@ -1,3 +1,0 @@
-LIBRARY cec14_test_func.pyd
-EXPORTS
-initcec14_test_func
