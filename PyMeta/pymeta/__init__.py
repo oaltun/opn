@@ -26,12 +26,11 @@ from scipy import interpolate
 from tvtk.tools import visual
 import logging
 import traceback
-import mlabwrap
-import os, sys, random, numpy as np, inspect, pickle, uuid, collections
+#import mlabwrap
+import os, sys, random, numpy as np, inspect, pickle, uuid, collections, json
 from pprint import pprint as pp
 from textwrap import wrap
 from inspect import getmembers, isroutine
-import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 
 
@@ -677,8 +676,6 @@ class OptimizationAlgorithm(Default):
         self.npositions = 20
         self.poscolors = None
 
-        # self.stop={'time':0, 'fbest': float('inf'),
-        # 'yieldcnt':float('inf') }
         self.stop = None  #
         self.isdebug = False
         self.log = []
@@ -767,10 +764,14 @@ class OptimizationAlgorithm(Default):
         self.positions = self.positions.astype(float)
 
         self.log = [];
+        self.logfes=[]
+        self.logfbest=[]
         cnt = {
             'assessmentcnt':0,
             'error':float('inf')
             }
+
+        self.startclock = time.clock()
 
 
         #### fix positions, also get their objective
@@ -813,29 +814,27 @@ class OptimizationAlgorithm(Default):
 
 
         ## main loop
-        self.yieldcnt = 0;
         yielder = self.search()
 
         oldbest = self.fbest
-        while self.iscontinue(cnt, self.stop):
-            self.yieldcnt += 1
+        while self.iscontinue():
 
             # run the actual search function till next yield
             yielder.next()
-            cnt['assessmentcnt'] = self.problem.assessmentcnt()
 
             if oldbest != self.fbest:
                 oldbest = self.fbest
                 try:
-                    cnt['error'] = abs(self.fbest - self.problem.optimum)
+                    self.currenterror = abs(self.fbest - self.problem.optimum)
                 except:pass
 
-#                if (hasattr(self.problem, 'optimum')
-#                    and (self.problem.optimum is not None)
-#                    and ('error' in self.stop)):
-#                    cnt['error'] = abs(self.fbest - self.problem.optimum)
         self.dolastlog()
+        self.stopclock = time.clock()
 
+        ### negate elements of logfbest if necessary
+        if self.minimize != self.problem.minimize:
+            for i,e in enumerate(self.logfbest):
+                self.logfbest[i] = -e
 
         ## draw final positions.
         self.drawfinalpositions()
@@ -846,35 +845,26 @@ class OptimizationAlgorithm(Default):
 
 
     def dolog(self):
-        self.log.append({
-            'assessmentcnt':
-                self.problem.assessmentcnt(),
-            'fbest':self.fbest})
+#         self.log.append({
+#             'assessmentcnt':
+#                 self.problem.assessmentcnt(),
+#             'fbest':self.fbest})
+        self.logfes.append(self.problem.assessmentcnt())
+        self.logfbest.append(self.fbest)
 
     def dolastlog(self):
-        self.log.append({
-            'assessmentcnt':
-                self.problem.assessmentcnt(),
-            'fbest':self.fbest})
+        self.dolog()
+#         self.log.append({
+#             'assessmentcnt':
+#                 self.problem.assessmentcnt(),
+#             'fbest':self.fbest})
 
 
 
-    def iscontinue(self, cnt, stop):
+    def iscontinue(self):
         """ decide whether we should continue searching. """
+        return self.problem.assessmentcnt() < self.stop['assessmentcnt']
 
-        cont = True
-
-        try:
-            if cnt['assessmentcnt'] >= stop['assessmentcnt']:
-                cont = False
-        except: pass
-
-#        try:
-#            if cnt['error'] <= stop['error']:
-#                cont = False
-#        except: pass
-
-        return cont
 
     def updatex(self, xnew, fnew, i):
         if np.array_equal(self.x[i], xnew):
@@ -1316,9 +1306,10 @@ class GenericExperiment(Default):
         self.ntrials = 2
         self.problemlist = None
         self.algorithmlist = None
-        self.returntrials = True
-        self.writetrials = False
+        self.returntrials = False
+        self.writetrials = True
         self.writedir = '../tmp/results'
+        self.logdir = 'c:/temp/pymeta/'
         self.imdir = '../latex/graphics'
         self.sep = '____',
         self.dashes = [],
@@ -1364,7 +1355,7 @@ class GenericExperiment(Default):
                     if self.returntrials:
                         results.append(trialinfo)
                     if self.writetrials:
-                        self.write(trialinfo)
+                        self.writelog(trialinfo)
 
         return results
 
@@ -1397,318 +1388,52 @@ class GenericExperiment(Default):
 
 
 
-    def write(self, t):
-        pass
-#        filename = self.sep.join(t['algorithm'].name, t['problem'].name,
-#            #str(t['trial'])
-#            uuid.uuid4()
-#            )
-#        with open(filename, 'wb') as fd:
-#            pickle.dump(t, fd)
-#
-#    def read(self, filename):
-#        with open(filename, 'rb') as fd:
-#            return pickle.load(fd)
-
-
-    def mergetrials(self, runs):
-        merged = {'acnt':[], 'meanbest':[], 'stdbest':[]}
-        ## merge the events in the logs
-        event = []
-        for runidx, result in enumerate(runs):
-            for record in result['log']:
-                event.append(
-                    (record['assessmentcnt'], record['fbest'], runidx))
-
-        ## sort events by assessmentcnt
-        e = np.array(event)
-        event = e[e[:, 0].argsort()]
-
-        if self.isdebug:
-            print('event list:\n(assessmentcnt, fbest, trial)')
-            pp(event)
-
-        # start bests as NaNs.
-        bests = np.ones(len(runs)) * np.NAN
-
-        for e in event :
-            acnt, fbest, idx = e
-            bests[idx] = fbest
-            mean = bests.mean()
-            std = bests.std()
-
-            # skip until all runs start contributing to the statistics.
-            if not(np.isnan(np.sum(bests))):
-                merged['acnt'].append(acnt)
-                merged['meanbest'].append(mean)
-                merged['stdbest'].append(std)
-
-        return merged
-
-
-    def get_dash(self, i):
-        """ get a dash style for i th line in a plot """
-
-        ### prepare some nice dashes. First these will be used.
-        dash = [  # no dash: a line
-            [2, 2],  # points
-
-            [8, 2],  # dashes
-            [8, 2, 2, 2],  # dash point
-            [8, 2, 2, 2, 2, 2],
-            [8, 2, 2, 2, 2, 2, 2, 2],
-            [8, 2, 2, 2, 2, 2, 2, 2, 2, 2],
-
-            [8, 2, 8, 2, ],
-            [8, 2, 8, 2, 2, 2],
-            [8, 2, 8, 2, 2, 2, 2, 2],
-            [8, 2, 8, 2, 2, 2, 2, 2, 2, 2],
-            [8, 2, 8, 2, 2, 2, 2, 2, 2, 2, 2, 2],
-
-            [8, 2, 8, 2, 8, 2],
-            [8, 2, 8, 2, 8, 2, 2, 2],
-            [8, 2, 8, 2, 8, 2, 2, 2, 2, 2],
-            [8, 2, 8, 2, 8, 2, 2, 2, 2, 2, 2, 2],
-            [8, 2, 8, 2, 8, 2, 2, 2, 2, 2, 2, 2, 2, 2],
-            ]
-
-        if i < len(dash):
-            return dash[i]
-        else:
-            ### If there is no pre-styled dash for i, prepare one automatically
-            space = [32, 4]
-            zero = [8, 4]
-            one = [2, 4]
-
-            br = bin(i)
-
-            dashes = []
-            dashes.extend(space)
-            for i, e in enumerate(br):
-                if i > 1:
-                    if int(e) > 0:
-                        dashes.extend(one)
-                    else:
-                        dashes.extend(zero)
-
-            return dashes
-
-
-
-
-
-    def pairname(self, probname, algoname):
-        return probname + '______' + algoname
-
-
-    def report(self,
-               results = None,
-               group_by = 'algo'):
-
-        #### group results by algorithms, problems, and algorithm-problem pairs
-        self.merges = {}
-        self.results = results
-        self.algos = collections.OrderedDict()
-        self.probs = collections.OrderedDict()
-        self.trials = collections.defaultdict(list)
-        for result in results:
-            algoname = result['algorithm'].name
-            probname = result['problem'].name
-            trialname = self.pairname(probname, algoname)
-            self.algos[algoname] = result['algorithm']
-            self.probs[probname] = result['problem']
-            self.trials[trialname].append(result)
-
-        ## say we do 10 trials for each pair. We need to merge these 10 trials
-        ## into a single line in graphs.
-        for trialname in self.trials:
-            self.merges[trialname] = self.mergetrials(self.trials[trialname])
-
-        if self.logfile is not None:
-            print('Printing logfile: \n{}'.format(self.logfilepath))
-
-            print('Printing problem info:')
-            for prob in self.probs:
-                self.logfile.write('!-- problem {} optimum {} minimize {}\n\n'.format(
-                        prob, self.probs[prob].optimum, self.probs[prob].minimize))
-
-            print('Printing algorithm info:')
-            for algo in self.algos:
-                self.logfile.write('!-- algorithm {} minimize {}\n\n'.format(
-                        algo, self.algos[algo].minimize))
-
-            print('Printing trial info')
-            for trialname in self.trials:
-                pname = re.sub('\_+', ' ', trialname)
-                pair = self.trials[trialname]
-
-                self.logfile.write('!-- pair {}\n\n'.format(
-                            pname))
-
-                self.logfile.write('!-- mean of fbest {} = {}\n\n'.format(
-                            pname, self.merges[trialname]['meanbest']))
-
-                self.logfile.write('!-- std of fbest {} = {}\n\n'.format(
-                            pname, self.merges[trialname]['stdbest']))
-
-                self.logfile.write('!-- fes {} = {}\n\n'.format(
-                            pname, self.merges[trialname]['acnt']))
-
-                for itrial, trial in enumerate(pair):
-                    self.logfile.write('!-- trial {} {} log = {}\n\n'.format(
-                            itrial, pname , trial['log']))
-
-                self.logfile.write('!-- --------------------------------------'
-                                   '-------------------------------------\n\n')
-
-
-        return self.report_results()
-
-
-
-    def report_results(self):
-        def savefigure(fig, figtype, name):
-            filename = (self.expdir + '/' + figtype + '/' + name)
-            mkdirfor(filename)
-            fig.savefig(filename + '.pdf', bbox_inches = 'tight')
-            fig.savefig(filename + '.png', bbox_inches = 'tight')
-
-            print('Saved figure ' + name + ' in:')
-            print(self.expdir + '/' + figtype)
-
-        ## plot problem comparisons.
-        for name in self.algos:
-            fig = self.plot_convergence_probs(name)
-            #fig.canvas.set_window_title(name)
-            savefigure(fig, 'algorithm', name)
-
-        ## plot algo comparisons.
-        for name in self.probs:
-            fig = self.plot_convergence_algos(name)
-            #fig.canvas.set_window_title(name + ' ' + self.probs[name].info)
-            savefigure(fig, 'problem', name)
-            if self.probs[name].info is not None:
-                savefigure(fig, 'problem', name + ' ' + self.probs[name].info)
-
-
-    def plot_convergence_probs(self, algoname):
-        print("in plot convergence probs")
-        ## get algorithm:
-        algorithm = self.algos[algoname]
-
-        ### get a new figure and axis
-        fig = plt.figure()
-        ax = fig.add_subplot(111)
-        #plt.title(algoname)
-        plt.xlabel('FES')
-        plt.ylabel(r'$f*$')
-
-        ### draw algorithms
-        plotidx = -1
-        for probname in self.probs:
-            ## gather info
-            plotidx += 1
-            problem = self.probs[probname]
-            pairname = self.pairname(probname, algoname)
-            y = self.merges[pairname]['meanbest']
-            x = self.merges[pairname]['acnt']
-            stdbest = self.merges[pairname]['stdbest']
-
-            ### negate best values if necessary
-            if algorithm.minimize != problem.minimize:
-                y = [-e for e in y]
-
-            plotargs = {'label': probname,
-                        'linewidth': 2,
-                        'color': 'black',
-                        'dashes': self.get_dash(plotidx)}
-
-            if self.convergenceplottype == 'semilogy':
-                ### if y has negative values, plot is more appropriate
-                if np.any(y < 0):
-                    self.convergenceplottype = 'plot'  #
-                else:
-                    plotargs['basey'] = 2
-                    h, = ax.semilogy(x, y, '--', **plotargs)
-
-            if self.convergenceplottype == 'plot':
-                h, = ax.plot(x, y, '--', **plotargs)
-
-        plt.legend(handlelength = 3)
-        return fig
-
-
-
-    def plot_convergence_algos(self, probname):
-        print('in plot convergence algos')
-        ## get problem:
-        problem = self.probs[probname]
-
-        ### get a new figure and axis
-        fig = plt.figure()
-        ax = fig.add_subplot(111)
-        #plt.title(probname)
-        plt.xlabel('FES')
-        plt.ylabel(r'$f*$')
-
-        ### draw algorithms
-        algoidx = -1
-        for algoname in self.algos:
-            ## gather info
-            algoidx += 1
-            algorithm = self.algos[algoname]
-            pairname = self.pairname(probname, algoname)
-            y = self.merges[pairname]['meanbest']
-            x = self.merges[pairname]['acnt']
-            stdbest = self.merges[pairname]['stdbest']
-
-            ### negate best values if necessary
-            if algorithm.minimize != problem.minimize:
-                y = [-e for e in y]
-
-            plotargs = {'label': algoname,
-                        'linewidth': 2,
-                        'color': 'black',
-                        'dashes': self.get_dash(algoidx)}
-
-            if self.convergenceplottype == 'semilogy':
-                ### if y has negative values, plot is more appropriate
-                if np.any(y < 0):
-                    self.convergenceplottype = 'plot'  #
-                else:
-                    plotargs['basey'] = 2
-                    h, = ax.semilogy(x, y, '--', **plotargs)
-
-            if self.convergenceplottype == 'plot':
-                h, = ax.plot(x, y, '--', **plotargs)
-
-        plt.legend(handlelength = 3)
-
-
-
-        #### rearrange ylim
-        ylim = list(ax.get_ylim())
-        if ((problem.optimum is not None) and ('nerror' in self.stop)):
-            if problem.minimize:
-                ylim[0] = problem.optimum + (-(self.stop['nerror']))
-            else:
-                ylim[1] = problem.optimum - (-(self.stop['nerror']))
-        ax.set_ylim(ylim)
-
-        return fig
-
-
-
-
-
-
-
-
-
-
-
-
-
+    def writelog(self, t):
+        algo = t['algorithm']
+        prob = t['problem']
+
+        for dumptype in [
+                         'json',
+                         #'pickle',
+                         ]:
+            filename = '__'.join((
+                                 self.logdir,
+                                 prob.name,
+                                 algo.name,
+                                 str(t['trial']),
+                                 #str(uuid.uuid4()),
+                                 dumptype,
+                                 '.pymeta.trial.log.txt'))
+            print('log: {}'.format(filename))
+
+            if dumptype == 'json':
+                with open(filename, 'wb') as fd:
+                    logdict=dict()
+                    logdict['algorithm_name']=algo.name
+                    logdict['problem_name']=prob.name
+                    logdict['trial']=t['trial']
+                    #logdict['log']=t['log']
+                    logdict['elapsed_time']=algo.stopclock-algo.startclock
+                    logdict['algorithm_minimize']=algo.minimize
+                    logdict['problem_minimize']=prob.minimize
+
+                    try:logdict['problem_optimum']=prob.optimum
+                    except:pass
+
+                    logdict['logfes']=algo.logfes
+                    logdict['logfbest']=algo.logfbest
+
+                    try:logdict['algorithm_stop_error']=algo.stop['error']
+                    except: pass
+
+                    try:logdict['algorithm_stop_assessmentcnt']=algo.stop['assessmentcnt']
+                    except: pass
+
+
+                    json.dump(logdict, fd)
+            if dumptype == 'pickle':
+                with open(filename,'wb') as fd:
+                    pickle.dump(t,fd)
 
 
 import algorithm
