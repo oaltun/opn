@@ -1392,48 +1392,33 @@ class GenericExperiment(Default):
         algo = t['algorithm']
         prob = t['problem']
 
-        for dumptype in [
-                         'json',
-                         #'pickle',
-                         ]:
-            filename = '__'.join((
-                                 self.logdir,
-                                 prob.name,
-                                 algo.name,
-                                 str(t['trial']),
-                                 #str(uuid.uuid4()),
-                                 dumptype,
-                                 '.pymeta.trial.log.txt'))
-            print('log: {}'.format(filename))
+        
+        filename = self.logdir+'/'+prob.name+'_'+algo.name+'_'+str(t['trial'])+'.json.txt'
+        
+        print('log: {}'.format(filename))
+        mkdirfor(filename)
+        with open(filename, 'wb') as fd:
+            logdict=dict()
+            logdict['algorithm_name']=algo.name
+            logdict['problem_name']=prob.name
+            logdict['trial']=t['trial']
+            logdict['elapsed_time']=algo.stopclock-algo.startclock
+            logdict['algorithm_minimize']=algo.minimize
+            logdict['problem_minimize']=prob.minimize
 
-            if dumptype == 'json':
-                with open(filename, 'wb') as fd:
-                    logdict=dict()
-                    logdict['algorithm_name']=algo.name
-                    logdict['problem_name']=prob.name
-                    logdict['trial']=t['trial']
-                    #logdict['log']=t['log']
-                    logdict['elapsed_time']=algo.stopclock-algo.startclock
-                    logdict['algorithm_minimize']=algo.minimize
-                    logdict['problem_minimize']=prob.minimize
+            try:logdict['problem_optimum']=prob.optimum
+            except:pass
 
-                    try:logdict['problem_optimum']=prob.optimum
-                    except:pass
+            logdict['logfes']=algo.logfes
+            logdict['logfbest']=algo.logfbest
 
-                    logdict['logfes']=algo.logfes
-                    logdict['logfbest']=algo.logfbest
+            try:logdict['algorithm_stop_error']=algo.stop['error']
+            except: pass
 
-                    try:logdict['algorithm_stop_error']=algo.stop['error']
-                    except: pass
+            try:logdict['algorithm_stop_assessmentcnt']=algo.stop['assessmentcnt']
+            except: pass
 
-                    try:logdict['algorithm_stop_assessmentcnt']=algo.stop['assessmentcnt']
-                    except: pass
-
-
-                    json.dump(logdict, fd)
-            if dumptype == 'pickle':
-                with open(filename,'wb') as fd:
-                    pickle.dump(t,fd)
+            json.dump(logdict, fd)
 
 
 import algorithm
