@@ -1362,15 +1362,11 @@ class GenericExperiment(Default):
 
     def runonce(self, algorithm, problem, trial):
 
-        graphtitle = (problem.name + ' - ' + algorithm.name +
-                      ' - trial' + str(trial))
+        graphtitle = (problem.name + ' - ' + algorithm.name + ' - trial' + str(trial))
         if self.isdebug:
             print graphtitle
 
         if self.isdraw:
-#            problem.visualiser = problem.visualiserclass(
-#                fun = problem.cost, lb = problem.lb, ub = problem.ub,
-#                step = (problem.ub - problem.lb) / 100)
             problem.visualiser.title = graphtitle
             problem.visualiser.init()
             problem.visualiser.isanimate = self.isanimate
