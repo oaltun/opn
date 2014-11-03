@@ -15,10 +15,10 @@ class Cec14SOOProblem(pm.OptimizationProblem):
         self.lb = -1 * self.ub
         self.func_num = None
         self.name = 'f'
-        self.visualiser = pm.TwoDFunVisualiser(
-            fun = self.cost, lb = self.lb, ub = self.ub,
-            step = (self.ub - self.lb) / 100.0
-            )
+#         self.visualiser = pm.TwoDFunVisualiser(
+#             fun = self.cost, lb = self.lb, ub = self.ub,
+#             step = (self.ub - self.lb) / 100.0
+#             )
         self.__dict__.update(**kwargs)  # #overwrite
         self.minimize = True
         self.name = self.name + str(self.func_num)

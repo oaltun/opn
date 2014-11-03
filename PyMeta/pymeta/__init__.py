@@ -7,16 +7,10 @@ REFERENCES
 """
 from __future__ import division
 import re
-import matplotlib
-#matplotlib.use("wx")
-#matplotlib.use("TkAgg")
-#matplotlib.use("QTAgg")
-#matplotlib.use("QT4Agg")
 import matplotlib.pyplot as plt
+from matplotlib.pyplot import gcf
 from matplotlib.path import Path
 import matplotlib.patches as patches
-
-import wx
 
 from random import randint
 import numbers
@@ -26,7 +20,6 @@ from scipy import interpolate
 from tvtk.tools import visual
 import logging
 import traceback
-#import mlabwrap
 import os, sys, random, numpy as np, inspect, pickle, uuid, collections, json
 from pprint import pprint as pp
 from textwrap import wrap
@@ -34,7 +27,10 @@ from inspect import getmembers, isroutine
 import matplotlib.cm as cm
 
 
-
+def fig_flush():
+    #fig_flush()
+    gcf().canvas.flush_events()
+    
 def mkdirfor(path):
     dn = os.path.dirname(path)
     if not os.path.isdir(dn):
@@ -403,7 +399,33 @@ def connectbycurve(p1, p2, adder = getcurveadder()):
     shape3[:, -1] = shape3[:, -1] + adder[:, -1] * amp
     return shape3
 
+# class TwoDFunVisualiserColors(OptimizationVisualiser):
+#     def __init__(self, **kwargs):
+#         OptimizationVisualiser.__init__(self)  # inherit
+#         self.fun = None  # # defaults
+#         self.lb = None
+#         self.ub = None
+#         self.stepdivisor = 100
+#         self.isanimate = False
+#         self.problem = None
+#         self.__dict__.update(**kwargs)  # overwrite
+# 
+# 
+#         self.fig = None
+#         self.ax = None
+#         self.im = None
+#         self.cb = None
+# 
+# 
+# 
+# 
+#     def init(self, **kwargs):
+#         #### shorter names
+#         lb = self.lb;
+#         ub = self.ub;
+#         step = self.step
 
+        #### prepare the surface data
 
 class TwoDFunVisualiser3D(OptimizationVisualiser):
     def __init__(self, **kwargs):
@@ -412,11 +434,11 @@ class TwoDFunVisualiser3D(OptimizationVisualiser):
         self.lb = None
         self.ub = None
         self.step = None
+        self.stepdivisor = 100
         self.isanimate = False
         self.problem = None
         self.__dict__.update(**kwargs)  # overwrite
 
-        wx.Yield()
 
 
     def init(self, **kwargs):
@@ -478,7 +500,7 @@ class TwoDFunVisualiser3D(OptimizationVisualiser):
 
         opt = dict(azimuth = 0, elevation = 60, distance = 'auto')
         opt.update(args['mlab_view_opt'])
-        mlab.view(**opt)
+        #mlab.view(**opt)
 
         opt = {}
         opt.update(args['mlab_outline_opt'])
@@ -488,19 +510,17 @@ class TwoDFunVisualiser3D(OptimizationVisualiser):
         opt.update(args['mlab_title_opt'])
         mlab.title(self.title, **opt)
         # mlab.show_graphs()
-        wx.Yield()
-
-#    def drawbest(self, p):
-#        pass
+        fig_flush()
 
     def drawposition(self, p, **kwargs):
         pz = np.hstack((p, self.fun(p))) * self.scaler
         mlab.points3d(pz[0], pz[1], pz[2], **kwargs)
-        wx.Yield()
+        #mlab.points3d(pz[0], pz[1], pz[2])
+        fig_flush()
 
     def drawbest(self, p, *args, **kwargs):
         self.drawposition(p, color = (1, 1, 0), scale_factor = 3)
-        wx.Yield()
+        fig_flush()
 
     def drawpath(self, p1, p2, **kwargs):
         if np.all(np.equal(p1, p2)):
@@ -515,11 +535,11 @@ class TwoDFunVisualiser3D(OptimizationVisualiser):
         pz1 = np.hstack((p2, self.fun(p2))) * self.scaler
         xyz = connectbycurve(pz2, pz1)
         mlab.plot3d(xyz[:, 0], xyz[:, 1], xyz[:, 2], figure = self.fig, **op)
-        wx.Yield()
+        fig_flush()
         if self.isanimate:
             print('sleeping')
             time.sleep(0.010)
-            wx.Yield()
+            fig_flush()
 
     def drawpathbest(self, p1, p2, *args, **kwargs):
         op = dict()
@@ -530,7 +550,7 @@ class TwoDFunVisualiser3D(OptimizationVisualiser):
         self.drawpath(p1, p2, *args, **op)
 
     def flush(self):
-        wx.Yield()
+        fig_flush()
 
 
 
@@ -578,7 +598,8 @@ class TwoDFunVisualiserColors(OptimizationVisualiser):
             interpolation = 'bilinear',
             origin = 'lower',
             #cmap = cm.get_cmap('gist_yarg'),
-            cmap = cm.get_cmap('Greys_r'),
+            #cmap = cm.get_cmap('Greys_r'),
+            cmap=cm.pink,
             extent = (x[0], x[-1], y[0], y[-1]))
         self.cb = self.fig.colorbar(self.im, use_gridspec = True)
 
@@ -586,7 +607,7 @@ class TwoDFunVisualiserColors(OptimizationVisualiser):
         self.ax.set_xlim(x[0], x[-1])
         self.ax.set_ylim(y[0], y[-1])
         plt.ion()
-        plt.show()
+        plt.show(block=False)
         self.fig.canvas.flush_events()
 
     def drawposition(self, pt, *args, **kwargs):
@@ -742,17 +763,13 @@ class OptimizationAlgorithm(Default):
         self.isbetter = isbetter_deprecated
 
         if self.minimize:
-            self.isbetterORequal = (
-                lambda new, old: new <= old)
-            self.isbetterNOTequal = (
-                lambda new, old: new < old)
+            self.isbetterORequal = (lambda new, old: new <= old)
+            self.isbetterNOTequal = (lambda new, old: new < old)
             self._obfun = self.problem.cost
             self.fbest = float('inf')
         else:
-            self.isbetterORequal = (
-                lambda new, old: new >= old)
-            self.isbetterNOTequal = (
-                lambda new, old: new > old)
+            self.isbetterORequal = (lambda new, old: new >= old)
+            self.isbetterNOTequal = (lambda new, old: new > old)
             self._obfun = self.problem.quality
             self.fbest = float('-inf')
 
@@ -775,7 +792,7 @@ class OptimizationAlgorithm(Default):
 
 
         #### fix positions, also get their objective
-        #### values. dont draw the movement of best
+        #### values. don't draw the movement of best
         #### in this stage
         self._drawbest = False
         self.x, self.fx = self.f(self.positions)
@@ -960,14 +977,12 @@ class OptimizationAlgorithm(Default):
     def drawpath(self, oldpos, newpos, idx):
         """ draw a path from old pos to new pos for the position idx """
         if self.isdraw:
-            self.problem.visualiser.drawpath(oldpos, newpos,
-                color = self.poscolors[idx])
+            self.problem.visualiser.drawpath(oldpos, newpos,color = self.poscolors[idx])
 
     def drawpathbest(self, oldpos, newpos):
         """ draw paths of the best."""
         if self.isdraw:
-            self.problem.visualiser.drawpathbest(oldpos, newpos,
-                                             color = self.bestcolor())
+            self.problem.visualiser.drawpathbest(oldpos, newpos,color = self.bestcolor())
 ###end drawing related methods ###
 
 
@@ -1325,12 +1340,12 @@ class GenericExperiment(Default):
     def do(self):
         results = []
 
-        #### re-check options
-        if self.ntrials > 1:
-            print('Warning: ntrials is higher than 1. So turning 3d drawing ' +
-                  'and animation off.')
-            self.isdraw = False
-            self.isanimate = False
+#         #### re-check options
+#         if self.ntrials > 1:
+#             print('Warning: ntrials is higher than 1. So turning 3d drawing ' +
+#                   'and animation off.')
+#             self.isdraw = False
+#             self.isanimate = False
 
         self.expdir = os.path.normpath(self.expdir)
 
@@ -1340,8 +1355,7 @@ class GenericExperiment(Default):
             for algorithminfo in self.algorithmlist:
                 for trial in range(self.ntrials):
 
-                    problem = probleminfo['class'](ndims = self.ndims,
-                            **probleminfo)
+                    problem = probleminfo['class'](ndims = self.ndims, **probleminfo)
 
                     algorithm = algorithminfo['class'](**algorithminfo)
                     algorithm.isdrawupdatex = self.isdrawupdatex
