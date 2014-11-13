@@ -31,6 +31,7 @@ class HillAscend(OptimizationAlgorithm):
                     self.updatex(xnew, fnew, i)
 
 HillClimbing = HillAscend
+ParallelClimbing = HillAscend
 
 # HillClimbing:
 class HillAscendRandomRestart(OptimizationAlgorithm):
@@ -40,6 +41,7 @@ class HillAscendRandomRestart(OptimizationAlgorithm):
         self.name = 'hars'
         self.maxstepdivisor = 40
         self.limit = 100
+        self.isdrawupdatex=True
 
         # overwrite defaults with keyword arguments supplied by user
         self.overwrite(**kwargs)
@@ -66,7 +68,7 @@ class HillAscendRandomRestart(OptimizationAlgorithm):
                 if np.array_equal(xold, xnew):
                     raise Exception('whaat tweak gave same value???')
 
-                if self.isbetterORequal(fnew, self.fx[0]):
+                if fnew > self.fx[0]:
                     self.updatex(xnew, fnew, 0)
                     badtrial = 0
                 else:
@@ -96,7 +98,7 @@ class HillDescend(OptimizationAlgorithm):
                 # ## peek: take a look to a close to this position: xtmp
                 xtmp = self.x[i] + randin(-self.maxstep, self.maxstep)
                 xnew, fnew = self.f(xtmp)
-                if self.isbetterORequal(fnew, self.fx[i]):
+                if fnew < self.fx[i]:
                     self.updatex(xnew, fnew, i)
 
 

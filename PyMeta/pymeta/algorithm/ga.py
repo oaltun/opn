@@ -30,15 +30,20 @@ class GeneticAlgorithm(OptimizationAlgorithm):
 
         self.maxstepdivisor = 70
         self.name = 'GA'
-        self.npositions = 50
+        self.npositions = 5
         self.p = 0.25  # for intermediate recombination
-        self.t = 2  # for tournament selection
+        self.t = 2     # for tournament selection
 
         self.__dict__.update(**kwargs)  # overwrite defaults with keyword arguments supplied by user
 
         self.minimize = False
         self.select = lambda fp: tournament_selection(fp, self.t)
         self.crossover = lambda v, w: intermediate_recombination(v, w, self.p)
+
+# def return_ts(self, fp):
+#     return tournament_selection( fp,self.t)
+# 
+# self.select = return_ts
 
     def search(self):
 
@@ -71,7 +76,6 @@ class GeneticAlgorithm(OptimizationAlgorithm):
                         q[iq] = a
                         fq[iq] = fa
                         iq += 1
-
 
             #### copy next generation q over current generation x.
             for i, e in enumerate(q):

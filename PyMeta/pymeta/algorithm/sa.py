@@ -26,7 +26,7 @@ class SimulatedAnnealingRandomRestart(OptimizationAlgorithm):
 
             #reset color
             if self.isdraw:
-                self._poscolors[0] = (np.random.uniform(),
+                self.poscolors[0] = (np.random.uniform(),
                                     np.random.uniform(),
                                     np.random.uniform())
 
@@ -36,7 +36,7 @@ class SimulatedAnnealingRandomRestart(OptimizationAlgorithm):
             ## get a new random starting x
             xtmp = self.problem.randpos()
             xnew, fnew = self.f(xtmp)
-            self.updatex(xnew, fnew, 0, False)
+            self.updatex(xnew, fnew, 0)
 
 
             ## tweak the point until we get self.limit unsuccessful
@@ -51,7 +51,7 @@ class SimulatedAnnealingRandomRestart(OptimizationAlgorithm):
                     raise Exception('whaat tweak gave same value???')
 
 
-                if (fnew <= self.fx[0] or
+                if (fnew < self.fx[0] or
                     np.random.uniform(0, 1) < np.exp((self.fx[0] - fnew) / t)):
                     self.updatex(xnew, fnew, 0)
                     badtrial = 0

@@ -838,6 +838,8 @@ class OptimizationAlgorithm(Default):
 
             # run the actual search function till next yield
             yielder.next()
+            if self.isdraw:
+                self.problem.visualiser.flush()
 
             if oldbest != self.fbest:
                 oldbest = self.fbest
@@ -883,7 +885,7 @@ class OptimizationAlgorithm(Default):
         return self.problem.assessmentcnt() < self.stop['assessmentcnt']
 
 
-    def updatex(self, xnew, fnew, i):
+    def updatex(self, xnew, fnew, i,isdraw=True):
         if np.array_equal(self.x[i], xnew):
             if self.warn_selfupdate:
                 dprint('updatex: warning! you are updating the x to the exact '
@@ -891,10 +893,11 @@ class OptimizationAlgorithm(Default):
                        'algorithm logic. You think you are modifying the x, '
                        'but '
                        'it is not being modified.')
-        if self.isdrawupdatex:
-            self.drawpath(self.x[i], xnew, i)
-            self.drawbest(self.xbest)
-            self.problem.visualiser.flush()
+        if isdraw:
+            if self.isdrawupdatex:
+                self.drawpath(self.x[i], xnew, i)
+                self.drawbest(self.xbest)
+                self.problem.visualiser.flush()
 
         self.x[i] = xnew
         self.fx[i] = fnew
@@ -974,10 +977,14 @@ class OptimizationAlgorithm(Default):
                     self.positions[i],
                     color = self.poscolors[i])
 
-    def drawpath(self, oldpos, newpos, idx):
+    def drawpath(self, oldpos, newpos, idx=0,color=None):
         """ draw a path from old pos to new pos for the position idx """
+        
+        if color is None:
+            color = self.poscolors[idx]
+            
         if self.isdraw:
-            self.problem.visualiser.drawpath(oldpos, newpos,color = self.poscolors[idx])
+            self.problem.visualiser.drawpath(oldpos, newpos,color = color)
 
     def drawpathbest(self, oldpos, newpos):
         """ draw paths of the best."""
@@ -1013,7 +1020,7 @@ class OptimizationProblem(Default):
         self.fixboundsfun = FixBounds.exceeder_random
 
 
-        self.tweakmethod = 'justsum'
+        self.tweakmethod = 'bucclosed'
         self.tweaksubmethod = 'bucclosed'
 
         # probability of adding noise to an element in solution vector
@@ -1167,6 +1174,8 @@ class OptimizationProblem(Default):
     def tweakfun(self, apos, method = None, submethod = None):
         # TODO: instead of if method == ... use different methods. it is easier
         # to debug.
+        
+        pos = None
 
         ## handle args
         if not(method):
@@ -1237,6 +1246,9 @@ class OptimizationProblem(Default):
             dim = random.randrange(self.ub.size)
             pos[dim] = np.random.uniform(self.lb[dim], self.ub[dim])
 
+        else:
+            raise Exception('Unknown method')
+        
         return pos
 
     def stepby(self, pos, step):
@@ -1339,13 +1351,6 @@ class GenericExperiment(Default):
 
     def do(self):
         results = []
-
-#         #### re-check options
-#         if self.ntrials > 1:
-#             print('Warning: ntrials is higher than 1. So turning 3d drawing ' +
-#                   'and animation off.')
-#             self.isdraw = False
-#             self.isanimate = False
 
         self.expdir = os.path.normpath(self.expdir)
 

@@ -50,9 +50,7 @@ class TabuSearch(OptimizationAlgorithm):
 
             #### setup for real mode if necessary
             if self.real:
-                self.tabudist = \
-                    np.linalg.norm(self.problem.lb - self.problem.ub) \
-                    / float(self.tabudistdivisor)
+                self.tabudist = np.linalg.norm(self.problem.lb - self.problem.ub) / float(self.tabudistdivisor)
                 self.tabu = lambda a: deque_similar(self.tabulist, a, self.tabudist)
 
             #### sugar
@@ -64,21 +62,12 @@ class TabuSearch(OptimizationAlgorithm):
                     raise Exception('whaat tweak gave same value???')
                 return xnew, fnew
 
-        #while True:  # for each restart
-        #    yield
-
-#            #reset color
-#            self._poscolors[0] = (np.random.uniform(),
-#                                np.random.uniform(),
-#                                np.random.uniform())
-
             ## some initial candidate solution
             xtmp = self.problem.randpos()
             S, fS = self.f(xtmp)  # S
-            self.updatex(S, fS, 0, False)
+            self.updatex(S, fS, 0,False)
 
             self.tabulist.append(S)
-
 
             while True:
                 yield
@@ -87,6 +76,8 @@ class TabuSearch(OptimizationAlgorithm):
                 R, fR = mytweak(S); yield
                 for _ in range(1, self.nt):
                     W, fW = mytweak(S); yield
+                    if self.isdraw:
+                        self.drawpath(S, R, color=(.5,.5,.5))
                     if not(tabu(W)) and (fW > fR or tabu(R)):
                         R = W
                         fR = fW
