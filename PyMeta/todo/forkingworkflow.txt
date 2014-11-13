@@ -1,0 +1,42 @@
+
+Developers:
+
+- fork the repo on bitbucket.org
+- add oaltun@epoka.edu.al in access management
+
+- open git-bash
+- go to your workspace:
+$ cd o:/r
+- clone your fork (bitbucket tells how to)
+$ git clone https://oguz211@bitbucket.org/oguz211/metaheuristics.git metaoguz211
+$ cd metaoguz211
+
+- add the central repository as upstream
+$ git remote add upstream https://oguz211@bitbucket.org/oaltun/metaheuristics.g
+it
+
+- build a new local feature-branch to work on
+$ git branch feature
+- see list of branches you have
+$ git branch
+- switch to feature branch
+$ git checkout feature
+
+- now you can pull changes from upstream anytime with
+$ git pull upstream master
+
+- do some work, then commit
+- stage all:
+$ git add . 
+- commit:
+$ git commit -m "did this and that"
+- publish:
+$ git push origin feature
+
+
+CENTRAL REPO MANAGER
+
+$ git remote add oguz211 https://oaltun@bitbucket.org/oguz211/metaheuristics.git 
+$ git fetch oguz211 feature
+$ git checkout master
+$ git merge FETCH_HEAD
