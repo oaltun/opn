@@ -1,8 +1,0 @@
-*.asv
-*.pyc
-*.aux
-*.synctex.gz
-graphics/*
-tmp/
-latex/
-
