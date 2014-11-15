@@ -18,8 +18,6 @@ def abc_recombination(i, x):
     return xtmp
 
 
-# TODO: this is a bad approach. there is a big difference between
-# 0.000001 and -0.99999. Try something different
 def assignprobabilities(fx):
     fit = fx.copy()
     for i, e in enumerate(fit):
@@ -29,7 +27,6 @@ def assignprobabilities(fx):
             fit[i] = 1.0 / (1 - e)
     return 0.9 * fit / float(np.max(fit)) + 0.1
 
-#ref Essentials of Metaheuristics, by Sean Luke
 class ArtificialBeeColony(OptimizationAlgorithm):
     def __init__(self, **kwargs):
         OptimizationAlgorithm.__init__(self)  # inherit
