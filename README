@@ -1,10 +1,15 @@
 Welcome to the Metaheuristics Repository
 ----------------------------------------
-This is a package of Metaheuristic algorithms and problems that can be 
-solved by these algorithms.
+This is a repository of projects related to global optimization.
 
-It is geared towards scientific experimentation and algorithm clarity..
+cec14py is a project for wrapping CEC 2014 Single Objective Optimization 
+competition c files.
 
-This is a software package still in alpha stage. We do not accept any kind of responsibility when used by others. 
+PyMeta is a project for building a framework for experimenting metaheuristic 
+optimization algorithms. It is geared towards scientific experimentation and 
+algorithm clarity.
+
+These software are in alpha stage. We do not accept any kind of responsibility 
+when used by others. 
 
 Licence is GPL.
