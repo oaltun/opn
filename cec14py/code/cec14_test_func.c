@@ -14,21 +14,21 @@
  * 		- mex build instructions 
  * 		- inclusion of <mex.h> 
  * 		- mexFunction definition
+ *  * We replaced "input_data" with "../cec14_input_data". 
  * 	* We changed extension of file from .cpp to .c
  * 	* We added this comment block.
  * 	
  *
  * Python wrapping:
- * 	- Install Cython. Ours is installed by Python(xy) 2.7.3.1 .
- * 	- run "python setup.py build_ext --inplace" 
- * 		to get cec14_test_func.pyd (or .so)
- * 	- test with "python main.py"
+ * 	- Install Cython and numpy.
+ * 	- run "python setup.py build_ext --inplace". This will buid cec14_test_func.pyd (or .so)
+ * 	- test with "python bin/main.py"
  *
  * See main.py for usage. 
  *
  * See _cec14_test_func.pyx and setup.py to see how it was wrapped.
  *
- * Oguz Altun (email: oguz@ce.yildiz.edu.tr)
+ * Oguz Altun (email: oguz211@gmail.com)
  * Mar. 16th 2014
  *
  */
@@ -136,7 +136,7 @@ void cec14_test_func(double *x, double *f, int nx, int mx,int func_num)
 		}
 
 		/* Load Matrix M*/
-		sprintf(FileName, "input_data/M_%d_D%d.txt", func_num,nx);
+		sprintf(FileName, "../cec14_input_data/M_%d_D%d.txt", func_num,nx);
 		fpt = fopen(FileName,"r");
 		if (fpt==NULL)
 		{
@@ -165,7 +165,7 @@ void cec14_test_func(double *x, double *f, int nx, int mx,int func_num)
 		fclose(fpt);
 		
 		/* Load shift_data */
-		sprintf(FileName, "input_data/shift_data_%d.txt", func_num);
+		sprintf(FileName, "../cec14_input_data/shift_data_%d.txt", func_num);
 		fpt = fopen(FileName,"r");
 		if (fpt==NULL)
 		{
@@ -208,7 +208,7 @@ void cec14_test_func(double *x, double *f, int nx, int mx,int func_num)
 		
 		if (func_num>=17&&func_num<=22)
 		{
-			sprintf(FileName, "input_data/shuffle_data_%d_D%d.txt", func_num, nx);
+			sprintf(FileName, "../cec14_input_data/shuffle_data_%d_D%d.txt", func_num, nx);
 			fpt = fopen(FileName,"r");
 			if (fpt==NULL)
 			{
@@ -225,7 +225,7 @@ void cec14_test_func(double *x, double *f, int nx, int mx,int func_num)
 		}
 		else if (func_num==29||func_num==30)
 		{
-			sprintf(FileName, "input_data/shuffle_data_%d_D%d.txt", func_num, nx);
+			sprintf(FileName, "../cec14_input_data/shuffle_data_%d_D%d.txt", func_num, nx);
 			fpt = fopen(FileName,"r");
 			if (fpt==NULL)
 			{

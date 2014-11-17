@@ -1,1 +1,1 @@
-See the comment at the beginning of cec14_test_func.c
+See the comment at the beginning of code/cocec14_test_func.c
