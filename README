@@ -1,4 +1,4 @@
-Welcome to the Metaheuristics Repository
+Welcome to the opn Repository
 ----------------------------------------
 This is a repository of projects related to global optimization.
 
@@ -7,9 +7,15 @@ competition c files.
 
 PyMeta is a project for building a framework for experimenting metaheuristic 
 optimization algorithms. It is geared towards scientific experimentation and 
-algorithm clarity.
+algorithm clarity. PyMeta can use cec14py.
 
 These software are in alpha stage. We do not accept any kind of responsibility 
 when used by others. 
 
 Licence is GPL.
+
+We should use the git-flow repository management approach explained here:
+http://nvie.com/posts/a-successful-git-branching-model/
+
+opn is an abbreviation for "OPtimizatioN". At first op9n was considered, but opn was choosen for simplicity. 
+
