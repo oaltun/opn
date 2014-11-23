@@ -1,8 +1,7 @@
 import numpy as np
-import wx
 
-from pymeta.algorithm.algorithmbase import OptimizationAlgorithm
-from pymeta.utils.pymetautils import randin
+from pymeta import OptimizationAlgorithm
+from pymeta import randin
 
 
 def updatepersonalbest(xnew, fnew, i, p, fp):
@@ -80,7 +79,6 @@ class ParticleSwarmOptimization(OptimizationAlgorithm):
         """ draw a path from old pos to new pos for the position idx """
         if self.isdraw:
             self.problem.visualiser.drawpath(oldpos, newpos, color = (0, 0, 0))  # draw the path;
-            wx.Yield()
 
 
 
