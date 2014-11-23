@@ -1,7 +1,7 @@
-
+# This code was written by Oguz Altun and Yunus Emre Yildiz.
 import numpy as np
-from pymeta.algorithm.algorithmbase import OptimizationAlgorithm
-from pymeta.utils.pymetautils import randin
+from pymeta import OptimizationAlgorithm
+from pymeta import randin
 import matplotlib.pyplot as plt
 
 ####################################################################################

@@ -1,6 +1,6 @@
 
-from pymeta.algorithm.algorithmbase import OptimizationAlgorithm
-from pymeta.utils.pymetautils import randin
+from pymeta import OptimizationAlgorithm
+from pymeta import randin
 from pymeta import dprint
 import numpy as np
 

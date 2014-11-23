@@ -1,9 +1,10 @@
+# This code was written by Oguz Altun and Ali Osman Topal.
+
 import numpy as np
 
-from pymeta.algorithm.algorithmbase import OptimizationAlgorithm
-from pymeta.utils.pymetautils import randin
+from pymeta import OptimizationAlgorithm
+from pymeta import randin
 
-import wx
 
 # ref: ...
 class BatAlgorithmDemo(OptimizationAlgorithm):
@@ -57,7 +58,6 @@ class BatAlgorithmDemo(OptimizationAlgorithm):
                 color = tuple(np.random.uniform(0, 1, (3,)).tolist())
                 colors.append(color)
                 vis.drawposition(pos, color = color)
-                wx.Yield()  # let mlab interact with user
 
 
         # ## main loop
@@ -69,8 +69,6 @@ class BatAlgorithmDemo(OptimizationAlgorithm):
             iteration = iteration + 1
 
             for i in xrange(n):  # #for each particle
-                if isdraw:
-                    wx.Yield()
 
                 print "----------------------------"
 

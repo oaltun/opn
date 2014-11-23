@@ -1,8 +1,8 @@
 import numpy as np
 #from numpy import *
-from pymeta.algorithm.algorithmbase import OptimizationAlgorithm
+from pymeta import OptimizationAlgorithm
 
-# based on intermediate recombination from Essentials of metaheuristics
+# Based on intermediate recombination from Essentials of metaheuristics
 # by Sean Luke. vectorised. no bounds checking, that is done automatically
 # in self.f()
 def intermediate_recombination_single_child(v, w, p):
@@ -16,7 +16,7 @@ def random_except(length, tabulist):
         if not (r in tabulist): break
     return r
 
-#ref Essentials of Metaheuristics, by Sean Luke
+#Based on Differential Evolution algorithm in Essentials of Metaheuristics, by Sean Luke
 class DifferentialEvolution(OptimizationAlgorithm):
     def __init__(self, **kwargs):
         OptimizationAlgorithm.__init__(self)  # inherit
