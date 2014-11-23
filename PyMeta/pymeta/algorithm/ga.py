@@ -1,6 +1,6 @@
 import numpy as np
 #from numpy import *
-from pymeta.algorithm.algorithmbase import OptimizationAlgorithm
+from pymeta import OptimizationAlgorithm
 
 
 #tournament selection. ref: Essentials of metaheuristics.
