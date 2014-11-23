@@ -212,6 +212,8 @@ class SetupClass(type):
 class Default(object):
     __metaclass__ = SetupClass
     def __init__(self):
+        isdebug=False
+        isdebugprintassessments=False
         pass
 
     def overwrite(self, **options):
@@ -226,28 +228,7 @@ class Default(object):
 
         overwrite(self.__dict__, **options)
 
-#    def setup(self, **kwargs):
-#        dprint('Default.setup')
-#        pass
 
-
-#     def __init__(self, **kwargs):
-#         self.__dict__.update(**kwargs)
-
-#     def __getattr__(self, attr):
-#         return self.__dict__.get(attr, None)
-
-#     def __repr__(self):
-#         keys = [key for key in dir(self) if not key.startswith('_')]
-#         return 'dict:'+str(self.__dict__)+'keys:'+str(keys)
-
-
-
-
-
-# class Struct(Default):
-#     """Class that can be used similar to a matlab struct"""
-#     pass
 
 
 
@@ -995,7 +976,7 @@ class OptimizationAlgorithm(Default):
 
 class OptimizationProblem(Default):
     def __init__(self, **kwargs):
-        dprint('OptimizationProblem.__init__')
+        #dprint('OptimizationProblem.__init__')
         Default.__init__(self)  # inherit
 
         self.lb = np.array([0, 0, 0, 0], dtype = float)
@@ -1049,12 +1030,12 @@ class OptimizationProblem(Default):
         self.shiftvector = None
 
     def setup(self, **kwargs):
-        dprint('OptimizationProblem.setup')
+        #dprint('OptimizationProblem.setup')
         self.ub = self.ub.astype(float)
         self.lb = self.lb.astype(float)
 
         if self.ndims:
-            print "setting dims"
+            #print "setting dims"
             self.ub = np.ones(self.ndims) * self.ub[0]
             self.lb = np.ones(self.ndims) * self.lb[0]
             try:
@@ -1290,33 +1271,9 @@ class OptimizationProblem(Default):
             pos = pos.dot(self.rotationmatrix)
 
         return pos
-
-
-class RandomSearch(OptimizationAlgorithm):
-    """
-    Simplest blind random search metaheuristics.
-    Just check random positions till termination.
-    """
-
-    def __init__(self, **kwargs):
-        # inherit
-        OptimizationAlgorithm.__init__(self)
-
-        self.name = 'rs'
-
-        # overwrite defaults with keyword arguments
-        # supplied by user
-        self.__dict__.update(**kwargs)
-        self.npositions = 1
-        #assume this is a minimization algorithm.
-        self.minimize = True
-
-    def search(self):
-        while True:
-            yield
-            self.f(self.problem.randpos())
-
-
+    
+# for backward compatibility:
+GenericOptimizationProblem = OptimizationProblem
 
 
 
@@ -1407,10 +1364,10 @@ class GenericExperiment(Default):
         algo = t['algorithm']
         prob = t['problem']
 
+        shortname = prob.name+'_'+algo.name+'_'+str(t['trial'])+'.json.txt'
+        filename = self.logdir+'/'+shortname
         
-        filename = self.logdir+'/'+prob.name+'_'+algo.name+'_'+str(t['trial'])+'.json.txt'
-        
-        print('log: {}'.format(filename))
+        print('Logging to {}: {}'.format(shortname,filename))
         mkdirfor(filename)
         with open(filename, 'wb') as fd:
             logdict=dict()
@@ -1436,28 +1393,8 @@ class GenericExperiment(Default):
             json.dump(logdict, fd)
 
 
-import algorithm
-import problem
-import visualiser
-
 def main():
-
-    class Shouter:
-        def __init__(self, name, shoutfun):
-            self.name = name
-            self.shout = shoutfun
-
-        def shoutfun1(self):
-            print('I am ' + self.name)
-
-        def shoutfun2(self):
-            print('This is ' + self.name)
-
-    s1 = Shouter('ozi', Shouter.shoutfun1)
-    s1.shout(s1)
-
-    s2 = Shouter('ali', Shouter.shoutfun2)
-    s2.shout(s1)
+    pass
 
 if __name__ == '__main__':
     main()

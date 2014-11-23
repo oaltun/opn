@@ -1,13 +1,36 @@
 
-from pymeta.algorithm.algorithmbase import OptimizationAlgorithm
-from pymeta.utils.pymetautils import randin
-from pymeta import dprint
 import numpy as np
+import pymeta as pm
 
-# HillClimbing:
-class HillAscend(OptimizationAlgorithm):
+
+class RandomSearch(pm.OptimizationAlgorithm):
+    """
+    Simplest blind random search metaheuristics.
+    Just check random positions till termination.
+    """
+
     def __init__(self, **kwargs):
-        OptimizationAlgorithm.__init__(self)  # inherit
+        # inherit
+        pm.OptimizationAlgorithm.__init__(self)
+
+        self.name = 'rs'
+
+        # overwrite defaults with keyword arguments
+        # supplied by user
+        self.__dict__.update(**kwargs)
+        self.npositions = 1
+        #assume this is a minimization algorithm.
+        self.minimize = True
+
+    def search(self):
+        while True:
+            yield
+            self.f(self.problem.randpos())
+
+
+class HillClimbingParallel(pm.OptimizationAlgorithm):
+    def __init__(self, **kwargs):
+        pm.OptimizationAlgorithm.__init__(self)  # inherit
 
         self.name = 'ha'
         self.maxstepdivisor = 40
@@ -25,18 +48,18 @@ class HillAscend(OptimizationAlgorithm):
             for i in xrange(self.n):  # #for each climber i
                 yield
                 # ## peek: take a look to a close to this position: xtmp
-                xtmp = self.x[i] + randin(-self.maxstep, self.maxstep)
+                xtmp = self.x[i] + pm.randin(-self.maxstep, self.maxstep)
                 xnew, fnew = self.f(xtmp)
                 if self.isbetterORequal(fnew, self.fx[i]):
                     self.updatex(xnew, fnew, i)
 
-HillClimbing = HillAscend
-ParallelClimbing = HillAscend
+# other names for backward compatibility
+ParallelClimbing = HillClimbing = HillAscend = HillClimbingParallel
 
-# HillClimbing:
-class HillAscendRandomRestart(OptimizationAlgorithm):
+
+class HillClimbingRandomRestart(pm.OptimizationAlgorithm):
     def __init__(self, **kwargs):
-        OptimizationAlgorithm.__init__(self)  # inherit
+        pm.OptimizationAlgorithm.__init__(self)  # inherit
 
         self.name = 'hars'
         self.maxstepdivisor = 40
@@ -73,39 +96,6 @@ class HillAscendRandomRestart(OptimizationAlgorithm):
                     badtrial = 0
                 else:
                     badtrial += 1
-
-HillClimbingRandomRestart = HillAscendRandomRestart
-
-
-
-class HillDescend(OptimizationAlgorithm):
-    def __init__(self, **kwargs):
-        OptimizationAlgorithm.__init__(self)  # inherit
-
-        self.name = 'hd'
-        self.maxstepdivisor = 40
-
-        self.__dict__.update(**kwargs)
-
-        self.minimize = True
-
-    def search(self):
-
-        # ## main loop
-        while True:  # forever...
-            for i in xrange(self.n):  # #for each climber i
-                yield  # let the controller decide whether stop or continue.
-                # ## peek: take a look to a close to this position: xtmp
-                xtmp = self.x[i] + randin(-self.maxstep, self.maxstep)
-                xnew, fnew = self.f(xtmp)
-                if fnew < self.fx[i]:
-                    self.updatex(xnew, fnew, i)
-
-
-
-
-
-
-
-
-
+                    
+# Additional name for backward compatibility:
+HillAscendRandomRestart = HillClimbingRandomRestart

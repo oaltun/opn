@@ -1,6 +1,6 @@
+#This code was written by Oguz Altun and Tarik Korkmaz.
 import numpy as np
-#from numpy import *
-from pymeta.algorithm.algorithmbase import OptimizationAlgorithm
+from pymeta import OptimizationAlgorithm
 
 # recombine solution with index i, with a random other solution in the
 # population x. return new solution and its
