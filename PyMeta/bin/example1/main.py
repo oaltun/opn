@@ -7,9 +7,6 @@ from __future__ import division
 # It can be absolute or relative.
 path_to_pymeta = '../../../../opn/PyMeta'
 
-# Path to the directory cecec14soo_test_func.pyd resides in.
-# It may be absolute or relative.
-path_to_cec14py = '../../../../opn/CEC14Py/cec14py'
 
 # END SETTINGS FOR IMPORTS
 
@@ -25,13 +22,13 @@ import matplotlib.pyplot as plt
 filedir = os.path.dirname(os.path.realpath(__file__))
 print "Starting in directory below:\n", filedir, "\n"
 os.chdir(filedir)
-sys.path.extend(['.',path_to_pymeta,path_to_cec14py])
+sys.path.extend(['.',path_to_pymeta])
 
 
 
 print("Importing pymeta")
 import pymeta as pm
-from pymeta.problem import benchmark,  cec14soo
+from pymeta.problem import benchmark
 from pymeta.algorithm import pso
 print("Imported pymeta")
 print('')
@@ -49,12 +46,10 @@ stop ={'assessmentcnt':1000}
 
 # The 'benchmark' module has some classical test problems:
 
-# ub=np.array([5,5])
-# lb = -ub
-# problem = benchmark.RastriginProblem(ub=ub,lb=lb)
+ub=np.array([5,5])
+lb = -ub
+problem = benchmark.RastriginProblem(ub=ub,lb=lb)
 
-# 'cec14soo' module wraps the CEC 2014 single objective optimization competition suit:
-problem = cec14soo.Cec14SOOProblem(ndims=10,func_num=24)
 
 # PREPARE THE ALGORITHM
 
