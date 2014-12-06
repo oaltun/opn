@@ -15,5 +15,5 @@ and add 'PyMeta' directory to your pythonpath.
 
 See examples in the PyMeta/bin directory for the usage.
 
-The repo management will folow the approach explained here: 
+The repo management will follow the approach explained here: 
 http://nvie.com/posts/a-successful-git-branching-model/
