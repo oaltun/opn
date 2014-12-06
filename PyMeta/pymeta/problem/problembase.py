@@ -1,2 +1,4 @@
-print("Warning: prefer using OptiimizationProblem from pymeta directly")
+print("Warning from problembase.py: prefer using OptimizationProblem from pymeta directly")
+import traceback
+traceback.print_stack()
 from pymeta import OptimizationProblem as GenericOptimizationProblem
