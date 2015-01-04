@@ -1,7 +1,7 @@
-PyMeta
+opn/PyMeta
 ------
 
-PyMeta is a framework for experimenting on metaheuristic optimization algorithms.
+opn/PyMeta is a framework for experimenting on metaheuristic optimization algorithms.
 
 This software is in alpha stage. They are useful for us, but we do not accept
 any kind of responsibility if you use it. They may ruin your day or more... You are 
