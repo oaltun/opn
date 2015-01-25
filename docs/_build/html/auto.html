@@ -1,0 +1,1443 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Auto Generated Documentation &mdash; opn/opn 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="opn/opn 0.1 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="index.html">opn/opn 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/auto.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-opn">
+<span id="auto-generated-documentation"></span><h1>Auto Generated Documentation<a class="headerlink" href="#module-opn" title="Permalink to this headline">¶</a></h1>
+<p>REFERENCES</p>
+<dl class="docutils">
+<dt>[Luke13]: Essentials of Metaheuristics, Second Edition, Online Version 2.0,</dt>
+<dd>June, 2013</dd>
+</dl>
+<dl class="class">
+<dt id="opn.Default">
+<em class="property">class </em><tt class="descclassname">opn.</tt><tt class="descname">Default</tt><a class="reference internal" href="_modules/opn.html#Default"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.Default" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="opn.Default.overwrite">
+<tt class="descname">overwrite</tt><big>(</big><em>**options</em><big>)</big><a class="reference internal" href="_modules/opn.html#Default.overwrite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.Default.overwrite" title="Permalink to this definition">¶</a></dt>
+<dd><p>overwrite already-existing/default values in self.dict &#8216;
+&#8216;with the ones in the options dictionary.
+if the options dictionary has keys that are not in orig, they
+are not assigned to orig. This function is intended for
+easy, safe option assignments in places like __init__()
+functions</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="opn.DummyVisualiser">
+<em class="property">class </em><tt class="descclassname">opn.</tt><tt class="descname">DummyVisualiser</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#DummyVisualiser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.DummyVisualiser" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="opn.DummyVisualiser.drawbest">
+<tt class="descname">drawbest</tt><big>(</big><em>p</em><big>)</big><a class="reference internal" href="_modules/opn.html#DummyVisualiser.drawbest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.DummyVisualiser.drawbest" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.DummyVisualiser.drawpath">
+<tt class="descname">drawpath</tt><big>(</big><em>p1</em>, <em>p2</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#DummyVisualiser.drawpath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.DummyVisualiser.drawpath" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.DummyVisualiser.drawposition">
+<tt class="descname">drawposition</tt><big>(</big><em>p</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#DummyVisualiser.drawposition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.DummyVisualiser.drawposition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.DummyVisualiser.flush">
+<tt class="descname">flush</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#DummyVisualiser.flush"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.DummyVisualiser.flush" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.DummyVisualiser.init">
+<tt class="descname">init</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#DummyVisualiser.init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.DummyVisualiser.init" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.DummyVisualiser.overwrite">
+<tt class="descname">overwrite</tt><big>(</big><em>**options</em><big>)</big><a class="headerlink" href="#opn.DummyVisualiser.overwrite" title="Permalink to this definition">¶</a></dt>
+<dd><p>overwrite already-existing/default values in self.dict &#8216;
+&#8216;with the ones in the options dictionary.
+if the options dictionary has keys that are not in orig, they
+are not assigned to orig. This function is intended for
+easy, safe option assignments in places like __init__()
+functions</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="opn.DummyVisualiser.setup">
+<tt class="descname">setup</tt><big>(</big><big>)</big><a class="headerlink" href="#opn.DummyVisualiser.setup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.DummyVisualiser.show">
+<tt class="descname">show</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#DummyVisualiser.show"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.DummyVisualiser.show" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="opn.FixBounds">
+<em class="property">class </em><tt class="descclassname">opn.</tt><tt class="descname">FixBounds</tt><a class="reference internal" href="_modules/opn.html#FixBounds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.FixBounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Namespace for static methods of fixing bounds</p>
+<dl class="staticmethod">
+<dt id="opn.FixBounds.exceeder_random">
+<em class="property">static </em><tt class="descname">exceeder_random</tt><big>(</big><em>ob</em>, <em>pos</em><big>)</big><a class="reference internal" href="_modules/opn.html#FixBounds.exceeder_random"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.FixBounds.exceeder_random" title="Permalink to this definition">¶</a></dt>
+<dd><p>assign random values only to the
+dimensions that are out of bounds</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="opn.FixBounds.full_random">
+<em class="property">static </em><tt class="descname">full_random</tt><big>(</big><em>ob</em>, <em>pos</em><big>)</big><a class="reference internal" href="_modules/opn.html#FixBounds.full_random"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.FixBounds.full_random" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="opn.FixBounds.to_edges">
+<em class="property">static </em><tt class="descname">to_edges</tt><big>(</big><em>ob</em>, <em>pos</em><big>)</big><a class="reference internal" href="_modules/opn.html#FixBounds.to_edges"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.FixBounds.to_edges" title="Permalink to this definition">¶</a></dt>
+<dd><p>out of bounds dimensions are moved
+to edges.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="opn.GenericExperiment">
+<em class="property">class </em><tt class="descclassname">opn.</tt><tt class="descname">GenericExperiment</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#GenericExperiment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.GenericExperiment" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="opn.GenericExperiment.do">
+<tt class="descname">do</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#GenericExperiment.do"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.GenericExperiment.do" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.GenericExperiment.overwrite">
+<tt class="descname">overwrite</tt><big>(</big><em>**options</em><big>)</big><a class="headerlink" href="#opn.GenericExperiment.overwrite" title="Permalink to this definition">¶</a></dt>
+<dd><p>overwrite already-existing/default values in self.dict &#8216;
+&#8216;with the ones in the options dictionary.
+if the options dictionary has keys that are not in orig, they
+are not assigned to orig. This function is intended for
+easy, safe option assignments in places like __init__()
+functions</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="opn.GenericExperiment.runonce">
+<tt class="descname">runonce</tt><big>(</big><em>algorithm</em>, <em>problem</em>, <em>trial</em><big>)</big><a class="reference internal" href="_modules/opn.html#GenericExperiment.runonce"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.GenericExperiment.runonce" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.GenericExperiment.writelog">
+<tt class="descname">writelog</tt><big>(</big><em>t</em><big>)</big><a class="reference internal" href="_modules/opn.html#GenericExperiment.writelog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.GenericExperiment.writelog" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="opn.GenericOptimizationProblem">
+<tt class="descclassname">opn.</tt><tt class="descname">GenericOptimizationProblem</tt><a class="headerlink" href="#opn.GenericOptimizationProblem" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="opn.html#opn.OptimizationProblem" title="opn.OptimizationProblem"><tt class="xref py py-class docutils literal"><span class="pre">OptimizationProblem</span></tt></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="opn.OptimizationAlgorithm">
+<em class="property">class </em><tt class="descclassname">opn.</tt><tt class="descname">OptimizationAlgorithm</tt><a class="reference internal" href="_modules/opn.html#OptimizationAlgorithm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationAlgorithm" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="opn.OptimizationAlgorithm.bestcolor">
+<tt class="descname">bestcolor</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationAlgorithm.bestcolor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationAlgorithm.bestcolor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationAlgorithm.dolastlog">
+<tt class="descname">dolastlog</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationAlgorithm.dolastlog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationAlgorithm.dolastlog" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationAlgorithm.dolog">
+<tt class="descname">dolog</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationAlgorithm.dolog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationAlgorithm.dolog" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationAlgorithm.draw">
+<tt class="descname">draw</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationAlgorithm.draw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationAlgorithm.draw" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationAlgorithm.drawbest">
+<tt class="descname">drawbest</tt><big>(</big><em>pos</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationAlgorithm.drawbest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationAlgorithm.drawbest" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationAlgorithm.drawfinalpositions">
+<tt class="descname">drawfinalpositions</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationAlgorithm.drawfinalpositions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationAlgorithm.drawfinalpositions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationAlgorithm.drawpath">
+<tt class="descname">drawpath</tt><big>(</big><em>oldpos</em>, <em>newpos</em>, <em>idx=0</em>, <em>color=None</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationAlgorithm.drawpath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationAlgorithm.drawpath" title="Permalink to this definition">¶</a></dt>
+<dd><p>draw a path from old pos to new pos for the position idx</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationAlgorithm.drawpathbest">
+<tt class="descname">drawpathbest</tt><big>(</big><em>oldpos</em>, <em>newpos</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationAlgorithm.drawpathbest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationAlgorithm.drawpathbest" title="Permalink to this definition">¶</a></dt>
+<dd><p>draw paths of the best.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationAlgorithm.f">
+<tt class="descname">f</tt><big>(</big><em>poslist</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationAlgorithm.f"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationAlgorithm.f" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationAlgorithm.hillclimb">
+<tt class="descname">hillclimb</tt><big>(</big><em>i</em>, <em>hclimit=-1</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationAlgorithm.hillclimb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationAlgorithm.hillclimb" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationAlgorithm.iscontinue">
+<tt class="descname">iscontinue</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationAlgorithm.iscontinue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationAlgorithm.iscontinue" title="Permalink to this definition">¶</a></dt>
+<dd><p>decide whether we should continue searching.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationAlgorithm.overwrite">
+<tt class="descname">overwrite</tt><big>(</big><em>**options</em><big>)</big><a class="headerlink" href="#opn.OptimizationAlgorithm.overwrite" title="Permalink to this definition">¶</a></dt>
+<dd><p>overwrite already-existing/default values in self.dict &#8216;
+&#8216;with the ones in the options dictionary.
+if the options dictionary has keys that are not in orig, they
+are not assigned to orig. This function is intended for
+easy, safe option assignments in places like __init__()
+functions</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationAlgorithm.prepareposcolors">
+<tt class="descname">prepareposcolors</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationAlgorithm.prepareposcolors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationAlgorithm.prepareposcolors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationAlgorithm.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationAlgorithm.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationAlgorithm.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationAlgorithm.updatebest">
+<tt class="descname">updatebest</tt><big>(</big><em>xnew</em>, <em>fnew</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationAlgorithm.updatebest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationAlgorithm.updatebest" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationAlgorithm.updateposnbest">
+<tt class="descname">updateposnbest</tt><big>(</big><em>xnew</em>, <em>fnew</em>, <em>i</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationAlgorithm.updateposnbest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationAlgorithm.updateposnbest" title="Permalink to this definition">¶</a></dt>
+<dd><p>if xnew is better than x, update x.
+if xnew is better than xbest, update xbest.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationAlgorithm.updatex">
+<tt class="descname">updatex</tt><big>(</big><em>xnew</em>, <em>fnew</em>, <em>i</em>, <em>isdraw=True</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationAlgorithm.updatex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationAlgorithm.updatex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="opn.OptimizationProblem">
+<em class="property">class </em><tt class="descclassname">opn.</tt><tt class="descname">OptimizationProblem</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="opn.OptimizationProblem.assessmentcnt">
+<tt class="descname">assessmentcnt</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.assessmentcnt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.assessmentcnt" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.cost">
+<tt class="descname">cost</tt><big>(</big><em>position</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.cost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.cost" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.costfun">
+<tt class="descname">costfun</tt><big>(</big><em>x</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.costfun"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.costfun" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.dims">
+<tt class="descname">dims</tt><big>(</big><big>)</big><a class="headerlink" href="#opn.OptimizationProblem.dims" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.fixbounds">
+<tt class="descname">fixbounds</tt><big>(</big><em>pos</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.fixbounds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.fixbounds" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.fixposition">
+<tt class="descname">fixposition</tt><big>(</big><em>pos</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.fixposition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.fixposition" title="Permalink to this definition">¶</a></dt>
+<dd><p>fix problems about position:
+invalid, etc.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.getdims">
+<tt class="descname">getdims</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.getdims"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.getdims" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.getrotationmatrix">
+<tt class="descname">getrotationmatrix</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.getrotationmatrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.getrotationmatrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.getshiftvector">
+<tt class="descname">getshiftvector</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.getshiftvector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.getshiftvector" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.height">
+<tt class="descname">height</tt><big>(</big><em>position</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.height"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.heightfun">
+<tt class="descname">heightfun</tt><big>(</big><em>x</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.heightfun"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.heightfun" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.overwrite">
+<tt class="descname">overwrite</tt><big>(</big><em>**options</em><big>)</big><a class="headerlink" href="#opn.OptimizationProblem.overwrite" title="Permalink to this definition">¶</a></dt>
+<dd><p>overwrite already-existing/default values in self.dict &#8216;
+&#8216;with the ones in the options dictionary.
+if the options dictionary has keys that are not in orig, they
+are not assigned to orig. This function is intended for
+easy, safe option assignments in places like __init__()
+functions</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.pos2str">
+<tt class="descname">pos2str</tt><big>(</big><em>pos</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.pos2str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.pos2str" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.quality">
+<tt class="descname">quality</tt><big>(</big><em>position</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.quality"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.quality" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.randpos">
+<tt class="descname">randpos</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.randpos"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.randpos" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.randposn">
+<tt class="descname">randposn</tt><big>(</big><em>nrows</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.randposn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.randposn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.resetassessmentcnt">
+<tt class="descname">resetassessmentcnt</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.resetassessmentcnt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.resetassessmentcnt" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.setup">
+<tt class="descname">setup</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.setup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.shiftNrotate">
+<tt class="descname">shiftNrotate</tt><big>(</big><em>pos</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.shiftNrotate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.shiftNrotate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.stepby">
+<tt class="descname">stepby</tt><big>(</big><em>pos</em>, <em>step</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.stepby"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.stepby" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.stepbyfun">
+<tt class="descname">stepbyfun</tt><big>(</big><em>pos</em>, <em>step</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.stepbyfun"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.stepbyfun" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.tweak">
+<tt class="descname">tweak</tt><big>(</big><em>pos</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.tweak"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.tweak" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.tweakfun">
+<tt class="descname">tweakfun</tt><big>(</big><em>apos</em>, <em>method=None</em>, <em>submethod=None</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.tweakfun"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.tweakfun" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="opn.OptimizationVisualiser">
+<em class="property">class </em><tt class="descclassname">opn.</tt><tt class="descname">OptimizationVisualiser</tt><a class="reference internal" href="_modules/opn.html#OptimizationVisualiser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationVisualiser" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="opn.OptimizationVisualiser.overwrite">
+<tt class="descname">overwrite</tt><big>(</big><em>**options</em><big>)</big><a class="headerlink" href="#opn.OptimizationVisualiser.overwrite" title="Permalink to this definition">¶</a></dt>
+<dd><p>overwrite already-existing/default values in self.dict &#8216;
+&#8216;with the ones in the options dictionary.
+if the options dictionary has keys that are not in orig, they
+are not assigned to orig. This function is intended for
+easy, safe option assignments in places like __init__()
+functions</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationVisualiser.setup">
+<tt class="descname">setup</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationVisualiser.setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationVisualiser.setup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="opn.Path">
+<em class="property">class </em><tt class="descclassname">opn.</tt><tt class="descname">Path</tt><big>(</big><em>vertices</em>, <em>codes=None</em>, <em>_interpolation_steps=1</em>, <em>closed=False</em>, <em>readonly=False</em><big>)</big><a class="headerlink" href="#opn.Path" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#opn.Path" title="opn.Path"><tt class="xref py py-class docutils literal"><span class="pre">Path</span></tt></a> represents a series of possibly disconnected,
+possibly closed, line and curve segments.</p>
+<dl class="docutils">
+<dt>The underlying storage is made up of two parallel numpy arrays:</dt>
+<dd><ul class="first last simple">
+<li><em>vertices</em>: an Nx2 float array of vertices</li>
+<li><em>codes</em>: an N-length uint8 array of vertex types</li>
+</ul>
+</dd>
+</dl>
+<p>These two arrays always have the same length in the first
+dimension.  For example, to represent a cubic curve, you must
+provide three vertices as well as three codes <tt class="docutils literal"><span class="pre">CURVE3</span></tt>.</p>
+<p>The code types are:</p>
+<blockquote>
+<div><ul>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">STOP</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">1 vertex (ignored)</span></dt>
+<dd><p class="first last">A marker for the end of the entire path (currently not
+required and ignored)</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">MOVETO</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">1 vertex</span></dt>
+<dd><p class="first last">Pick up the pen and move to the given vertex.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">LINETO</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">1 vertex</span></dt>
+<dd><p class="first last">Draw a line from the current position to the given vertex.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">CURVE3</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">1 control point, 1 endpoint</span></dt>
+<dd><p class="first last">Draw a quadratic Bezier curve from the current position,
+with the given control point, to the given end point.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">CURVE4</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">2 control points, 1 endpoint</span></dt>
+<dd><p class="first last">Draw a cubic Bezier curve from the current position, with
+the given control points, to the given end point.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">CLOSEPOLY</span></tt> <span class="classifier-delimiter">:</span> <span class="classifier">1 vertex (ignored)</span></dt>
+<dd><p class="first last">Draw a line segment to the start point of the current
+polyline.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<p>Users of Path objects should not access the vertices and codes
+arrays directly.  Instead, they should use <a class="reference internal" href="#opn.Path.iter_segments" title="opn.Path.iter_segments"><tt class="xref py py-meth docutils literal"><span class="pre">iter_segments()</span></tt></a>
+or <a class="reference internal" href="#opn.Path.cleaned" title="opn.Path.cleaned"><tt class="xref py py-meth docutils literal"><span class="pre">cleaned()</span></tt></a> to get the vertex/code pairs.  This is important,
+since many <a class="reference internal" href="#opn.Path" title="opn.Path"><tt class="xref py py-class docutils literal"><span class="pre">Path</span></tt></a> objects, as an optimization, do not store a
+<em>codes</em> at all, but have a default one provided for them by
+<a class="reference internal" href="#opn.Path.iter_segments" title="opn.Path.iter_segments"><tt class="xref py py-meth docutils literal"><span class="pre">iter_segments()</span></tt></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The vertices and codes arrays should be treated as
+immutable &#8211; there are a number of optimizations and assumptions
+made up front in the constructor that will not change when the
+data changes.</p>
+</div>
+<dl class="attribute">
+<dt id="opn.Path.CLOSEPOLY">
+<tt class="descname">CLOSEPOLY</tt><em class="property"> = 79</em><a class="headerlink" href="#opn.Path.CLOSEPOLY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="opn.Path.CURVE3">
+<tt class="descname">CURVE3</tt><em class="property"> = 3</em><a class="headerlink" href="#opn.Path.CURVE3" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="opn.Path.CURVE4">
+<tt class="descname">CURVE4</tt><em class="property"> = 4</em><a class="headerlink" href="#opn.Path.CURVE4" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="opn.Path.LINETO">
+<tt class="descname">LINETO</tt><em class="property"> = 2</em><a class="headerlink" href="#opn.Path.LINETO" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="opn.Path.MOVETO">
+<tt class="descname">MOVETO</tt><em class="property"> = 1</em><a class="headerlink" href="#opn.Path.MOVETO" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="opn.Path.NUM_VERTICES_FOR_CODE">
+<tt class="descname">NUM_VERTICES_FOR_CODE</tt><em class="property"> = {0: 1, 1: 1, 2: 1, 3: 2, 4: 3, 79: 1}</em><a class="headerlink" href="#opn.Path.NUM_VERTICES_FOR_CODE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="opn.Path.STOP">
+<tt class="descname">STOP</tt><em class="property"> = 0</em><a class="headerlink" href="#opn.Path.STOP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="opn.Path.arc">
+<em class="property">classmethod </em><tt class="descname">arc</tt><big>(</big><em>theta1</em>, <em>theta2</em>, <em>n=None</em>, <em>is_wedge=False</em><big>)</big><a class="headerlink" href="#opn.Path.arc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an arc on the unit circle from angle
+<em>theta1</em> to angle <em>theta2</em> (in degrees).</p>
+<p>If <em>n</em> is provided, it is the number of spline segments to make.
+If <em>n</em> is not provided, the number of spline segments is
+determined based on the delta between <em>theta1</em> and <em>theta2</em>.</p>
+<blockquote>
+<div>Masionobe, L.  2003.  <a class="reference external" href="http://www.spaceroots.org/documents/ellipse/index.html">Drawing an elliptical arc using
+polylines, quadratic or cubic Bezier curves</a>.</div></blockquote>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="opn.Path.circle">
+<em class="property">classmethod </em><tt class="descname">circle</tt><big>(</big><em>center=(0.0</em>, <em>0.0)</em>, <em>radius=1.0</em>, <em>readonly=False</em><big>)</big><a class="headerlink" href="#opn.Path.circle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a Path representing a circle of a given radius and center.</p>
+<dl class="docutils">
+<dt>center <span class="classifier-delimiter">:</span> <span class="classifier">pair of floats</span></dt>
+<dd>The center of the circle. Default <tt class="docutils literal"><span class="pre">(0,</span> <span class="pre">0)</span></tt>.</dd>
+<dt>radius <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd>The radius of the circle. Default is 1.</dd>
+<dt>readonly <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd>Whether the created path should have the &#8220;readonly&#8221; argument
+set when creating the Path instance.</dd>
+</dl>
+<p>The circle is approximated using cubic Bezier curves.  This
+uses 8 splines around the circle using the approach presented
+here:</p>
+<blockquote>
+<div>Lancaster, Don.  <a class="reference external" href="http://www.tinaja.com/glib/ellipse4.pdf">Approximating a Circle or an Ellipse Using Four
+Bezier Cubic Splines</a>.</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="opn.Path.cleaned">
+<tt class="descname">cleaned</tt><big>(</big><em>transform=None</em>, <em>remove_nans=False</em>, <em>clip=None</em>, <em>quantize=False</em>, <em>simplify=False</em>, <em>curves=False</em>, <em>stroke_width=1.0</em>, <em>snap=False</em>, <em>sketch=None</em><big>)</big><a class="headerlink" href="#opn.Path.cleaned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cleans up the path according to the parameters returning a new
+Path instance.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">See <a class="reference internal" href="#opn.Path.iter_segments" title="opn.Path.iter_segments"><tt class="xref py py-meth docutils literal"><span class="pre">iter_segments()</span></tt></a> for details of the keyword arguments.</p>
+</div>
+<p>Path instance with cleaned up vertices and codes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="opn.Path.clip_to_bbox">
+<tt class="descname">clip_to_bbox</tt><big>(</big><em>bbox</em>, <em>inside=True</em><big>)</big><a class="headerlink" href="#opn.Path.clip_to_bbox" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clip the path to the given bounding box.</p>
+<p>The path must be made up of one or more closed polygons.  This
+algorithm will not behave correctly for unclosed paths.</p>
+<p>If <em>inside</em> is <cite>True</cite>, clip to the inside of the box, otherwise
+to the outside of the box.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="opn.Path.code_type">
+<tt class="descname">code_type</tt><a class="headerlink" href="#opn.Path.code_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <tt class="xref py py-class docutils literal"><span class="pre">uint8</span></tt></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="opn.Path.codes">
+<tt class="descname">codes</tt><a class="headerlink" href="#opn.Path.codes" title="Permalink to this definition">¶</a></dt>
+<dd><p>The list of codes in the <cite>Path</cite> as a 1-D numpy array.  Each
+code is one of <cite>STOP</cite>, <cite>MOVETO</cite>, <cite>LINETO</cite>, <cite>CURVE3</cite>, <cite>CURVE4</cite>
+or <cite>CLOSEPOLY</cite>.  For codes that correspond to more than one
+vertex (<cite>CURVE3</cite> and <cite>CURVE4</cite>), that code will be repeated so
+that the length of <cite>self.vertices</cite> and <cite>self.codes</cite> is always
+the same.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="opn.Path.contains_path">
+<tt class="descname">contains_path</tt><big>(</big><em>path</em>, <em>transform=None</em><big>)</big><a class="headerlink" href="#opn.Path.contains_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns <em>True</em> if this path completely contains the given path.</p>
+<p>If <em>transform</em> is not <em>None</em>, the path will be transformed
+before performing the test.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="opn.Path.contains_point">
+<tt class="descname">contains_point</tt><big>(</big><em>point</em>, <em>transform=None</em>, <em>radius=0.0</em><big>)</big><a class="headerlink" href="#opn.Path.contains_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns <em>True</em> if the path contains the given point.</p>
+<p>If <em>transform</em> is not <em>None</em>, the path will be transformed
+before performing the test.</p>
+<p><em>radius</em> allows the path to be made slightly larger or
+smaller.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="opn.Path.contains_points">
+<tt class="descname">contains_points</tt><big>(</big><em>points</em>, <em>transform=None</em>, <em>radius=0.0</em><big>)</big><a class="headerlink" href="#opn.Path.contains_points" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a bool array which is <em>True</em> if the path contains the
+corresponding point.</p>
+<p>If <em>transform</em> is not <em>None</em>, the path will be transformed
+before performing the test.</p>
+<p><em>radius</em> allows the path to be made slightly larger or
+smaller.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="opn.Path.copy">
+<tt class="descname">copy</tt><big>(</big><big>)</big><a class="headerlink" href="#opn.Path.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a shallow copy of the <cite>Path</cite>, which will share the
+vertices and codes with the source <cite>Path</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="opn.Path.deepcopy">
+<tt class="descname">deepcopy</tt><big>(</big><big>)</big><a class="headerlink" href="#opn.Path.deepcopy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a deepcopy of the <cite>Path</cite>.  The <cite>Path</cite> will not be
+readonly, even if the source <cite>Path</cite> is.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="opn.Path.get_extents">
+<tt class="descname">get_extents</tt><big>(</big><em>transform=None</em><big>)</big><a class="headerlink" href="#opn.Path.get_extents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the extents (<em>xmin</em>, <em>ymin</em>, <em>xmax</em>, <em>ymax</em>) of the
+path.</p>
+<p>Unlike computing the extents on the <em>vertices</em> alone, this
+algorithm will take into account the curves and deal with
+control points appropriately.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="opn.Path.has_nonfinite">
+<tt class="descname">has_nonfinite</tt><a class="headerlink" href="#opn.Path.has_nonfinite" title="Permalink to this definition">¶</a></dt>
+<dd><p><cite>True</cite> if the vertices array has nonfinite values.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="opn.Path.hatch">
+<em class="property">classmethod </em><tt class="descname">hatch</tt><big>(</big><em>hatchpattern</em>, <em>density=6</em><big>)</big><a class="headerlink" href="#opn.Path.hatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a hatch specifier, <em>hatchpattern</em>, generates a Path that
+can be used in a repeated hatching pattern.  <em>density</em> is the
+number of lines per unit square.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="opn.Path.interpolated">
+<tt class="descname">interpolated</tt><big>(</big><em>steps</em><big>)</big><a class="headerlink" href="#opn.Path.interpolated" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a new path resampled to length N x steps.  Does not
+currently handle interpolating curves.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="opn.Path.intersects_bbox">
+<tt class="descname">intersects_bbox</tt><big>(</big><em>bbox</em>, <em>filled=True</em><big>)</big><a class="headerlink" href="#opn.Path.intersects_bbox" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns <em>True</em> if this path intersects a given
+<tt class="xref py py-class docutils literal"><span class="pre">Bbox</span></tt>.</p>
+<p><em>filled</em>, when True, treats the path as if it was filled.
+That is, if one path completely encloses the other,
+<a class="reference internal" href="#opn.Path.intersects_path" title="opn.Path.intersects_path"><tt class="xref py py-meth docutils literal"><span class="pre">intersects_path()</span></tt></a> will return True.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="opn.Path.intersects_path">
+<tt class="descname">intersects_path</tt><big>(</big><em>other</em>, <em>filled=True</em><big>)</big><a class="headerlink" href="#opn.Path.intersects_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns <em>True</em> if this path intersects another given path.</p>
+<p><em>filled</em>, when True, treats the paths as if they were filled.
+That is, if one path completely encloses the other,
+<a class="reference internal" href="#opn.Path.intersects_path" title="opn.Path.intersects_path"><tt class="xref py py-meth docutils literal"><span class="pre">intersects_path()</span></tt></a> will return True.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="opn.Path.iter_segments">
+<tt class="descname">iter_segments</tt><big>(</big><em>transform=None</em>, <em>remove_nans=True</em>, <em>clip=None</em>, <em>snap=False</em>, <em>stroke_width=1.0</em>, <em>simplify=None</em>, <em>curves=True</em>, <em>sketch=None</em><big>)</big><a class="headerlink" href="#opn.Path.iter_segments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterates over all of the curve segments in the path.  Each
+iteration returns a 2-tuple (<em>vertices</em>, <em>code</em>), where
+<em>vertices</em> is a sequence of 1 - 3 coordinate pairs, and <em>code</em> is
+one of the <a class="reference internal" href="#opn.Path" title="opn.Path"><tt class="xref py py-class docutils literal"><span class="pre">Path</span></tt></a> codes.</p>
+<p>Additionally, this method can provide a number of standard
+cleanups and conversions to the path.</p>
+<dl class="docutils">
+<dt>transform <span class="classifier-delimiter">:</span> <span class="classifier">None or <tt class="xref py py-class docutils literal"><span class="pre">Transform</span></tt> instance</span></dt>
+<dd>If not None, the given affine transformation will
+be applied to the path.</dd>
+<dt>remove_nans <span class="classifier-delimiter">:</span> <span class="classifier">{False, True}, optional</span></dt>
+<dd>If True, will remove all NaNs from the path and
+insert MOVETO commands to skip over them.</dd>
+<dt>clip <span class="classifier-delimiter">:</span> <span class="classifier">None or sequence, optional</span></dt>
+<dd>If not None, must be a four-tuple (x1, y1, x2, y2)
+defining a rectangle in which to clip the path.</dd>
+<dt>snap <span class="classifier-delimiter">:</span> <span class="classifier">None or bool, optional</span></dt>
+<dd>If None, auto-snap to pixels, to reduce
+fuzziness of rectilinear lines.  If True, force snapping, and
+if False, don&#8217;t snap.</dd>
+<dt>stroke_width <span class="classifier-delimiter">:</span> <span class="classifier">float, optional</span></dt>
+<dd><dl class="first last docutils">
+<dt>The width of the stroke being drawn.  Needed</dt>
+<dd>as a hint for the snapping algorithm.</dd>
+</dl>
+</dd>
+<dt>simplify <span class="classifier-delimiter">:</span> <span class="classifier">None or bool, optional</span></dt>
+<dd><dl class="first last docutils">
+<dt>If True, perform simplification, to remove</dt>
+<dd>vertices that do not affect the appearance of the path.  If
+False, perform no simplification.  If None, use the
+should_simplify member variable.</dd>
+</dl>
+</dd>
+<dt>curves <span class="classifier-delimiter">:</span> <span class="classifier">{True, False}, optional</span></dt>
+<dd>If True, curve segments will be returned as curve
+segments.  If False, all curves will be converted to line
+segments.</dd>
+<dt>sketch <span class="classifier-delimiter">:</span> <span class="classifier">None or sequence, optional</span></dt>
+<dd>If not None, must be a 3-tuple of the form
+(scale, length, randomness), representing the sketch
+parameters.</dd>
+</dl>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="opn.Path.make_compound_path">
+<em class="property">classmethod </em><tt class="descname">make_compound_path</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#opn.Path.make_compound_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a compound path from a list of Path objects.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="opn.Path.make_compound_path_from_polys">
+<em class="property">classmethod </em><tt class="descname">make_compound_path_from_polys</tt><big>(</big><em>XY</em><big>)</big><a class="headerlink" href="#opn.Path.make_compound_path_from_polys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a compound path object to draw a number
+of polygons with equal numbers of sides XY is a (numpolys x
+numsides x 2) numpy array of vertices.  Return object is a
+<a class="reference internal" href="#opn.Path" title="opn.Path"><tt class="xref py py-class docutils literal"><span class="pre">Path</span></tt></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="opn.Path.readonly">
+<tt class="descname">readonly</tt><a class="headerlink" href="#opn.Path.readonly" title="Permalink to this definition">¶</a></dt>
+<dd><p><cite>True</cite> if the <cite>Path</cite> is read-only.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="opn.Path.should_simplify">
+<tt class="descname">should_simplify</tt><a class="headerlink" href="#opn.Path.should_simplify" title="Permalink to this definition">¶</a></dt>
+<dd><p><cite>True</cite> if the vertices array should be simplified.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="opn.Path.simplify_threshold">
+<tt class="descname">simplify_threshold</tt><a class="headerlink" href="#opn.Path.simplify_threshold" title="Permalink to this definition">¶</a></dt>
+<dd><p>The fraction of a pixel difference below which vertices will
+be simplified out.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="opn.Path.to_polygons">
+<tt class="descname">to_polygons</tt><big>(</big><em>transform=None</em>, <em>width=0</em>, <em>height=0</em><big>)</big><a class="headerlink" href="#opn.Path.to_polygons" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert this path to a list of polygons.  Each polygon is an
+Nx2 array of vertices.  In other words, each polygon has no
+<tt class="docutils literal"><span class="pre">MOVETO</span></tt> instructions or curves.  This is useful for
+displaying in backends that do not support compound paths or
+Bezier curves, such as GDK.</p>
+<p>If <em>width</em> and <em>height</em> are both non-zero then the lines will
+be simplified so that vertices outside of (0, 0), (width,
+height) will be clipped.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="opn.Path.transformed">
+<tt class="descname">transformed</tt><big>(</big><em>transform</em><big>)</big><a class="headerlink" href="#opn.Path.transformed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a transformed copy of the path.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><tt class="xref py py-class docutils literal"><span class="pre">matplotlib.transforms.TransformedPath</span></tt></dt>
+<dd>A specialized path class that will cache the
+transformed result and automatically update when the
+transform changes.</dd>
+</dl>
+</div>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="opn.Path.unit_circle">
+<em class="property">classmethod </em><tt class="descname">unit_circle</tt><big>(</big><big>)</big><a class="headerlink" href="#opn.Path.unit_circle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the readonly <a class="reference internal" href="#opn.Path" title="opn.Path"><tt class="xref py py-class docutils literal"><span class="pre">Path</span></tt></a> of the unit circle.</p>
+<p>For most cases, <a class="reference internal" href="#opn.Path.circle" title="opn.Path.circle"><tt class="xref py py-func docutils literal"><span class="pre">Path.circle()</span></tt></a> will be what you want.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="opn.Path.unit_circle_righthalf">
+<em class="property">classmethod </em><tt class="descname">unit_circle_righthalf</tt><big>(</big><big>)</big><a class="headerlink" href="#opn.Path.unit_circle_righthalf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a <a class="reference internal" href="#opn.Path" title="opn.Path"><tt class="xref py py-class docutils literal"><span class="pre">Path</span></tt></a> of the right half
+of a unit circle. The circle is approximated using cubic Bezier
+curves.  This uses 4 splines around the circle using the approach
+presented here:</p>
+<blockquote>
+<div>Lancaster, Don.  <a class="reference external" href="http://www.tinaja.com/glib/ellipse4.pdf">Approximating a Circle or an Ellipse Using Four
+Bezier Cubic Splines</a>.</div></blockquote>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="opn.Path.unit_rectangle">
+<em class="property">classmethod </em><tt class="descname">unit_rectangle</tt><big>(</big><big>)</big><a class="headerlink" href="#opn.Path.unit_rectangle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a <a class="reference internal" href="#opn.Path" title="opn.Path"><tt class="xref py py-class docutils literal"><span class="pre">Path</span></tt></a> instance of the unit rectangle
+from (0, 0) to (1, 1).</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="opn.Path.unit_regular_asterisk">
+<em class="property">classmethod </em><tt class="descname">unit_regular_asterisk</tt><big>(</big><em>numVertices</em><big>)</big><a class="headerlink" href="#opn.Path.unit_regular_asterisk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a <a class="reference internal" href="#opn.Path" title="opn.Path"><tt class="xref py py-class docutils literal"><span class="pre">Path</span></tt></a> for a unit regular
+asterisk with the given numVertices and radius of 1.0,
+centered at (0, 0).</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="opn.Path.unit_regular_polygon">
+<em class="property">classmethod </em><tt class="descname">unit_regular_polygon</tt><big>(</big><em>numVertices</em><big>)</big><a class="headerlink" href="#opn.Path.unit_regular_polygon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a <a class="reference internal" href="#opn.Path" title="opn.Path"><tt class="xref py py-class docutils literal"><span class="pre">Path</span></tt></a> instance for a unit regular
+polygon with the given <em>numVertices</em> and radius of 1.0,
+centered at (0, 0).</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="opn.Path.unit_regular_star">
+<em class="property">classmethod </em><tt class="descname">unit_regular_star</tt><big>(</big><em>numVertices</em>, <em>innerCircle=0.5</em><big>)</big><a class="headerlink" href="#opn.Path.unit_regular_star" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a <a class="reference internal" href="#opn.Path" title="opn.Path"><tt class="xref py py-class docutils literal"><span class="pre">Path</span></tt></a> for a unit regular star
+with the given numVertices and radius of 1.0, centered at (0,
+0).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="opn.Path.vertices">
+<tt class="descname">vertices</tt><a class="headerlink" href="#opn.Path.vertices" title="Permalink to this definition">¶</a></dt>
+<dd><p>The list of vertices in the <cite>Path</cite> as an Nx2 numpy array.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="opn.Path.wedge">
+<em class="property">classmethod </em><tt class="descname">wedge</tt><big>(</big><em>theta1</em>, <em>theta2</em>, <em>n=None</em><big>)</big><a class="headerlink" href="#opn.Path.wedge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a wedge of the unit circle from angle
+<em>theta1</em> to angle <em>theta2</em> (in degrees).</p>
+<p>If <em>n</em> is provided, it is the number of spline segments to make.
+If <em>n</em> is not provided, the number of spline segments is
+determined based on the delta between <em>theta1</em> and <em>theta2</em>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="opn.SetupClass">
+<em class="property">class </em><tt class="descclassname">opn.</tt><tt class="descname">SetupClass</tt><a class="reference internal" href="_modules/opn.html#SetupClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.SetupClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>answer from :
+<a class="reference external" href="http://stackoverflow.com/questions/22261763">http://stackoverflow.com/questions/22261763</a></p>
+<dl class="method">
+<dt id="opn.SetupClass.mro">
+<tt class="descname">mro</tt><big>(</big><big>)</big> &rarr; list<a class="headerlink" href="#opn.SetupClass.mro" title="Permalink to this definition">¶</a></dt>
+<dd><p>return a type&#8217;s method resolution order</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="opn.Table">
+<em class="property">class </em><tt class="descclassname">opn.</tt><tt class="descname">Table</tt><a class="reference internal" href="_modules/opn.html#Table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.Table" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="opn.Table.add">
+<tt class="descname">add</tt><big>(</big><em>col</em>, <em>content</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#Table.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.Table.add" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.Table.dlt">
+<tt class="descname">dlt</tt><big>(</big><em>astr</em><big>)</big><a class="reference internal" href="_modules/opn.html#Table.dlt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.Table.dlt" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.Table.hesc">
+<tt class="descname">hesc</tt><big>(</big><em>astr</em><big>)</big><a class="reference internal" href="_modules/opn.html#Table.hesc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.Table.hesc" title="Permalink to this definition">¶</a></dt>
+<dd><p>escape special characters like #</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="opn.Table.latex_alignments_tabulary">
+<tt class="descname">latex_alignments_tabulary</tt><big>(</big><em>fid</em><big>)</big><a class="reference internal" href="_modules/opn.html#Table.latex_alignments_tabulary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.Table.latex_alignments_tabulary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.Table.latex_data">
+<tt class="descname">latex_data</tt><big>(</big><em>fid</em><big>)</big><a class="reference internal" href="_modules/opn.html#Table.latex_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.Table.latex_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>fid: file or similar. E.g. file or StringIO or ... any object
+that defines a proper write() method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="opn.Table.latex_header">
+<tt class="descname">latex_header</tt><big>(</big><em>fid</em><big>)</big><a class="reference internal" href="_modules/opn.html#Table.latex_header"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.Table.latex_header" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.Table.latex_tabulary">
+<tt class="descname">latex_tabulary</tt><big>(</big><em>fid</em><big>)</big><a class="reference internal" href="_modules/opn.html#Table.latex_tabulary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.Table.latex_tabulary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.Table.row">
+<tt class="descname">row</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#Table.row"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.Table.row" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="opn.TwoDFunVisualiser">
+<tt class="descclassname">opn.</tt><tt class="descname">TwoDFunVisualiser</tt><a class="headerlink" href="#opn.TwoDFunVisualiser" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="opn.html#opn.TwoDFunVisualiser3D" title="opn.TwoDFunVisualiser3D"><tt class="xref py py-class docutils literal"><span class="pre">TwoDFunVisualiser3D</span></tt></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="opn.TwoDFunVisualiser3D">
+<em class="property">class </em><tt class="descclassname">opn.</tt><tt class="descname">TwoDFunVisualiser3D</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#TwoDFunVisualiser3D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.TwoDFunVisualiser3D" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="opn.TwoDFunVisualiser3D.drawbest">
+<tt class="descname">drawbest</tt><big>(</big><em>p</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#TwoDFunVisualiser3D.drawbest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.TwoDFunVisualiser3D.drawbest" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.TwoDFunVisualiser3D.drawpath">
+<tt class="descname">drawpath</tt><big>(</big><em>p1</em>, <em>p2</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#TwoDFunVisualiser3D.drawpath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.TwoDFunVisualiser3D.drawpath" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.TwoDFunVisualiser3D.drawpathbest">
+<tt class="descname">drawpathbest</tt><big>(</big><em>p1</em>, <em>p2</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#TwoDFunVisualiser3D.drawpathbest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.TwoDFunVisualiser3D.drawpathbest" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.TwoDFunVisualiser3D.drawposition">
+<tt class="descname">drawposition</tt><big>(</big><em>p</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#TwoDFunVisualiser3D.drawposition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.TwoDFunVisualiser3D.drawposition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.TwoDFunVisualiser3D.flush">
+<tt class="descname">flush</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#TwoDFunVisualiser3D.flush"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.TwoDFunVisualiser3D.flush" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.TwoDFunVisualiser3D.init">
+<tt class="descname">init</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#TwoDFunVisualiser3D.init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.TwoDFunVisualiser3D.init" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.TwoDFunVisualiser3D.overwrite">
+<tt class="descname">overwrite</tt><big>(</big><em>**options</em><big>)</big><a class="headerlink" href="#opn.TwoDFunVisualiser3D.overwrite" title="Permalink to this definition">¶</a></dt>
+<dd><p>overwrite already-existing/default values in self.dict &#8216;
+&#8216;with the ones in the options dictionary.
+if the options dictionary has keys that are not in orig, they
+are not assigned to orig. This function is intended for
+easy, safe option assignments in places like __init__()
+functions</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="opn.TwoDFunVisualiser3D.setup">
+<tt class="descname">setup</tt><big>(</big><big>)</big><a class="headerlink" href="#opn.TwoDFunVisualiser3D.setup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="opn.TwoDFunVisualiserColors">
+<em class="property">class </em><tt class="descclassname">opn.</tt><tt class="descname">TwoDFunVisualiserColors</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#TwoDFunVisualiserColors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.TwoDFunVisualiserColors" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="opn.TwoDFunVisualiserColors.drawbest">
+<tt class="descname">drawbest</tt><big>(</big><em>pt</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#TwoDFunVisualiserColors.drawbest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.TwoDFunVisualiserColors.drawbest" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.TwoDFunVisualiserColors.drawpath">
+<tt class="descname">drawpath</tt><big>(</big><em>pt1</em>, <em>pt2</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#TwoDFunVisualiserColors.drawpath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.TwoDFunVisualiserColors.drawpath" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.TwoDFunVisualiserColors.drawpathbest">
+<tt class="descname">drawpathbest</tt><big>(</big><em>pt1</em>, <em>pt2</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#TwoDFunVisualiserColors.drawpathbest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.TwoDFunVisualiserColors.drawpathbest" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.TwoDFunVisualiserColors.drawposition">
+<tt class="descname">drawposition</tt><big>(</big><em>pt</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#TwoDFunVisualiserColors.drawposition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.TwoDFunVisualiserColors.drawposition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.TwoDFunVisualiserColors.drawrange">
+<tt class="descname">drawrange</tt><big>(</big><em>pt</em>, <em>halfrange</em><big>)</big><a class="reference internal" href="_modules/opn.html#TwoDFunVisualiserColors.drawrange"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.TwoDFunVisualiserColors.drawrange" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.TwoDFunVisualiserColors.flush">
+<tt class="descname">flush</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#TwoDFunVisualiserColors.flush"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.TwoDFunVisualiserColors.flush" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.TwoDFunVisualiserColors.init">
+<tt class="descname">init</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#TwoDFunVisualiserColors.init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.TwoDFunVisualiserColors.init" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.TwoDFunVisualiserColors.overwrite">
+<tt class="descname">overwrite</tt><big>(</big><em>**options</em><big>)</big><a class="headerlink" href="#opn.TwoDFunVisualiserColors.overwrite" title="Permalink to this definition">¶</a></dt>
+<dd><p>overwrite already-existing/default values in self.dict &#8216;
+&#8216;with the ones in the options dictionary.
+if the options dictionary has keys that are not in orig, they
+are not assigned to orig. This function is intended for
+easy, safe option assignments in places like __init__()
+functions</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="opn.TwoDFunVisualiserColors.setup">
+<tt class="descname">setup</tt><big>(</big><big>)</big><a class="headerlink" href="#opn.TwoDFunVisualiserColors.setup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descname">connectbycurve(p1, p2, adder=array([[ 0.        ],</tt></dt>
+<dt>
+<tt class="descname">[ 0.03124681],</tt></dt>
+<dt>
+<tt class="descname">[ 0.06185593],</tt></dt>
+<dt>
+<tt class="descname">[ 0.09182736],</tt></dt>
+<dt>
+<tt class="descname">[ 0.12116111],</tt></dt>
+<dt>
+<tt class="descname">[ 0.14985716],</tt></dt>
+<dt>
+<tt class="descname">[ 0.17791552],</tt></dt>
+<dt>
+<tt class="descname">[ 0.20533619],</tt></dt>
+<dt>
+<tt class="descname">[ 0.23211917],</tt></dt>
+<dt>
+<tt class="descname">[ 0.25826446],</tt></dt>
+<dt>
+<tt class="descname">[ 0.28377206],</tt></dt>
+<dt>
+<tt class="descname">[ 0.30864198],</tt></dt>
+<dt>
+<tt class="descname">[ 0.3328742 ],</tt></dt>
+<dt>
+<tt class="descname">[ 0.35646873],</tt></dt>
+<dt>
+<tt class="descname">[ 0.37942557],</tt></dt>
+<dt>
+<tt class="descname">[ 0.40174472],</tt></dt>
+<dt>
+<tt class="descname">[ 0.42342618],</tt></dt>
+<dt>
+<tt class="descname">[ 0.44446995],</tt></dt>
+<dt>
+<tt class="descname">[ 0.46487603],</tt></dt>
+<dt>
+<tt class="descname">[ 0.48464442],</tt></dt>
+<dt>
+<tt class="descname">[ 0.50377512],</tt></dt>
+<dt>
+<tt class="descname">[ 0.52226814],</tt></dt>
+<dt>
+<tt class="descname">[ 0.54012346],</tt></dt>
+<dt>
+<tt class="descname">[ 0.55734109],</tt></dt>
+<dt>
+<tt class="descname">[ 0.57392103],</tt></dt>
+<dt>
+<tt class="descname">[ 0.58986328],</tt></dt>
+<dt>
+<tt class="descname">[ 0.60516784],</tt></dt>
+<dt>
+<tt class="descname">[ 0.61983471],</tt></dt>
+<dt>
+<tt class="descname">[ 0.63386389],</tt></dt>
+<dt>
+<tt class="descname">[ 0.64725538],</tt></dt>
+<dt>
+<tt class="descname">[ 0.66000918],</tt></dt>
+<dt>
+<tt class="descname">[ 0.67212529],</tt></dt>
+<dt>
+<tt class="descname">[ 0.68360371],</tt></dt>
+<dt>
+<tt class="descname">[ 0.69444444],</tt></dt>
+<dt>
+<tt class="descname">[ 0.70464748],</tt></dt>
+<dt>
+<tt class="descname">[ 0.71421284],</tt></dt>
+<dt>
+<tt class="descname">[ 0.7231405 ],</tt></dt>
+<dt>
+<tt class="descname">[ 0.73143047],</tt></dt>
+<dt>
+<tt class="descname">[ 0.73908275],</tt></dt>
+<dt>
+<tt class="descname">[ 0.74609734],</tt></dt>
+<dt>
+<tt class="descname">[ 0.75247424],</tt></dt>
+<dt>
+<tt class="descname">[ 0.75821345],</tt></dt>
+<dt>
+<tt class="descname">[ 0.76331497],</tt></dt>
+<dt>
+<tt class="descname">[ 0.7677788 ],</tt></dt>
+<dt>
+<tt class="descname">[ 0.77160494],</tt></dt>
+<dt>
+<tt class="descname">[ 0.77479339],</tt></dt>
+<dt>
+<tt class="descname">[ 0.77734415],</tt></dt>
+<dt>
+<tt class="descname">[ 0.77925722],</tt></dt>
+<dt>
+<tt class="descname">[ 0.7805326 ],</tt></dt>
+<dt>
+<tt class="descname">[ 0.78117029],</tt></dt>
+<dt>
+<tt class="descname">[ 0.78117029],</tt></dt>
+<dt>
+<tt class="descname">[ 0.7805326 ],</tt></dt>
+<dt>
+<tt class="descname">[ 0.77925722],</tt></dt>
+<dt>
+<tt class="descname">[ 0.77734415],</tt></dt>
+<dt>
+<tt class="descname">[ 0.77479339],</tt></dt>
+<dt>
+<tt class="descname">[ 0.77160494],</tt></dt>
+<dt>
+<tt class="descname">[ 0.7677788 ],</tt></dt>
+<dt>
+<tt class="descname">[ 0.76331497],</tt></dt>
+<dt>
+<tt class="descname">[ 0.75821345],</tt></dt>
+<dt>
+<tt class="descname">[ 0.75247424],</tt></dt>
+<dt>
+<tt class="descname">[ 0.74609734],</tt></dt>
+<dt>
+<tt class="descname">[ 0.73908275],</tt></dt>
+<dt>
+<tt class="descname">[ 0.73143047],</tt></dt>
+<dt>
+<tt class="descname">[ 0.7231405 ],</tt></dt>
+<dt>
+<tt class="descname">[ 0.71421284],</tt></dt>
+<dt>
+<tt class="descname">[ 0.70464748],</tt></dt>
+<dt>
+<tt class="descname">[ 0.69444444],</tt></dt>
+<dt>
+<tt class="descname">[ 0.68360371],</tt></dt>
+<dt>
+<tt class="descname">[ 0.67212529],</tt></dt>
+<dt>
+<tt class="descname">[ 0.66000918],</tt></dt>
+<dt>
+<tt class="descname">[ 0.64725538],</tt></dt>
+<dt>
+<tt class="descname">[ 0.63386389],</tt></dt>
+<dt>
+<tt class="descname">[ 0.61983471],</tt></dt>
+<dt>
+<tt class="descname">[ 0.60516784],</tt></dt>
+<dt>
+<tt class="descname">[ 0.58986328],</tt></dt>
+<dt>
+<tt class="descname">[ 0.57392103],</tt></dt>
+<dt>
+<tt class="descname">[ 0.55734109],</tt></dt>
+<dt>
+<tt class="descname">[ 0.54012346],</tt></dt>
+<dt>
+<tt class="descname">[ 0.52226814],</tt></dt>
+<dt>
+<tt class="descname">[ 0.50377512],</tt></dt>
+<dt>
+<tt class="descname">[ 0.48464442],</tt></dt>
+<dt>
+<tt class="descname">[ 0.46487603],</tt></dt>
+<dt>
+<tt class="descname">[ 0.44446995],</tt></dt>
+<dt>
+<tt class="descname">[ 0.42342618],</tt></dt>
+<dt>
+<tt class="descname">[ 0.40174472],</tt></dt>
+<dt>
+<tt class="descname">[ 0.37942557],</tt></dt>
+<dt>
+<tt class="descname">[ 0.35646873],</tt></dt>
+<dt>
+<tt class="descname">[ 0.3328742 ],</tt></dt>
+<dt>
+<tt class="descname">[ 0.30864198],</tt></dt>
+<dt>
+<tt class="descname">[ 0.28377206],</tt></dt>
+<dt>
+<tt class="descname">[ 0.25826446],</tt></dt>
+<dt>
+<tt class="descname">[ 0.23211917],</tt></dt>
+<dt>
+<tt class="descname">[ 0.20533619],</tt></dt>
+<dt>
+<tt class="descname">[ 0.17791552],</tt></dt>
+<dt>
+<tt class="descname">[ 0.14985716],</tt></dt>
+<dt>
+<tt class="descname">[ 0.12116111],</tt></dt>
+<dt>
+<tt class="descname">[ 0.09182736],</tt></dt>
+<dt>
+<tt class="descname">[ 0.06185593],</tt></dt>
+<dt>
+<tt class="descname">[ 0.03124681],</tt></dt>
+<dt>
+<tt class="descname">[ 0.        ]]))</tt></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="opn.dprint">
+<tt class="descclassname">opn.</tt><tt class="descname">dprint</tt><big>(</big><em>msg</em><big>)</big><a class="reference internal" href="_modules/opn.html#dprint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.dprint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="opn.fig_flush">
+<tt class="descclassname">opn.</tt><tt class="descname">fig_flush</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#fig_flush"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.fig_flush" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="opn.gcf">
+<tt class="descclassname">opn.</tt><tt class="descname">gcf</tt><big>(</big><big>)</big><a class="headerlink" href="#opn.gcf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a reference to the current figure.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="opn.getcurveadder">
+<tt class="descclassname">opn.</tt><tt class="descname">getcurveadder</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#getcurveadder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.getcurveadder" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="opn.getlogger">
+<tt class="descclassname">opn.</tt><tt class="descname">getlogger</tt><big>(</big><em>filepath='../tmp/log.txt'</em>, <em>appname='PM'</em><big>)</big><a class="reference internal" href="_modules/opn.html#getlogger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.getlogger" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="opn.getmembers">
+<tt class="descclassname">opn.</tt><tt class="descname">getmembers</tt><big>(</big><em>object</em>, <em>predicate=None</em><big>)</big><a class="headerlink" href="#opn.getmembers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all members of an object as (name, value) pairs sorted by name.
+Optionally, only return members that satisfy a given predicate.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="opn.isroutine">
+<tt class="descclassname">opn.</tt><tt class="descname">isroutine</tt><big>(</big><em>object</em><big>)</big><a class="headerlink" href="#opn.isroutine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return true if the object is any kind of function or method.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="opn.main">
+<tt class="descclassname">opn.</tt><tt class="descname">main</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="opn.maxval">
+<tt class="descclassname">opn.</tt><tt class="descname">maxval</tt><big>(</big><em>a</em>, <em>b</em><big>)</big><a class="reference internal" href="_modules/opn.html#maxval"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.maxval" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="opn.minval">
+<tt class="descclassname">opn.</tt><tt class="descname">minval</tt><big>(</big><em>a</em>, <em>b</em><big>)</big><a class="reference internal" href="_modules/opn.html#minval"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.minval" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="opn.mkdirfor">
+<tt class="descclassname">opn.</tt><tt class="descname">mkdirfor</tt><big>(</big><em>path</em><big>)</big><a class="reference internal" href="_modules/opn.html#mkdirfor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.mkdirfor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="opn.nparray">
+<tt class="descclassname">opn.</tt><tt class="descname">nparray</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#nparray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.nparray" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unless dtype is specified, makesure new array has float type</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="opn.overwrite">
+<tt class="descclassname">opn.</tt><tt class="descname">overwrite</tt><big>(</big><em>orig</em>, <em>**options</em><big>)</big><a class="reference internal" href="_modules/opn.html#overwrite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.overwrite" title="Permalink to this definition">¶</a></dt>
+<dd><p>overwrite already-existing/default values in the original
+dictionary with the ones in the options dictionary.
+if the options dictionary has keys that are not in orig, they
+are not assigned to orig. This function is intended for
+easy, safe option assignments in places like __init__()
+functions</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="opn.pp">
+<tt class="descclassname">opn.</tt><tt class="descname">pp</tt><big>(</big><em>object</em>, <em>stream=None</em>, <em>indent=1</em>, <em>width=80</em>, <em>depth=None</em><big>)</big><a class="headerlink" href="#opn.pp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pretty-print a Python object to a stream [default is sys.stdout].</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="opn.randdiv">
+<tt class="descclassname">opn.</tt><tt class="descname">randdiv</tt><big>(</big><em>amount</em>, <em>cnt</em><big>)</big><a class="reference internal" href="_modules/opn.html#randdiv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.randdiv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Divides the AMOUNT into CNT random parts and returns those
+parts in a numpy array. CNT must not be bigger than AMOUNT.
+Both CNT and AMOUNT must be integers.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">randdiv</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<span class="go">array([ 5,  6,  9,  8, 11, 15,  8,  9, 17, 12])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="opn.randin">
+<tt class="descclassname">opn.</tt><tt class="descname">randin</tt><big>(</big><em>lb</em>, <em>ub</em><big>)</big><a class="reference internal" href="_modules/opn.html#randin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.randin" title="Permalink to this definition">¶</a></dt>
+<dd><p>return random array with elements between the
+elements of lb and ub. ub is not included.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="opn.randintbetween">
+<tt class="descclassname">opn.</tt><tt class="descname">randintbetween</tt><big>(</big><em>mat1</em>, <em>mat2</em><big>)</big><a class="reference internal" href="_modules/opn.html#randintbetween"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.randintbetween" title="Permalink to this definition">¶</a></dt>
+<dd><p>return a matrix with random elements between
+elements of corresponding  mat1 and mat2 elements.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="opn.rotationmatrix">
+<tt class="descclassname">opn.</tt><tt class="descname">rotationmatrix</tt><big>(</big><em>D</em>, <em>c</em><big>)</big><a class="reference internal" href="_modules/opn.html#rotationmatrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.rotationmatrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Translated from the Matlab function rot_matrix of P. N. Suganthan</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="opn.rotationmatrixsuganthan">
+<tt class="descclassname">opn.</tt><tt class="descname">rotationmatrixsuganthan</tt><big>(</big><em>D</em>, <em>c</em>, <em>rotmatspath</em><big>)</big><a class="reference internal" href="_modules/opn.html#rotationmatrixsuganthan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.rotationmatrixsuganthan" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="opn.wrap">
+<tt class="descclassname">opn.</tt><tt class="descname">wrap</tt><big>(</big><em>text</em>, <em>width=70</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#opn.wrap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrap a single paragraph of text, returning a list of wrapped lines.</p>
+<p>Reformat the single paragraph in &#8216;text&#8217; so it fits in lines of no
+more than &#8216;width&#8217; columns, and return a list of wrapped lines.  By
+default, tabs in &#8216;text&#8217; are expanded with string.expandtabs(), and
+all other whitespace characters (including newline) are converted to
+space.  See TextWrapper class for available keyword args to customize
+wrapping behaviour.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="index.html">opn/opn 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Oğuz Altun.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>
