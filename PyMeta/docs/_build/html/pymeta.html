@@ -1,0 +1,947 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pymeta package &mdash; opn/PyMeta 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="opn/PyMeta 0.1 documentation" href="index.html" />
+    <link rel="next" title="pymeta.algorithm package" href="pymeta.algorithm.html" />
+    <link rel="prev" title="Welcome!" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pymeta.algorithm.html" title="pymeta.algorithm package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome!"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">opn/PyMeta 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">pymeta package</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#module-pymeta">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pymeta.algorithm.html"
+                        title="next chapter">pymeta.algorithm package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/pymeta.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="pymeta-package">
+<h1>pymeta package<a class="headerlink" href="#pymeta-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pymeta.algorithm.html">pymeta.algorithm package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pymeta.algorithm.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pymeta.algorithm.abc.html">pymeta.algorithm.abc module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pymeta.algorithm.algorithmbase.html">pymeta.algorithm.algorithmbase module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pymeta.algorithm.ba.html">pymeta.algorithm.ba module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pymeta.algorithm.bfoa.html">pymeta.algorithm.bfoa module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pymeta.algorithm.de.html">pymeta.algorithm.de module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pymeta.algorithm.ga.html">pymeta.algorithm.ga module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pymeta.algorithm.had.html">pymeta.algorithm.had module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pymeta.algorithm.pso.html">pymeta.algorithm.pso module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pymeta.algorithm.sa.html">pymeta.algorithm.sa module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pymeta.algorithm.ts.html">pymeta.algorithm.ts module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pymeta.algorithm.html#module-pymeta.algorithm">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pymeta.problem.html">pymeta.problem package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pymeta.problem.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pymeta.problem.benchmark.html">pymeta.problem.benchmark module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pymeta.problem.problembase.html">pymeta.problem.problembase module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pymeta.problem.html#module-pymeta.problem">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pymeta.utils.html">pymeta.utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pymeta.utils.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pymeta.utils.pymetautils.html">pymeta.utils.pymetautils module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pymeta.utils.html#module-pymeta.utils">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pymeta.visualiser.html">pymeta.visualiser package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pymeta.visualiser.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pymeta.visualiser.dummy.html">pymeta.visualiser.dummy module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pymeta.visualiser.funvis.html">pymeta.visualiser.funvis module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pymeta.visualiser.visualiserbase.html">pymeta.visualiser.visualiserbase module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pymeta.visualiser.html#module-pymeta.visualiser">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="module-pymeta">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pymeta" title="Permalink to this headline">¶</a></h2>
+<p>REFERENCES</p>
+<dl class="docutils">
+<dt>[Luke13]: Essentials of Metaheuristics, Second Edition, Online Version 2.0,</dt>
+<dd>June, 2013</dd>
+</dl>
+<dl class="class">
+<dt id="pymeta.Default">
+<em class="property">class </em><tt class="descclassname">pymeta.</tt><tt class="descname">Default</tt><a class="reference internal" href="_modules/pymeta.html#Default"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.Default" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></a></p>
+<dl class="method">
+<dt id="pymeta.Default.overwrite">
+<tt class="descname">overwrite</tt><big>(</big><em>**options</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#Default.overwrite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.Default.overwrite" title="Permalink to this definition">¶</a></dt>
+<dd><p>overwrite already-existing/default values in self.dict &#8216;
+&#8216;with the ones in the options dictionary.
+if the options dictionary has keys that are not in orig, they
+are not assigned to orig. This function is intended for
+easy, safe option assignments in places like __init__()
+functions</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pymeta.DummyVisualiser">
+<em class="property">class </em><tt class="descclassname">pymeta.</tt><tt class="descname">DummyVisualiser</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#DummyVisualiser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.DummyVisualiser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pymeta.OptimizationVisualiser" title="pymeta.OptimizationVisualiser"><tt class="xref py py-class docutils literal"><span class="pre">pymeta.OptimizationVisualiser</span></tt></a></p>
+<dl class="method">
+<dt id="pymeta.DummyVisualiser.drawbest">
+<tt class="descname">drawbest</tt><big>(</big><em>p</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#DummyVisualiser.drawbest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.DummyVisualiser.drawbest" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.DummyVisualiser.drawpath">
+<tt class="descname">drawpath</tt><big>(</big><em>p1</em>, <em>p2</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#DummyVisualiser.drawpath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.DummyVisualiser.drawpath" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.DummyVisualiser.drawposition">
+<tt class="descname">drawposition</tt><big>(</big><em>p</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#DummyVisualiser.drawposition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.DummyVisualiser.drawposition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.DummyVisualiser.flush">
+<tt class="descname">flush</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pymeta.html#DummyVisualiser.flush"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.DummyVisualiser.flush" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.DummyVisualiser.init">
+<tt class="descname">init</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pymeta.html#DummyVisualiser.init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.DummyVisualiser.init" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.DummyVisualiser.show">
+<tt class="descname">show</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pymeta.html#DummyVisualiser.show"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.DummyVisualiser.show" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pymeta.FixBounds">
+<em class="property">class </em><tt class="descclassname">pymeta.</tt><tt class="descname">FixBounds</tt><a class="reference internal" href="_modules/pymeta.html#FixBounds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.FixBounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Namespace for static methods of fixing bounds</p>
+<dl class="staticmethod">
+<dt id="pymeta.FixBounds.exceeder_random">
+<em class="property">static </em><tt class="descname">exceeder_random</tt><big>(</big><em>ob</em>, <em>pos</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#FixBounds.exceeder_random"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.FixBounds.exceeder_random" title="Permalink to this definition">¶</a></dt>
+<dd><p>assign random values only to the
+dimensions that are out of bounds</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="pymeta.FixBounds.full_random">
+<em class="property">static </em><tt class="descname">full_random</tt><big>(</big><em>ob</em>, <em>pos</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#FixBounds.full_random"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.FixBounds.full_random" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="pymeta.FixBounds.to_edges">
+<em class="property">static </em><tt class="descname">to_edges</tt><big>(</big><em>ob</em>, <em>pos</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#FixBounds.to_edges"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.FixBounds.to_edges" title="Permalink to this definition">¶</a></dt>
+<dd><p>out of bounds dimensions are moved
+to edges.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pymeta.GenericExperiment">
+<em class="property">class </em><tt class="descclassname">pymeta.</tt><tt class="descname">GenericExperiment</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#GenericExperiment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.GenericExperiment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pymeta.Default" title="pymeta.Default"><tt class="xref py py-class docutils literal"><span class="pre">pymeta.Default</span></tt></a></p>
+<dl class="method">
+<dt id="pymeta.GenericExperiment.do">
+<tt class="descname">do</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pymeta.html#GenericExperiment.do"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.GenericExperiment.do" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.GenericExperiment.runonce">
+<tt class="descname">runonce</tt><big>(</big><em>algorithm</em>, <em>problem</em>, <em>trial</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#GenericExperiment.runonce"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.GenericExperiment.runonce" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.GenericExperiment.writelog">
+<tt class="descname">writelog</tt><big>(</big><em>t</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#GenericExperiment.writelog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.GenericExperiment.writelog" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pymeta.GenericOptimizationProblem">
+<tt class="descclassname">pymeta.</tt><tt class="descname">GenericOptimizationProblem</tt><a class="headerlink" href="#pymeta.GenericOptimizationProblem" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#pymeta.OptimizationProblem" title="pymeta.OptimizationProblem"><tt class="xref py py-class docutils literal"><span class="pre">OptimizationProblem</span></tt></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pymeta.OptimizationAlgorithm">
+<em class="property">class </em><tt class="descclassname">pymeta.</tt><tt class="descname">OptimizationAlgorithm</tt><a class="reference internal" href="_modules/pymeta.html#OptimizationAlgorithm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationAlgorithm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pymeta.Default" title="pymeta.Default"><tt class="xref py py-class docutils literal"><span class="pre">pymeta.Default</span></tt></a></p>
+<dl class="method">
+<dt id="pymeta.OptimizationAlgorithm.bestcolor">
+<tt class="descname">bestcolor</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationAlgorithm.bestcolor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationAlgorithm.bestcolor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.OptimizationAlgorithm.dolastlog">
+<tt class="descname">dolastlog</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationAlgorithm.dolastlog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationAlgorithm.dolastlog" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.OptimizationAlgorithm.dolog">
+<tt class="descname">dolog</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationAlgorithm.dolog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationAlgorithm.dolog" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.OptimizationAlgorithm.draw">
+<tt class="descname">draw</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationAlgorithm.draw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationAlgorithm.draw" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.OptimizationAlgorithm.drawbest">
+<tt class="descname">drawbest</tt><big>(</big><em>pos</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationAlgorithm.drawbest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationAlgorithm.drawbest" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.OptimizationAlgorithm.drawfinalpositions">
+<tt class="descname">drawfinalpositions</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationAlgorithm.drawfinalpositions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationAlgorithm.drawfinalpositions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.OptimizationAlgorithm.drawpath">
+<tt class="descname">drawpath</tt><big>(</big><em>oldpos</em>, <em>newpos</em>, <em>idx=0</em>, <em>color=None</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationAlgorithm.drawpath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationAlgorithm.drawpath" title="Permalink to this definition">¶</a></dt>
+<dd><p>draw a path from old pos to new pos for the position idx</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pymeta.OptimizationAlgorithm.drawpathbest">
+<tt class="descname">drawpathbest</tt><big>(</big><em>oldpos</em>, <em>newpos</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationAlgorithm.drawpathbest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationAlgorithm.drawpathbest" title="Permalink to this definition">¶</a></dt>
+<dd><p>draw paths of the best.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pymeta.OptimizationAlgorithm.f">
+<tt class="descname">f</tt><big>(</big><em>poslist</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationAlgorithm.f"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationAlgorithm.f" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.OptimizationAlgorithm.hillclimb">
+<tt class="descname">hillclimb</tt><big>(</big><em>i</em>, <em>hclimit=-1</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationAlgorithm.hillclimb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationAlgorithm.hillclimb" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.OptimizationAlgorithm.iscontinue">
+<tt class="descname">iscontinue</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationAlgorithm.iscontinue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationAlgorithm.iscontinue" title="Permalink to this definition">¶</a></dt>
+<dd><p>decide whether we should continue searching.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pymeta.OptimizationAlgorithm.prepareposcolors">
+<tt class="descname">prepareposcolors</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationAlgorithm.prepareposcolors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationAlgorithm.prepareposcolors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.OptimizationAlgorithm.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationAlgorithm.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationAlgorithm.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.OptimizationAlgorithm.updatebest">
+<tt class="descname">updatebest</tt><big>(</big><em>xnew</em>, <em>fnew</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationAlgorithm.updatebest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationAlgorithm.updatebest" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.OptimizationAlgorithm.updateposnbest">
+<tt class="descname">updateposnbest</tt><big>(</big><em>xnew</em>, <em>fnew</em>, <em>i</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationAlgorithm.updateposnbest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationAlgorithm.updateposnbest" title="Permalink to this definition">¶</a></dt>
+<dd><p>if xnew is better than x, update x.
+if xnew is better than xbest, update xbest.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pymeta.OptimizationAlgorithm.updatex">
+<tt class="descname">updatex</tt><big>(</big><em>xnew</em>, <em>fnew</em>, <em>i</em>, <em>isdraw=True</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationAlgorithm.updatex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationAlgorithm.updatex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pymeta.OptimizationProblem">
+<em class="property">class </em><tt class="descclassname">pymeta.</tt><tt class="descname">OptimizationProblem</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationProblem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationProblem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pymeta.Default" title="pymeta.Default"><tt class="xref py py-class docutils literal"><span class="pre">pymeta.Default</span></tt></a></p>
+<dl class="method">
+<dt id="pymeta.OptimizationProblem.assessmentcnt">
+<tt class="descname">assessmentcnt</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationProblem.assessmentcnt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationProblem.assessmentcnt" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.OptimizationProblem.cost">
+<tt class="descname">cost</tt><big>(</big><em>position</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationProblem.cost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationProblem.cost" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.OptimizationProblem.costfun">
+<tt class="descname">costfun</tt><big>(</big><em>x</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationProblem.costfun"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationProblem.costfun" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.OptimizationProblem.dims">
+<tt class="descname">dims</tt><big>(</big><big>)</big><a class="headerlink" href="#pymeta.OptimizationProblem.dims" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.OptimizationProblem.fixbounds">
+<tt class="descname">fixbounds</tt><big>(</big><em>pos</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationProblem.fixbounds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationProblem.fixbounds" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.OptimizationProblem.fixposition">
+<tt class="descname">fixposition</tt><big>(</big><em>pos</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationProblem.fixposition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationProblem.fixposition" title="Permalink to this definition">¶</a></dt>
+<dd><p>fix problems about position:
+invalid, etc.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pymeta.OptimizationProblem.getdims">
+<tt class="descname">getdims</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationProblem.getdims"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationProblem.getdims" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.OptimizationProblem.getrotationmatrix">
+<tt class="descname">getrotationmatrix</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationProblem.getrotationmatrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationProblem.getrotationmatrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.OptimizationProblem.getshiftvector">
+<tt class="descname">getshiftvector</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationProblem.getshiftvector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationProblem.getshiftvector" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.OptimizationProblem.height">
+<tt class="descname">height</tt><big>(</big><em>position</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationProblem.height"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationProblem.height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.OptimizationProblem.heightfun">
+<tt class="descname">heightfun</tt><big>(</big><em>x</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationProblem.heightfun"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationProblem.heightfun" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.OptimizationProblem.pos2str">
+<tt class="descname">pos2str</tt><big>(</big><em>pos</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationProblem.pos2str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationProblem.pos2str" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.OptimizationProblem.quality">
+<tt class="descname">quality</tt><big>(</big><em>position</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationProblem.quality"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationProblem.quality" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.OptimizationProblem.randpos">
+<tt class="descname">randpos</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationProblem.randpos"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationProblem.randpos" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.OptimizationProblem.randposn">
+<tt class="descname">randposn</tt><big>(</big><em>nrows</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationProblem.randposn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationProblem.randposn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.OptimizationProblem.resetassessmentcnt">
+<tt class="descname">resetassessmentcnt</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationProblem.resetassessmentcnt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationProblem.resetassessmentcnt" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.OptimizationProblem.setup">
+<tt class="descname">setup</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationProblem.setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationProblem.setup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.OptimizationProblem.shiftNrotate">
+<tt class="descname">shiftNrotate</tt><big>(</big><em>pos</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationProblem.shiftNrotate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationProblem.shiftNrotate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.OptimizationProblem.stepby">
+<tt class="descname">stepby</tt><big>(</big><em>pos</em>, <em>step</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationProblem.stepby"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationProblem.stepby" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.OptimizationProblem.stepbyfun">
+<tt class="descname">stepbyfun</tt><big>(</big><em>pos</em>, <em>step</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationProblem.stepbyfun"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationProblem.stepbyfun" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.OptimizationProblem.tweak">
+<tt class="descname">tweak</tt><big>(</big><em>pos</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationProblem.tweak"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationProblem.tweak" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.OptimizationProblem.tweakfun">
+<tt class="descname">tweakfun</tt><big>(</big><em>apos</em>, <em>method=None</em>, <em>submethod=None</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationProblem.tweakfun"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationProblem.tweakfun" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pymeta.OptimizationVisualiser">
+<em class="property">class </em><tt class="descclassname">pymeta.</tt><tt class="descname">OptimizationVisualiser</tt><a class="reference internal" href="_modules/pymeta.html#OptimizationVisualiser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationVisualiser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pymeta.Default" title="pymeta.Default"><tt class="xref py py-class docutils literal"><span class="pre">pymeta.Default</span></tt></a></p>
+<dl class="method">
+<dt id="pymeta.OptimizationVisualiser.setup">
+<tt class="descname">setup</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pymeta.html#OptimizationVisualiser.setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.OptimizationVisualiser.setup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pymeta.SetupClass">
+<em class="property">class </em><tt class="descclassname">pymeta.</tt><tt class="descname">SetupClass</tt><a class="reference internal" href="_modules/pymeta.html#SetupClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.SetupClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#type" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">type</span></tt></a></p>
+<p>answer from :
+<a class="reference external" href="http://stackoverflow.com/questions/22261763">http://stackoverflow.com/questions/22261763</a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pymeta.Table">
+<em class="property">class </em><tt class="descclassname">pymeta.</tt><tt class="descname">Table</tt><a class="reference internal" href="_modules/pymeta.html#Table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.Table" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="pymeta.Table.add">
+<tt class="descname">add</tt><big>(</big><em>col</em>, <em>content</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#Table.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.Table.add" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.Table.dlt">
+<tt class="descname">dlt</tt><big>(</big><em>astr</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#Table.dlt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.Table.dlt" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.Table.hesc">
+<tt class="descname">hesc</tt><big>(</big><em>astr</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#Table.hesc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.Table.hesc" title="Permalink to this definition">¶</a></dt>
+<dd><p>escape special characters like #</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pymeta.Table.latex_alignments_tabulary">
+<tt class="descname">latex_alignments_tabulary</tt><big>(</big><em>fid</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#Table.latex_alignments_tabulary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.Table.latex_alignments_tabulary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.Table.latex_data">
+<tt class="descname">latex_data</tt><big>(</big><em>fid</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#Table.latex_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.Table.latex_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>fid: file or similar. E.g. file or StringIO or ... any object
+that defines a proper write() method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pymeta.Table.latex_header">
+<tt class="descname">latex_header</tt><big>(</big><em>fid</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#Table.latex_header"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.Table.latex_header" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.Table.latex_tabulary">
+<tt class="descname">latex_tabulary</tt><big>(</big><em>fid</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#Table.latex_tabulary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.Table.latex_tabulary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.Table.row">
+<tt class="descname">row</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pymeta.html#Table.row"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.Table.row" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pymeta.TwoDFunVisualiser">
+<tt class="descclassname">pymeta.</tt><tt class="descname">TwoDFunVisualiser</tt><a class="headerlink" href="#pymeta.TwoDFunVisualiser" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#pymeta.TwoDFunVisualiser3D" title="pymeta.TwoDFunVisualiser3D"><tt class="xref py py-class docutils literal"><span class="pre">TwoDFunVisualiser3D</span></tt></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pymeta.TwoDFunVisualiser3D">
+<em class="property">class </em><tt class="descclassname">pymeta.</tt><tt class="descname">TwoDFunVisualiser3D</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#TwoDFunVisualiser3D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.TwoDFunVisualiser3D" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pymeta.OptimizationVisualiser" title="pymeta.OptimizationVisualiser"><tt class="xref py py-class docutils literal"><span class="pre">pymeta.OptimizationVisualiser</span></tt></a></p>
+<dl class="method">
+<dt id="pymeta.TwoDFunVisualiser3D.drawbest">
+<tt class="descname">drawbest</tt><big>(</big><em>p</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#TwoDFunVisualiser3D.drawbest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.TwoDFunVisualiser3D.drawbest" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.TwoDFunVisualiser3D.drawpath">
+<tt class="descname">drawpath</tt><big>(</big><em>p1</em>, <em>p2</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#TwoDFunVisualiser3D.drawpath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.TwoDFunVisualiser3D.drawpath" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.TwoDFunVisualiser3D.drawpathbest">
+<tt class="descname">drawpathbest</tt><big>(</big><em>p1</em>, <em>p2</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#TwoDFunVisualiser3D.drawpathbest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.TwoDFunVisualiser3D.drawpathbest" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.TwoDFunVisualiser3D.drawposition">
+<tt class="descname">drawposition</tt><big>(</big><em>p</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#TwoDFunVisualiser3D.drawposition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.TwoDFunVisualiser3D.drawposition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.TwoDFunVisualiser3D.flush">
+<tt class="descname">flush</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pymeta.html#TwoDFunVisualiser3D.flush"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.TwoDFunVisualiser3D.flush" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.TwoDFunVisualiser3D.init">
+<tt class="descname">init</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#TwoDFunVisualiser3D.init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.TwoDFunVisualiser3D.init" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pymeta.TwoDFunVisualiserColors">
+<em class="property">class </em><tt class="descclassname">pymeta.</tt><tt class="descname">TwoDFunVisualiserColors</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#TwoDFunVisualiserColors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.TwoDFunVisualiserColors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pymeta.OptimizationVisualiser" title="pymeta.OptimizationVisualiser"><tt class="xref py py-class docutils literal"><span class="pre">pymeta.OptimizationVisualiser</span></tt></a></p>
+<dl class="method">
+<dt id="pymeta.TwoDFunVisualiserColors.drawbest">
+<tt class="descname">drawbest</tt><big>(</big><em>pt</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#TwoDFunVisualiserColors.drawbest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.TwoDFunVisualiserColors.drawbest" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.TwoDFunVisualiserColors.drawpath">
+<tt class="descname">drawpath</tt><big>(</big><em>pt1</em>, <em>pt2</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#TwoDFunVisualiserColors.drawpath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.TwoDFunVisualiserColors.drawpath" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.TwoDFunVisualiserColors.drawpathbest">
+<tt class="descname">drawpathbest</tt><big>(</big><em>pt1</em>, <em>pt2</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#TwoDFunVisualiserColors.drawpathbest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.TwoDFunVisualiserColors.drawpathbest" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.TwoDFunVisualiserColors.drawposition">
+<tt class="descname">drawposition</tt><big>(</big><em>pt</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#TwoDFunVisualiserColors.drawposition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.TwoDFunVisualiserColors.drawposition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.TwoDFunVisualiserColors.drawrange">
+<tt class="descname">drawrange</tt><big>(</big><em>pt</em>, <em>halfrange</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#TwoDFunVisualiserColors.drawrange"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.TwoDFunVisualiserColors.drawrange" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.TwoDFunVisualiserColors.flush">
+<tt class="descname">flush</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pymeta.html#TwoDFunVisualiserColors.flush"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.TwoDFunVisualiserColors.flush" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pymeta.TwoDFunVisualiserColors.init">
+<tt class="descname">init</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#TwoDFunVisualiserColors.init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.TwoDFunVisualiserColors.init" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descname">connectbycurve(p1, p2, adder=array([[ 0.        ],</tt></dt>
+<dt>
+<tt class="descname">[ 0.03124681],</tt></dt>
+<dt>
+<tt class="descname">[ 0.06185593],</tt></dt>
+<dt>
+<tt class="descname">[ 0.09182736],</tt></dt>
+<dt>
+<tt class="descname">[ 0.12116111],</tt></dt>
+<dt>
+<tt class="descname">[ 0.14985716],</tt></dt>
+<dt>
+<tt class="descname">[ 0.17791552],</tt></dt>
+<dt>
+<tt class="descname">[ 0.20533619],</tt></dt>
+<dt>
+<tt class="descname">[ 0.23211917],</tt></dt>
+<dt>
+<tt class="descname">[ 0.25826446],</tt></dt>
+<dt>
+<tt class="descname">[ 0.28377206],</tt></dt>
+<dt>
+<tt class="descname">[ 0.30864198],</tt></dt>
+<dt>
+<tt class="descname">[ 0.3328742 ],</tt></dt>
+<dt>
+<tt class="descname">[ 0.35646873],</tt></dt>
+<dt>
+<tt class="descname">[ 0.37942557],</tt></dt>
+<dt>
+<tt class="descname">[ 0.40174472],</tt></dt>
+<dt>
+<tt class="descname">[ 0.42342618],</tt></dt>
+<dt>
+<tt class="descname">[ 0.44446995],</tt></dt>
+<dt>
+<tt class="descname">[ 0.46487603],</tt></dt>
+<dt>
+<tt class="descname">[ 0.48464442],</tt></dt>
+<dt>
+<tt class="descname">[ 0.50377512],</tt></dt>
+<dt>
+<tt class="descname">[ 0.52226814],</tt></dt>
+<dt>
+<tt class="descname">[ 0.54012346],</tt></dt>
+<dt>
+<tt class="descname">[ 0.55734109],</tt></dt>
+<dt>
+<tt class="descname">[ 0.57392103],</tt></dt>
+<dt>
+<tt class="descname">[ 0.58986328],</tt></dt>
+<dt>
+<tt class="descname">[ 0.60516784],</tt></dt>
+<dt>
+<tt class="descname">[ 0.61983471],</tt></dt>
+<dt>
+<tt class="descname">[ 0.63386389],</tt></dt>
+<dt>
+<tt class="descname">[ 0.64725538],</tt></dt>
+<dt>
+<tt class="descname">[ 0.66000918],</tt></dt>
+<dt>
+<tt class="descname">[ 0.67212529],</tt></dt>
+<dt>
+<tt class="descname">[ 0.68360371],</tt></dt>
+<dt>
+<tt class="descname">[ 0.69444444],</tt></dt>
+<dt>
+<tt class="descname">[ 0.70464748],</tt></dt>
+<dt>
+<tt class="descname">[ 0.71421284],</tt></dt>
+<dt>
+<tt class="descname">[ 0.7231405 ],</tt></dt>
+<dt>
+<tt class="descname">[ 0.73143047],</tt></dt>
+<dt>
+<tt class="descname">[ 0.73908275],</tt></dt>
+<dt>
+<tt class="descname">[ 0.74609734],</tt></dt>
+<dt>
+<tt class="descname">[ 0.75247424],</tt></dt>
+<dt>
+<tt class="descname">[ 0.75821345],</tt></dt>
+<dt>
+<tt class="descname">[ 0.76331497],</tt></dt>
+<dt>
+<tt class="descname">[ 0.7677788 ],</tt></dt>
+<dt>
+<tt class="descname">[ 0.77160494],</tt></dt>
+<dt>
+<tt class="descname">[ 0.77479339],</tt></dt>
+<dt>
+<tt class="descname">[ 0.77734415],</tt></dt>
+<dt>
+<tt class="descname">[ 0.77925722],</tt></dt>
+<dt>
+<tt class="descname">[ 0.7805326 ],</tt></dt>
+<dt>
+<tt class="descname">[ 0.78117029],</tt></dt>
+<dt>
+<tt class="descname">[ 0.78117029],</tt></dt>
+<dt>
+<tt class="descname">[ 0.7805326 ],</tt></dt>
+<dt>
+<tt class="descname">[ 0.77925722],</tt></dt>
+<dt>
+<tt class="descname">[ 0.77734415],</tt></dt>
+<dt>
+<tt class="descname">[ 0.77479339],</tt></dt>
+<dt>
+<tt class="descname">[ 0.77160494],</tt></dt>
+<dt>
+<tt class="descname">[ 0.7677788 ],</tt></dt>
+<dt>
+<tt class="descname">[ 0.76331497],</tt></dt>
+<dt>
+<tt class="descname">[ 0.75821345],</tt></dt>
+<dt>
+<tt class="descname">[ 0.75247424],</tt></dt>
+<dt>
+<tt class="descname">[ 0.74609734],</tt></dt>
+<dt>
+<tt class="descname">[ 0.73908275],</tt></dt>
+<dt>
+<tt class="descname">[ 0.73143047],</tt></dt>
+<dt>
+<tt class="descname">[ 0.7231405 ],</tt></dt>
+<dt>
+<tt class="descname">[ 0.71421284],</tt></dt>
+<dt>
+<tt class="descname">[ 0.70464748],</tt></dt>
+<dt>
+<tt class="descname">[ 0.69444444],</tt></dt>
+<dt>
+<tt class="descname">[ 0.68360371],</tt></dt>
+<dt>
+<tt class="descname">[ 0.67212529],</tt></dt>
+<dt>
+<tt class="descname">[ 0.66000918],</tt></dt>
+<dt>
+<tt class="descname">[ 0.64725538],</tt></dt>
+<dt>
+<tt class="descname">[ 0.63386389],</tt></dt>
+<dt>
+<tt class="descname">[ 0.61983471],</tt></dt>
+<dt>
+<tt class="descname">[ 0.60516784],</tt></dt>
+<dt>
+<tt class="descname">[ 0.58986328],</tt></dt>
+<dt>
+<tt class="descname">[ 0.57392103],</tt></dt>
+<dt>
+<tt class="descname">[ 0.55734109],</tt></dt>
+<dt>
+<tt class="descname">[ 0.54012346],</tt></dt>
+<dt>
+<tt class="descname">[ 0.52226814],</tt></dt>
+<dt>
+<tt class="descname">[ 0.50377512],</tt></dt>
+<dt>
+<tt class="descname">[ 0.48464442],</tt></dt>
+<dt>
+<tt class="descname">[ 0.46487603],</tt></dt>
+<dt>
+<tt class="descname">[ 0.44446995],</tt></dt>
+<dt>
+<tt class="descname">[ 0.42342618],</tt></dt>
+<dt>
+<tt class="descname">[ 0.40174472],</tt></dt>
+<dt>
+<tt class="descname">[ 0.37942557],</tt></dt>
+<dt>
+<tt class="descname">[ 0.35646873],</tt></dt>
+<dt>
+<tt class="descname">[ 0.3328742 ],</tt></dt>
+<dt>
+<tt class="descname">[ 0.30864198],</tt></dt>
+<dt>
+<tt class="descname">[ 0.28377206],</tt></dt>
+<dt>
+<tt class="descname">[ 0.25826446],</tt></dt>
+<dt>
+<tt class="descname">[ 0.23211917],</tt></dt>
+<dt>
+<tt class="descname">[ 0.20533619],</tt></dt>
+<dt>
+<tt class="descname">[ 0.17791552],</tt></dt>
+<dt>
+<tt class="descname">[ 0.14985716],</tt></dt>
+<dt>
+<tt class="descname">[ 0.12116111],</tt></dt>
+<dt>
+<tt class="descname">[ 0.09182736],</tt></dt>
+<dt>
+<tt class="descname">[ 0.06185593],</tt></dt>
+<dt>
+<tt class="descname">[ 0.03124681],</tt></dt>
+<dt>
+<tt class="descname">[ 0.        ]]))</tt></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pymeta.dprint">
+<tt class="descclassname">pymeta.</tt><tt class="descname">dprint</tt><big>(</big><em>msg</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#dprint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.dprint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pymeta.fig_flush">
+<tt class="descclassname">pymeta.</tt><tt class="descname">fig_flush</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pymeta.html#fig_flush"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.fig_flush" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pymeta.getcurveadder">
+<tt class="descclassname">pymeta.</tt><tt class="descname">getcurveadder</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pymeta.html#getcurveadder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.getcurveadder" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pymeta.getlogger">
+<tt class="descclassname">pymeta.</tt><tt class="descname">getlogger</tt><big>(</big><em>filepath='../tmp/log.txt'</em>, <em>appname='PM'</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#getlogger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.getlogger" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pymeta.main">
+<tt class="descclassname">pymeta.</tt><tt class="descname">main</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/pymeta.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pymeta.maxval">
+<tt class="descclassname">pymeta.</tt><tt class="descname">maxval</tt><big>(</big><em>a</em>, <em>b</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#maxval"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.maxval" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pymeta.minval">
+<tt class="descclassname">pymeta.</tt><tt class="descname">minval</tt><big>(</big><em>a</em>, <em>b</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#minval"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.minval" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pymeta.mkdirfor">
+<tt class="descclassname">pymeta.</tt><tt class="descname">mkdirfor</tt><big>(</big><em>path</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#mkdirfor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.mkdirfor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pymeta.nparray">
+<tt class="descclassname">pymeta.</tt><tt class="descname">nparray</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#nparray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.nparray" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unless dtype is specified, makesure new array has float type</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymeta.overwrite">
+<tt class="descclassname">pymeta.</tt><tt class="descname">overwrite</tt><big>(</big><em>orig</em>, <em>**options</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#overwrite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.overwrite" title="Permalink to this definition">¶</a></dt>
+<dd><p>overwrite already-existing/default values in the original
+dictionary with the ones in the options dictionary.
+if the options dictionary has keys that are not in orig, they
+are not assigned to orig. This function is intended for
+easy, safe option assignments in places like __init__()
+functions</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymeta.randdiv">
+<tt class="descclassname">pymeta.</tt><tt class="descname">randdiv</tt><big>(</big><em>amount</em>, <em>cnt</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#randdiv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.randdiv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Divides the AMOUNT into CNT random parts and returns those
+parts in a numpy array. CNT must not be bigger than AMOUNT.
+Both CNT and AMOUNT must be integers.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">randdiv</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<span class="go">array([ 5,  6,  9,  8, 11, 15,  8,  9, 17, 12])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymeta.randin">
+<tt class="descclassname">pymeta.</tt><tt class="descname">randin</tt><big>(</big><em>lb</em>, <em>ub</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#randin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.randin" title="Permalink to this definition">¶</a></dt>
+<dd><p>return random array with elements between the
+elements of lb and ub. ub is not included.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymeta.randintbetween">
+<tt class="descclassname">pymeta.</tt><tt class="descname">randintbetween</tt><big>(</big><em>mat1</em>, <em>mat2</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#randintbetween"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.randintbetween" title="Permalink to this definition">¶</a></dt>
+<dd><p>return a matrix with random elements between
+elements of corresponding  mat1 and mat2 elements.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymeta.rotationmatrix">
+<tt class="descclassname">pymeta.</tt><tt class="descname">rotationmatrix</tt><big>(</big><em>D</em>, <em>c</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#rotationmatrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.rotationmatrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Translated from the Matlab function rot_matrix of P. N. Suganthan</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pymeta.rotationmatrixsuganthan">
+<tt class="descclassname">pymeta.</tt><tt class="descname">rotationmatrixsuganthan</tt><big>(</big><em>D</em>, <em>c</em>, <em>rotmatspath</em><big>)</big><a class="reference internal" href="_modules/pymeta.html#rotationmatrixsuganthan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pymeta.rotationmatrixsuganthan" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pymeta.algorithm.html" title="pymeta.algorithm package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome!"
+             >previous</a> |</li>
+        <li><a href="index.html">opn/PyMeta 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Oğuz Altun.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

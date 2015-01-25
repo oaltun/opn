@@ -1,0 +1,1 @@
+sphinx-apidoc --output-dir=. --maxdepth=1000 --follow-links --separate --private --doc-project=opn/PyMeta --doc-author="Oðuz Altun" --doc-version=0.1 ../bin/example1

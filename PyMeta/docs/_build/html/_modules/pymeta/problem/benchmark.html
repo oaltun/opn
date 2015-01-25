@@ -1,0 +1,235 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pymeta.problem.benchmark &mdash; opn/PyMeta 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="opn/PyMeta 0.1 documentation" href="../../../index.html" />
+    <link rel="up" title="pymeta" href="../../pymeta.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">opn/PyMeta 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../pymeta.html" accesskey="U">pymeta</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for pymeta.problem.benchmark</h1><div class="highlight"><pre>
+<span class="c"># reference: Essentials of Metaheuristics, First Edition (Rev C) Online Version</span>
+<span class="c"># 1.3, February, 2012 by Sean Luke, Section 11.2.2</span>
+
+<span class="kn">import</span> <span class="nn">pymeta</span> <span class="kn">as</span> <span class="nn">pm</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="c"># TODO: get rid of this &quot;from numpy import *&quot;</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c"># TODO: get rid of &quot;self.visualiser = ...&quot; lines.</span>
+<span class="c">#     visualiser must be attached by the user </span>
+
+<span class="c"># TODO: simplify problem objects to subclass and use &quot;RealValuedFunctionProblem&quot;</span>
+<div class="viewcode-block" id="RealValuedFunctionProblem"><a class="viewcode-back" href="../../../pymeta.problem.benchmark.html#pymeta.problem.benchmark.RealValuedFunctionProblem">[docs]</a><span class="k">class</span> <span class="nc">RealValuedFunctionProblem</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">OptimizationProblem</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">pm</span><span class="o">.</span><span class="n">OptimizationProblem</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ub</span> <span class="o">=</span> <span class="n">array</span><span class="p">([</span><span class="mf">5.12</span><span class="p">,</span> <span class="mf">5.12</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lb</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">ub</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">minimize</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">visualiser</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">TwoDFunVisualiser</span><span class="p">(</span><span class="n">fun</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">costfun</span><span class="p">,</span> <span class="n">lb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lb</span><span class="p">,</span>
+            <span class="n">ub</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ub</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ub</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">lb</span><span class="p">)</span> <span class="o">/</span> <span class="mf">100.0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="SphereProblem"><a class="viewcode-back" href="../../../pymeta.problem.benchmark.html#pymeta.problem.benchmark.SphereProblem">[docs]</a><span class="k">class</span> <span class="nc">SphereProblem</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">OptimizationProblem</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; Ref : Essentials of Metaheuristics, Sean Luke, Second Edition,</span>
+<span class="sd">    Online Version 2.0, June 2013&#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">pm</span><span class="o">.</span><span class="n">OptimizationProblem</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>  <span class="c"># inherit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ub</span> <span class="o">=</span> <span class="n">array</span><span class="p">([</span><span class="mf">5.12</span><span class="p">,</span> <span class="mf">5.12</span><span class="p">])</span>  <span class="c"># #defaults</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lb</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">ub</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;Sphere&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">optimum</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">optimumsol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ub</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">visualiser</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">TwoDFunVisualiser</span><span class="p">(</span><span class="n">fun</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cost</span><span class="p">,</span> <span class="n">lb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lb</span><span class="p">,</span>
+            <span class="n">ub</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ub</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ub</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">lb</span><span class="p">)</span> <span class="o">/</span> <span class="mf">100.0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>  <span class="c"># #overwrite</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">minimize</span> <span class="o">=</span> <span class="bp">True</span>
+
+<div class="viewcode-block" id="SphereProblem.costfun"><a class="viewcode-back" href="../../../pymeta.problem.benchmark.html#pymeta.problem.benchmark.SphereProblem.costfun">[docs]</a>    <span class="k">def</span> <span class="nf">costfun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
+</div></div>
+<div class="viewcode-block" id="RastriginProblem"><a class="viewcode-back" href="../../../pymeta.problem.benchmark.html#pymeta.problem.benchmark.RastriginProblem">[docs]</a><span class="k">class</span> <span class="nc">RastriginProblem</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">OptimizationProblem</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; Ref : Essentials of Metaheuristics, Sean Luke, Second Edition,</span>
+<span class="sd">    Online Version 2.0, June 2013&#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">pm</span><span class="o">.</span><span class="n">OptimizationProblem</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>  <span class="c"># inherit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ub</span> <span class="o">=</span> <span class="n">array</span><span class="p">([</span><span class="mf">5.12</span><span class="p">,</span> <span class="mf">5.12</span><span class="p">])</span>  <span class="c"># #defaults</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lb</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">ub</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;Rastrigin&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">optimum</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">optimumsol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ub</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">visualiser</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">TwoDFunVisualiser</span><span class="p">(</span><span class="n">fun</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cost</span><span class="p">,</span> <span class="n">lb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lb</span><span class="p">,</span>
+            <span class="n">ub</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ub</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ub</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">lb</span><span class="p">)</span> <span class="o">/</span> <span class="mf">100.0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>  <span class="c"># #overwrite</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">minimize</span> <span class="o">=</span> <span class="bp">True</span>
+
+<div class="viewcode-block" id="RastriginProblem.costfun"><a class="viewcode-back" href="../../../pymeta.problem.benchmark.html#pymeta.problem.benchmark.RastriginProblem.costfun">[docs]</a>    <span class="k">def</span> <span class="nf">costfun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">10</span><span class="o">*</span><span class="n">x</span><span class="o">.</span><span class="n">size</span> <span class="o">+</span> <span class="nb">sum</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">x</span><span class="p">))</span>
+</div></div>
+<div class="viewcode-block" id="RosenbrockProblem"><a class="viewcode-back" href="../../../pymeta.problem.benchmark.html#pymeta.problem.benchmark.RosenbrockProblem">[docs]</a><span class="k">class</span> <span class="nc">RosenbrockProblem</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">OptimizationProblem</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; Ref : Essentials of Metaheuristics, Sean Luke, Second Edition,</span>
+<span class="sd">    Online Version 2.0, June 2013&#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">pm</span><span class="o">.</span><span class="n">OptimizationProblem</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>  <span class="c"># inherit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ub</span> <span class="o">=</span> <span class="n">array</span><span class="p">([</span><span class="mf">2.048</span><span class="p">,</span> <span class="mf">2.048</span><span class="p">])</span>  <span class="c"># #defaults</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lb</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">ub</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;Rosenbrock&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">minimize</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">visualiser</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">TwoDFunVisualiser</span><span class="p">(</span><span class="n">fun</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">costfun</span><span class="p">,</span> <span class="n">lb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lb</span><span class="p">,</span>
+            <span class="n">ub</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ub</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ub</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">lb</span><span class="p">)</span> <span class="o">/</span> <span class="mf">100.0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>  <span class="c"># #overwrite</span>
+
+<div class="viewcode-block" id="RosenbrockProblem.costfun"><a class="viewcode-back" href="../../../pymeta.problem.benchmark.html#pymeta.problem.benchmark.RosenbrockProblem.costfun">[docs]</a>    <span class="k">def</span> <span class="nf">costfun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">**</span> <span class="mf">2.0</span> <span class="o">+</span> <span class="mf">100.0</span> <span class="o">*</span>
+                   <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">**</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">**</span> <span class="mf">2.0</span><span class="p">)</span>
+</div></div>
+<div class="viewcode-block" id="AckleyProblem"><a class="viewcode-back" href="../../../pymeta.problem.benchmark.html#pymeta.problem.benchmark.AckleyProblem">[docs]</a><span class="k">class</span> <span class="nc">AckleyProblem</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">OptimizationProblem</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; Ref : Essentials of Metaheuristics, Sean Luke, Second Edition,</span>
+<span class="sd">    Online Version 2.0, June 2013&#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">pm</span><span class="o">.</span><span class="n">OptimizationProblem</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>  <span class="c"># inherit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ub</span> <span class="o">=</span> <span class="n">array</span><span class="p">([</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">])</span>  <span class="c"># #defaults</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lb</span> <span class="o">=</span> <span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">15</span><span class="p">,</span> <span class="o">-</span><span class="mi">15</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;Ackley&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">minimize</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">visualiser</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">TwoDFunVisualiser</span><span class="p">(</span><span class="n">fun</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">costfun</span><span class="p">,</span> <span class="n">lb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lb</span><span class="p">,</span>
+            <span class="n">ub</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ub</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ub</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">lb</span><span class="p">)</span> <span class="o">/</span> <span class="mf">100.0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>  <span class="c"># #overwrite</span>
+
+<div class="viewcode-block" id="AckleyProblem.costfun"><a class="viewcode-back" href="../../../pymeta.problem.benchmark.html#pymeta.problem.benchmark.AckleyProblem.costfun">[docs]</a>    <span class="k">def</span> <span class="nf">costfun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="o">-</span><span class="mf">20.0</span> <span class="o">*</span> <span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.2</span> <span class="o">*</span> <span class="n">sqrt</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="n">size</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span> <span class="o">-</span>
+                <span class="n">exp</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">cos</span><span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">x</span><span class="p">))</span> <span class="o">/</span> <span class="n">size</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="o">+</span> <span class="mi">20</span> <span class="o">+</span> <span class="n">e</span><span class="p">)</span>
+</div></div>
+<div class="viewcode-block" id="SumProblem"><a class="viewcode-back" href="../../../pymeta.problem.benchmark.html#pymeta.problem.benchmark.SumProblem">[docs]</a><span class="k">class</span> <span class="nc">SumProblem</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">OptimizationProblem</span><span class="p">):</span>
+    <span class="c">## Ref : Essentials of Metaheuristics, Sean Luke, Second Edition,</span>
+    <span class="c">## Online Version 2.0, June 2013</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">pm</span><span class="o">.</span><span class="n">OptimizationProblem</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>  <span class="c"># inherit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ub</span> <span class="o">=</span> <span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>  <span class="c"># #defaults</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lb</span> <span class="o">=</span> <span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;Sum&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">minimize</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">visualiser</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">TwoDFunVisualiser</span><span class="p">(</span><span class="n">fun</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">costfun</span><span class="p">,</span> <span class="n">lb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lb</span><span class="p">,</span>
+            <span class="n">ub</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ub</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ub</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">lb</span><span class="p">)</span> <span class="o">/</span> <span class="mf">100.0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>  <span class="c"># #overwrite</span>
+
+<div class="viewcode-block" id="SumProblem.costfun"><a class="viewcode-back" href="../../../pymeta.problem.benchmark.html#pymeta.problem.benchmark.SumProblem.costfun">[docs]</a>    <span class="k">def</span> <span class="nf">costfun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</div></div>
+<div class="viewcode-block" id="StepProblem"><a class="viewcode-back" href="../../../pymeta.problem.benchmark.html#pymeta.problem.benchmark.StepProblem">[docs]</a><span class="k">class</span> <span class="nc">StepProblem</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">OptimizationProblem</span><span class="p">):</span>
+    <span class="c">## Ref : Essentials of Metaheuristics, Sean Luke, Second Edition,</span>
+    <span class="c">## Online Version 2.0, June 2013</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">pm</span><span class="o">.</span><span class="n">OptimizationProblem</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>  <span class="c"># inherit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ub</span> <span class="o">=</span> <span class="n">array</span><span class="p">([</span><span class="mf">5.12</span><span class="p">,</span> <span class="mf">5.12</span><span class="p">])</span>  <span class="c"># #defaults</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lb</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">ub</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;Step&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">minimize</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">visualiser</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">TwoDFunVisualiser</span><span class="p">(</span><span class="n">fun</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">costfun</span><span class="p">,</span> <span class="n">lb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lb</span><span class="p">,</span>
+            <span class="n">ub</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ub</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ub</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">lb</span><span class="p">)</span> <span class="o">/</span> <span class="mf">100.0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>  <span class="c"># #overwrite</span>
+
+<div class="viewcode-block" id="StepProblem.costfun"><a class="viewcode-back" href="../../../pymeta.problem.benchmark.html#pymeta.problem.benchmark.StepProblem.costfun">[docs]</a>    <span class="k">def</span> <span class="nf">costfun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mf">6.0</span> <span class="o">*</span> <span class="n">size</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</div></div>
+<div class="viewcode-block" id="SchwefelProblem"><a class="viewcode-back" href="../../../pymeta.problem.benchmark.html#pymeta.problem.benchmark.SchwefelProblem">[docs]</a><span class="k">class</span> <span class="nc">SchwefelProblem</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">OptimizationProblem</span><span class="p">):</span>
+    <span class="c">## Ref : Essentials of Metaheuristics, Sean Luke, Second Edition,</span>
+    <span class="c">## Online Version 2.0, June 2013</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">pm</span><span class="o">.</span><span class="n">OptimizationProblem</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>  <span class="c"># inherit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ub</span> <span class="o">=</span> <span class="n">array</span><span class="p">([</span><span class="mf">511.97</span><span class="p">,</span> <span class="mf">511.97</span><span class="p">])</span>  <span class="c"># #defaults</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lb</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">array</span><span class="p">([</span><span class="mf">512.03</span><span class="p">,</span> <span class="mf">512.03</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;Schwefel&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">minimize</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">visualiser</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">TwoDFunVisualiser</span><span class="p">(</span><span class="n">fun</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">costfun</span><span class="p">,</span> <span class="n">lb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lb</span><span class="p">,</span>
+            <span class="n">ub</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ub</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ub</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">lb</span><span class="p">)</span> <span class="o">/</span> <span class="mf">100.0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>  <span class="c"># #overwrite</span>
+
+<div class="viewcode-block" id="SchwefelProblem.costfun"><a class="viewcode-back" href="../../../pymeta.problem.benchmark.html#pymeta.problem.benchmark.SchwefelProblem.costfun">[docs]</a>    <span class="k">def</span> <span class="nf">costfun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="o">-</span><span class="n">x</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">))))</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">opn/PyMeta 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../pymeta.html" >pymeta</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Oğuz Altun.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>
