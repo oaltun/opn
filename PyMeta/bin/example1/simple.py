@@ -1,58 +1,60 @@
 #-*- coding: utf-8 -*-
 from __future__ import division
 
-# SETTINGS FOR IMPORTS:
-
-# Path to the directory that (lowercase) 'pymeta' directory resides in.
-# It can be absolute or relative.
-path_to_pymeta = '../../../../opn/PyMeta'
-
-
-# END SETTINGS FOR IMPORTS
-
-# IMPORTS
-# Import non-pymeta libraries.
-
-import os, sys
-from pprint import pprint
-import numpy as np
-import matplotlib.pyplot as plt
-
-if __name__ == '__main__':
-	# Arrange paths for importing pymeta
+def main():
+	# DO NECESSARY IMPORTS------------------------------------
+	# Arrangements for using pyqt4 as backend
+	import sip
+	sip.setapi('QString', 2)
+	sip.setapi('QVariant', 2)
+	import matplotlib
+	matplotlib.use('qt4agg')
+	
+	# Import necessary libraries
+	import matplotlib.pyplot as plt		
+	import os, sys
+	from pprint import pprint
+	import numpy as np
+	
+	# Change working directory to the directory of this script
 	filedir = os.path.dirname(os.path.realpath(__file__))
 	print "Starting in directory below:\n", filedir, "\n"
 	os.chdir(filedir)
-	sys.path.extend(['.',path_to_pymeta])
-
-
-
+	
+	# Arrange paths for importing pymeta	
+	import sys
+	path_to_pymeta = '../../../../opn/PyMeta'
+	sys.path.extend(['.',path_to_pymeta])	
+	
+	# Import PyMeta
 	print("Importing pymeta")
 	import pymeta as pm
 	from pymeta.problem import benchmark
 	from pymeta.algorithm import pso
 	print("Imported pymeta")
 	print('')
-	#---MAIN---
 
-	#OPTIONS
-
-	isdraw = False # Visualise? Visualisation is available for problems of two dimensions on real domain.
-	isdrawupdatex = isdraw # Draw solution updates?
+	
+	# SET OPTIONS----------------------------------------------------
+	
+	# Visualise? Visualisation is available for problems of two dimensions on real domain.
+	isdraw = False 
+	
+	# Draw solution updates?
+	isdrawupdatex = isdraw 
 
 	# After how many function evaluations (FES, assessments) should the algorithm stop? 
 	stop ={'assessmentcnt':1000}
 
-	# PREPARE THE PROBLEM  TO BE SOLVED:
+	# PREPARE THE PROBLEM TO BE SOLVED---------------------------------
 
-	# The 'benchmark' module has some classical test problems:
-
+	# The 'benchmark' module has some classical test problems. The dimensionality is inferred from the ub (upper bounds) or lb (lower bounds)
 	ub=np.array([5,5])
 	lb = -ub
 	problem = benchmark.RastriginProblem(ub=ub,lb=lb)
 
 
-	# PREPARE THE ALGORITHM
+	# PREPARE THE ALGORITHM TO BE USED----------------------------------
 
 	algorithm = pso.ParticleSwarmOptimization(
 		  name='PSO',
@@ -66,7 +68,7 @@ if __name__ == '__main__':
 	# GIVE STARTING POSITIONS OF PARTICLES
 	algorithm.positions = problem.randposn(algorithm.npositions)
 
-	# ARRANGE VISUALISATION
+	# PREPARE VISUALISER TO BE USED-------------------------------------
 	if isdraw:
 		#also try pm.TwoDFunVisualiserColor 
 		problem.visualiser = pm.TwoDFunVisualiser3D(
@@ -75,10 +77,10 @@ if __name__ == '__main__':
 			)
 		problem.visualiser.init()
 
-	# RUN THE ALGORITHM
+	# RUN THE ALGORITHM-----------------------------------------------------
 	algorithm.run()
 
-	# EXTRACT INFORMATION FROM THE ALGORITHM
+	# EXTRACT INFORMATION FROM THE ALGORITHM AND REPORT --------------------
 	# algorithm.logfes has the function evaluation numbers that globals best (fbest) changes.
 	# algorithm.logfbest has the corresponding new global best values.
 	# algorithm.xbest has the current best solution. Hence, when the main loop of the algorithm terminate, it has the last best solution.
@@ -89,8 +91,10 @@ if __name__ == '__main__':
 	print('XBEST:')
 	print(algorithm.xbest)
 
-	# SHOW PLOTS
 	if isdraw:
 		plt.show()
 
 
+
+if __name__ == '__main__':
+	main()
