@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pymeta.algorithm.de &mdash; opn/PyMeta 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="opn/PyMeta 0.1 documentation" href="../../../index.html" />
+    <link rel="up" title="pymeta" href="../../pymeta.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">opn/PyMeta 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../pymeta.html" accesskey="U">pymeta</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for pymeta.algorithm.de</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="c">#from numpy import *</span>
+<span class="kn">from</span> <span class="nn">pymeta</span> <span class="kn">import</span> <span class="n">OptimizationAlgorithm</span>
+
+<span class="c"># Based on intermediate recombination from Essentials of metaheuristics</span>
+<span class="c"># by Sean Luke. vectorised. no bounds checking, that is done automatically</span>
+<span class="c"># in self.f()</span>
+<div class="viewcode-block" id="intermediate_recombination_single_child"><a class="viewcode-back" href="../../../pymeta.algorithm.de.html#pymeta.algorithm.de.intermediate_recombination_single_child">[docs]</a><span class="k">def</span> <span class="nf">intermediate_recombination_single_child</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="n">p</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">p</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">v</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span> <span class="o">*</span> <span class="n">w</span>
+    <span class="k">return</span> <span class="n">r</span>
+</div>
+<div class="viewcode-block" id="random_except"><a class="viewcode-back" href="../../../pymeta.algorithm.de.html#pymeta.algorithm.de.random_except">[docs]</a><span class="k">def</span> <span class="nf">random_except</span><span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="n">tabulist</span><span class="p">):</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">length</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">r</span> <span class="ow">in</span> <span class="n">tabulist</span><span class="p">):</span> <span class="k">break</span>
+    <span class="k">return</span> <span class="n">r</span>
+
+<span class="c">#Based on Differential Evolution algorithm in Essentials of Metaheuristics, by Sean Luke</span></div>
+<div class="viewcode-block" id="DifferentialEvolution"><a class="viewcode-back" href="../../../pymeta.algorithm.de.html#pymeta.algorithm.de.DifferentialEvolution">[docs]</a><span class="k">class</span> <span class="nc">DifferentialEvolution</span><span class="p">(</span><span class="n">OptimizationAlgorithm</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">OptimizationAlgorithm</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>  <span class="c"># inherit</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxstepdivisor</span> <span class="o">=</span> <span class="mi">70</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;DE&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">npositions</span> <span class="o">=</span> <span class="mi">50</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="o">=</span> <span class="mf">0.25</span>  <span class="c"># for intermediate recombination</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mutationrate</span> <span class="o">=</span> <span class="mf">0.75</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>  <span class="c"># overwrite defaults</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">minimize</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">crossover</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">,</span> <span class="n">w</span><span class="p">:</span> \
+            <span class="n">intermediate_recombination_single_child</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DifferentialEvolution.search"><a class="viewcode-back" href="../../../pymeta.algorithm.de.html#pymeta.algorithm.de.DifferentialEvolution.search">[docs]</a>    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>  <span class="c"># for each generation</span>
+            <span class="k">yield</span>
+            <span class="n">q</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>  <span class="c"># parents</span>
+            <span class="n">nq</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">q</span><span class="p">):</span>  <span class="c"># let parent have a child</span>
+                <span class="n">ia</span> <span class="o">=</span> <span class="n">random_except</span><span class="p">(</span><span class="n">nq</span><span class="p">,</span> <span class="p">(</span><span class="n">i</span><span class="p">,))</span>
+                <span class="n">ib</span> <span class="o">=</span> <span class="n">random_except</span><span class="p">(</span><span class="n">nq</span><span class="p">,</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">ia</span><span class="p">))</span>
+                <span class="n">ic</span> <span class="o">=</span> <span class="n">random_except</span><span class="p">(</span><span class="n">nq</span><span class="p">,</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">ia</span><span class="p">,</span> <span class="n">ib</span><span class="p">))</span>
+                <span class="n">d</span> <span class="o">=</span> <span class="n">q</span><span class="p">[</span><span class="n">ia</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">mutationrate</span> <span class="o">*</span> <span class="p">(</span><span class="n">q</span><span class="p">[</span><span class="n">ib</span><span class="p">]</span> <span class="o">-</span> <span class="n">q</span><span class="p">[</span><span class="n">ic</span><span class="p">])</span>
+                <span class="n">child</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">crossover</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+                <span class="n">xnew</span><span class="p">,</span> <span class="n">fnew</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="n">child</span><span class="p">);</span> <span class="k">yield</span>
+                <span class="k">if</span> <span class="n">fnew</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fx</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>  <span class="c"># accept child if it exceeds its parent</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">updatex</span><span class="p">(</span><span class="n">xnew</span><span class="p">,</span> <span class="n">fnew</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">opn/PyMeta 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../pymeta.html" >pymeta</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Oğuz Altun.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pymeta.algorithm.ba &mdash; opn/PyMeta 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="opn/PyMeta 0.1 documentation" href="../../../index.html" />
+    <link rel="up" title="pymeta" href="../../pymeta.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">opn/PyMeta 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../pymeta.html" accesskey="U">pymeta</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for pymeta.algorithm.ba</h1><div class="highlight"><pre>
+<span class="c"># This code was written by Oguz Altun and Ali Osman Topal.</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">pymeta</span> <span class="kn">import</span> <span class="n">OptimizationAlgorithm</span>
+<span class="kn">from</span> <span class="nn">pymeta</span> <span class="kn">import</span> <span class="n">randin</span>
+
+
+<span class="c"># ref: ...</span>
+<div class="viewcode-block" id="BatAlgorithmDemo"><a class="viewcode-back" href="../../../pymeta.algorithm.ba.html#pymeta.algorithm.ba.BatAlgorithmDemo">[docs]</a><span class="k">class</span> <span class="nc">BatAlgorithmDemo</span><span class="p">(</span><span class="n">OptimizationAlgorithm</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">OptimizationAlgorithm</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>  <span class="c"># inherit</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">A</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c"># # defaults</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="mf">0.5</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Qmin</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Qmax</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;Bat&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">npositions</span> <span class="o">=</span> <span class="mi">20</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxstepdivisor</span> <span class="o">=</span> <span class="mi">100</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>  <span class="c"># overwrite defaults with keyword arguments supplied by user</span>
+
+
+
+<div class="viewcode-block" id="BatAlgorithmDemo.search"><a class="viewcode-back" href="../../../pymeta.algorithm.ba.html#pymeta.algorithm.ba.BatAlgorithmDemo.search">[docs]</a>    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># ## shorter names to make program easier to read</span>
+        <span class="n">vis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">problem</span><span class="o">.</span><span class="n">visualiser</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">problem</span><span class="o">.</span><span class="n">cost</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">positions</span>  <span class="c"># name x is preferred in articles</span>
+        <span class="n">isdraw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">isdraw</span>
+        <span class="n">rand</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span>
+
+        <span class="n">maxstep</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">problem</span><span class="o">.</span><span class="n">ub</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">problem</span><span class="o">.</span><span class="n">lb</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxstepdivisor</span>
+
+        <span class="k">print</span> <span class="s">&quot;hello&quot;</span>
+        <span class="k">print</span> <span class="s">&quot;world&quot;</span>
+
+        <span class="n">n</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c"># number of particles</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c"># number of dimensions</span>
+
+        <span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">d</span><span class="p">))</span>
+
+        <span class="n">Fitness</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">f</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span> <span class="k">for</span> <span class="n">pos</span> <span class="ow">in</span> <span class="n">x</span><span class="p">])</span>  <span class="c"># heights of best positions</span>
+
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">Fitness</span><span class="o">.</span><span class="n">argmin</span><span class="p">()</span>  <span class="c"># # best of the best values: global best value</span>
+
+        <span class="c"># drawing stuff</span>
+        <span class="n">colors</span> <span class="o">=</span> <span class="p">[];</span>
+        <span class="n">bestcolor</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">drawbest</span><span class="p">(</span><span class="n">pos</span><span class="p">):</span>
+            <span class="n">vis</span><span class="o">.</span><span class="n">drawposition</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="n">bestcolor</span><span class="p">,</span> <span class="n">scale_factor</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isdraw</span><span class="p">:</span>
+            <span class="n">drawbest</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">pos</span> <span class="ow">in</span> <span class="n">x</span><span class="p">:</span>
+                <span class="n">color</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,))</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+                <span class="n">colors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
+                <span class="n">vis</span><span class="o">.</span><span class="n">drawposition</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="n">color</span><span class="p">)</span>
+
+
+        <span class="c"># ## main loop</span>
+        <span class="n">bestpos</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">mincost</span> <span class="o">=</span> <span class="n">Fitness</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="n">iteration</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="p">(</span><span class="n">bestpos</span><span class="p">,</span> <span class="o">-</span><span class="n">mincost</span><span class="p">,</span> <span class="n">iteration</span><span class="p">)</span>  <span class="c"># give control to caller. It will log and decide whether to stop.</span>
+            <span class="n">iteration</span> <span class="o">=</span> <span class="n">iteration</span> <span class="o">+</span> <span class="mi">1</span>
+
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>  <span class="c"># #for each particle</span>
+
+                <span class="k">print</span> <span class="s">&quot;----------------------------&quot;</span>
+
+                <span class="n">xi</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">();</span> <span class="k">print</span> <span class="s">&quot;xi&quot;</span><span class="p">,</span> <span class="n">xi</span>
+                <span class="n">vi</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">();</span> <span class="k">print</span> <span class="s">&quot;vi&quot;</span><span class="p">,</span> <span class="n">vi</span>
+
+                <span class="n">Q</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Qmin</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Qmax</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">Qmin</span><span class="p">)</span> <span class="o">*</span> <span class="n">rand</span><span class="p">()</span>
+                <span class="n">vnew</span> <span class="o">=</span> <span class="n">vi</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">bestpos</span><span class="p">)</span> <span class="o">*</span> <span class="n">Q</span><span class="p">[</span><span class="n">i</span><span class="p">];</span> <span class="k">print</span> <span class="s">&quot;vnew&quot;</span><span class="p">,</span> <span class="n">vnew</span>
+                <span class="n">xnew</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">problem</span><span class="o">.</span><span class="n">fixbounds</span><span class="p">(</span><span class="n">xi</span> <span class="o">+</span> <span class="n">vnew</span><span class="p">);</span> <span class="k">print</span> <span class="s">&quot;xnew&quot;</span><span class="p">,</span> <span class="n">xnew</span>
+
+                <span class="k">if</span> <span class="n">rand</span><span class="p">()</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="p">:</span>
+                    <span class="n">xnew</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">problem</span><span class="o">.</span><span class="n">fixbounds</span><span class="p">(</span><span class="n">bestpos</span> <span class="o">+</span> <span class="n">maxstep</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">d</span><span class="p">)));</span> <span class="k">print</span> <span class="s">&quot;in if xnew&quot;</span><span class="p">,</span> <span class="n">xnew</span>
+
+                <span class="k">print</span> <span class="s">&quot;Fitness[i]&quot;</span><span class="p">,</span> <span class="n">Fitness</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">Fnew</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">xnew</span><span class="p">);</span> <span class="k">print</span> <span class="s">&quot;Fnew&quot;</span><span class="p">,</span> <span class="n">Fnew</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="n">Fnew</span> <span class="o">&lt;=</span> <span class="n">Fitness</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="ow">and</span> <span class="p">(</span><span class="n">rand</span><span class="p">()</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">A</span><span class="p">):</span>
+                    <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">xnew</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="p">;</span> <span class="k">print</span> <span class="s">&quot;better x[i] ! in if x[i]&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                    <span class="n">Fitness</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Fnew</span>
+
+                <span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">xi</span><span class="p">;</span> <span class="k">print</span> <span class="s">&quot;v[i]&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+
+
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isdraw</span><span class="p">:</span>
+                    <span class="n">vis</span><span class="o">.</span><span class="n">drawpath</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">color</span> <span class="o">=</span> <span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>  <span class="c"># draw the path</span>
+
+                <span class="k">print</span> <span class="s">&quot;============================&quot;</span>
+
+                <span class="k">if</span> <span class="n">Fnew</span> <span class="o">&lt;=</span> <span class="n">mincost</span><span class="p">:</span>
+                    <span class="n">mincost</span> <span class="o">=</span> <span class="n">Fnew</span>
+                    <span class="n">bestpos</span> <span class="o">=</span> <span class="n">xnew</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+                    <span class="k">yield</span> <span class="p">(</span><span class="n">bestpos</span><span class="p">,</span> <span class="o">-</span><span class="n">mincost</span><span class="p">,</span> <span class="n">iteration</span><span class="p">)</span>
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">opn/PyMeta 0.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../pymeta.html" >pymeta</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Oğuz Altun.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>
