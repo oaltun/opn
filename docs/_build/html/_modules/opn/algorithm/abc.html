@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>opn.algorithm.abc &mdash; opn 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="opn 0.1.1 documentation" href="../../../index.html" />
+    <link rel="up" title="opn" href="../../opn.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">opn 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../opn.html" accesskey="U">opn</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for opn.algorithm.abc</h1><div class="highlight"><pre>
+<span class="c">#This code was written by Oguz Altun and Tarik Korkmaz.</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">opn</span> <span class="kn">import</span> <span class="n">OptimizationAlgorithm</span>
+
+<span class="c"># recombine solution with index i, with a random other solution in the</span>
+<span class="c"># population x. return new solution and its</span>
+<div class="viewcode-block" id="abc_recombination"><a class="viewcode-back" href="../../../opn.algorithm.abc.html#opn.algorithm.abc.abc_recombination">[docs]</a><span class="k">def</span> <span class="nf">abc_recombination</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="c">#get a mate</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">j</span><span class="p">):</span> <span class="k">break</span>
+
+    <span class="c">#get a dim</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+    <span class="n">xtmp</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">xtmp</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">d</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">d</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">d</span><span class="p">])</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">xtmp</span>
+
+</div>
+<div class="viewcode-block" id="assignprobabilities"><a class="viewcode-back" href="../../../opn.algorithm.abc.html#opn.algorithm.abc.assignprobabilities">[docs]</a><span class="k">def</span> <span class="nf">assignprobabilities</span><span class="p">(</span><span class="n">fx</span><span class="p">):</span>
+    <span class="n">fit</span> <span class="o">=</span> <span class="n">fx</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">fit</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">e</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">fit</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">e</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">fit</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">e</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mf">0.9</span> <span class="o">*</span> <span class="n">fit</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">fit</span><span class="p">))</span> <span class="o">+</span> <span class="mf">0.1</span>
+</div>
+<div class="viewcode-block" id="ArtificialBeeColony"><a class="viewcode-back" href="../../../opn.algorithm.abc.html#opn.algorithm.abc.ArtificialBeeColony">[docs]</a><span class="k">class</span> <span class="nc">ArtificialBeeColony</span><span class="p">(</span><span class="n">OptimizationAlgorithm</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">OptimizationAlgorithm</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>  <span class="c"># inherit</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxstepdivisor</span> <span class="o">=</span> <span class="mi">70</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;ABC&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">npositions</span> <span class="o">=</span> <span class="mi">50</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">limit</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c"># when to leave food sources</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">crossover</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">abc_recombination</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>  <span class="c"># overwrite</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">minimize</span> <span class="o">=</span> <span class="bp">False</span>
+
+<div class="viewcode-block" id="ArtificialBeeColony.search"><a class="viewcode-back" href="../../../opn.algorithm.abc.html#opn.algorithm.abc.ArtificialBeeColony.search">[docs]</a>    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="c">#### sugar</span>
+        <span class="n">randomrecombine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">crossover</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span>
+        <span class="n">fx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fx</span>
+
+        <span class="c">#### main loop</span>
+        <span class="n">trial</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">fx</span><span class="p">)</span>
+        <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>  <span class="c">#for each generation</span>
+            <span class="k">yield</span>
+
+            <span class="c"># re-visit all sources (employed bee phase)</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">):</span>
+                <span class="n">xnew</span><span class="p">,</span> <span class="n">fnew</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">randomrecombine</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">));</span> <span class="k">yield</span>
+                <span class="k">if</span> <span class="n">fnew</span> <span class="o">&gt;=</span> <span class="n">fx</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">updatex</span><span class="p">(</span><span class="n">xnew</span><span class="p">,</span> <span class="n">fnew</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+                    <span class="n">trial</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">trial</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="c">## re visit good sources (onlooker bee phase)</span>
+            <span class="c"># assign re-visit probability</span>
+            <span class="n">prob</span> <span class="o">=</span> <span class="n">assignprobabilities</span><span class="p">(</span><span class="n">fx</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">prob</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">e</span> <span class="o">&gt;</span> <span class="n">r</span><span class="p">():</span>
+                    <span class="n">xnew</span><span class="p">,</span> <span class="n">fnew</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">randomrecombine</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">));</span> <span class="k">yield</span>
+                    <span class="k">if</span> <span class="n">fnew</span> <span class="o">&gt;=</span> <span class="n">fx</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">updatex</span><span class="p">(</span><span class="n">xnew</span><span class="p">,</span> <span class="n">fnew</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+                        <span class="n">trial</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">trial</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="c"># leave inactive sources (scout phase)</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">trial</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">e</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">limit</span><span class="p">:</span>
+                    <span class="n">xnew</span><span class="p">,</span> <span class="n">fnew</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">problem</span><span class="o">.</span><span class="n">randpos</span><span class="p">());</span> <span class="k">yield</span>
+                    <span class="n">trial</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">updatex</span><span class="p">(</span><span class="n">xnew</span><span class="p">,</span> <span class="n">fnew</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>  <span class="c"># do not draw path</span>
+
+                    <span class="c">#assign a new color, as old path is abandoned</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isdraw</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_poscolors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">r</span><span class="p">(),</span> <span class="n">r</span><span class="p">(),</span> <span class="n">r</span><span class="p">())</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">opn 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../opn.html" >opn</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Oğuz Altun.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

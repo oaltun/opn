@@ -6,6 +6,12 @@ REFERENCES
     June, 2013
 """
 from __future__ import division
+import sip
+sip.setapi('QString', 2)
+sip.setapi('QVariant', 2)
+import matplotlib
+matplotlib.use('qt4agg')
+
 import re
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import gcf
@@ -368,7 +374,9 @@ def getcurveadder():
     adder = adder.reshape((-1, 1))
     return adder
 
-def connectbycurve(p1, p2, adder = getcurveadder()):
+def connectbycurve(p1, p2, adder = None):
+    if adder is None:
+        adder = getcurveadder()
     dist = np.sum((p2 - p1) ** 2) ** 0.5
     # amp = dist/2.0
     amp = dist / 2

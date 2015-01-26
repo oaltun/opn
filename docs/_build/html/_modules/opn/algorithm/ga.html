@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>opn.algorithm.ga &mdash; opn 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="opn 0.1.1 documentation" href="../../../index.html" />
+    <link rel="up" title="opn" href="../../opn.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">opn 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../opn.html" accesskey="U">opn</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for opn.algorithm.ga</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="c">#from numpy import *</span>
+<span class="kn">from</span> <span class="nn">opn</span> <span class="kn">import</span> <span class="n">OptimizationAlgorithm</span>
+
+
+<span class="c">#tournament selection. ref: Essentials of metaheuristics.</span>
+<span class="c">#fp: fitnesses of the population. t: tournament size, t&gt;=1</span>
+<div class="viewcode-block" id="tournament_selection"><a class="viewcode-back" href="../../../opn.algorithm.ga.html#opn.algorithm.ga.tournament_selection">[docs]</a><span class="k">def</span> <span class="nf">tournament_selection</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">best</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">t</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">nxt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">fp</span><span class="p">[</span><span class="n">nxt</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">fp</span><span class="p">[</span><span class="n">best</span><span class="p">]:</span>
+            <span class="n">best</span> <span class="o">=</span> <span class="n">nxt</span>
+    <span class="k">return</span> <span class="n">best</span>
+
+<span class="c"># intermediate recombination from Essentials of metaheuristics by Sean Luke.</span>
+<span class="c"># vectorised. no bounds checking, that is done automatically in opn.</span></div>
+<div class="viewcode-block" id="intermediate_recombination"><a class="viewcode-back" href="../../../opn.algorithm.ga.html#opn.algorithm.ga.intermediate_recombination">[docs]</a><span class="k">def</span> <span class="nf">intermediate_recombination</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="n">p</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">p</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="n">p</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">p</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">v</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span> <span class="o">*</span> <span class="n">w</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">b</span> <span class="o">*</span> <span class="n">w</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span> <span class="o">*</span> <span class="n">v</span>
+    <span class="k">return</span> <span class="n">t</span><span class="p">,</span> <span class="n">s</span>
+
+<span class="c">#ref Essentials of Metaheuristics, by Sean Luke</span></div>
+<div class="viewcode-block" id="GeneticAlgorithm"><a class="viewcode-back" href="../../../opn.algorithm.ga.html#opn.algorithm.ga.GeneticAlgorithm">[docs]</a><span class="k">class</span> <span class="nc">GeneticAlgorithm</span><span class="p">(</span><span class="n">OptimizationAlgorithm</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">OptimizationAlgorithm</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>  <span class="c"># inherit</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxstepdivisor</span> <span class="o">=</span> <span class="mi">70</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;GA&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">npositions</span> <span class="o">=</span> <span class="mi">5</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="o">=</span> <span class="mf">0.25</span>  <span class="c"># for intermediate recombination</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="mi">2</span>     <span class="c"># for tournament selection</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>  <span class="c"># overwrite defaults with keyword arguments supplied by user</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">minimize</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">select</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">fp</span><span class="p">:</span> <span class="n">tournament_selection</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">crossover</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">v</span><span class="p">,</span> <span class="n">w</span><span class="p">:</span> <span class="n">intermediate_recombination</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="p">)</span>
+
+<span class="c"># def return_ts(self, fp):</span>
+<span class="c">#     return tournament_selection( fp,self.t)</span>
+<span class="c"># </span>
+<span class="c"># self.select = return_ts</span>
+
+<div class="viewcode-block" id="GeneticAlgorithm.search"><a class="viewcode-back" href="../../../opn.algorithm.ga.html#opn.algorithm.ga.GeneticAlgorithm.search">[docs]</a>    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="c">#### sugar</span>
+        <span class="n">select</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">select</span>
+        <span class="n">crossover</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">crossover</span>
+        <span class="k">def</span> <span class="nf">mutate</span><span class="p">(</span><span class="n">sol</span><span class="p">):</span>
+            <span class="n">xtmp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">problem</span><span class="o">.</span><span class="n">tweak</span><span class="p">(</span><span class="n">sol</span><span class="p">)</span>
+            <span class="n">xnew</span><span class="p">,</span> <span class="n">fnew</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="n">xtmp</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">xnew</span><span class="p">,</span> <span class="n">sol</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;whaat tweak gave same value???&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">xnew</span><span class="p">,</span> <span class="n">fnew</span>
+
+        <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>  <span class="c">#for each generation</span>
+            <span class="k">yield</span>
+
+            <span class="c">#### get next generation q</span>
+            <span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+            <span class="n">fq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fx</span><span class="p">)</span>
+            <span class="n">iq</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">nq</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">while</span> <span class="n">iq</span> <span class="o">&lt;</span> <span class="n">nq</span><span class="p">:</span>  <span class="c">#reproduction loop</span>
+                <span class="k">yield</span>
+                <span class="n">pa</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fx</span><span class="p">)</span>  <span class="c">#obtain parent 1</span>
+                <span class="n">pb</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fx</span><span class="p">)</span>  <span class="c">#obtain parent 2</span>
+                <span class="n">ca</span><span class="p">,</span> <span class="n">cb</span> <span class="o">=</span> <span class="n">crossover</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">pa</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">pb</span><span class="p">])</span>  <span class="c">#crossover</span>
+                <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">(</span><span class="n">ca</span><span class="p">,</span> <span class="n">cb</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">iq</span> <span class="o">&lt;</span> <span class="n">nq</span><span class="p">:</span>
+                        <span class="n">a</span><span class="p">,</span> <span class="n">fa</span> <span class="o">=</span> <span class="n">mutate</span><span class="p">(</span><span class="n">c</span><span class="p">);</span><span class="k">yield</span>  <span class="c">#mutate</span>
+                        <span class="n">q</span><span class="p">[</span><span class="n">iq</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span>
+                        <span class="n">fq</span><span class="p">[</span><span class="n">iq</span><span class="p">]</span> <span class="o">=</span> <span class="n">fa</span>
+                        <span class="n">iq</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="c">#### copy next generation q over current generation x.</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">q</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">updatex</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">fq</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">i</span><span class="p">)</span>
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">opn 0.1.1 documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../opn.html" >opn</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Oğuz Altun.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>
