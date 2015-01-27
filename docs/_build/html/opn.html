@@ -106,8 +106,577 @@
 </ul>
 </div>
 </div>
-<div class="section" id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-opn">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-opn" title="Permalink to this headline">¶</a></h2>
+<p>REFERENCES</p>
+<dl class="docutils">
+<dt>[Luke13]: Essentials of Metaheuristics, Second Edition, Online Version 2.0,</dt>
+<dd>June, 2013</dd>
+</dl>
+<dl class="class">
+<dt id="opn.Default">
+<em class="property">class </em><tt class="descclassname">opn.</tt><tt class="descname">Default</tt><a class="reference internal" href="_modules/opn.html#Default"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.Default" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#object" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></a></p>
+<dl class="method">
+<dt id="opn.Default.overwrite">
+<tt class="descname">overwrite</tt><big>(</big><em>**options</em><big>)</big><a class="reference internal" href="_modules/opn.html#Default.overwrite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.Default.overwrite" title="Permalink to this definition">¶</a></dt>
+<dd><p>overwrite already-existing/default values in self.dict &#8216;
+&#8216;with the ones in the options dictionary.
+if the options dictionary has keys that are not in orig, they
+are not assigned to orig. This function is intended for
+easy, safe option assignments in places like __init__()
+functions</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="opn.DummyVisualiser">
+<em class="property">class </em><tt class="descclassname">opn.</tt><tt class="descname">DummyVisualiser</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#DummyVisualiser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.DummyVisualiser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#opn.OptimizationVisualiser" title="opn.OptimizationVisualiser"><tt class="xref py py-class docutils literal"><span class="pre">opn.OptimizationVisualiser</span></tt></a></p>
+<dl class="method">
+<dt id="opn.DummyVisualiser.drawbest">
+<tt class="descname">drawbest</tt><big>(</big><em>p</em><big>)</big><a class="reference internal" href="_modules/opn.html#DummyVisualiser.drawbest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.DummyVisualiser.drawbest" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.DummyVisualiser.drawpath">
+<tt class="descname">drawpath</tt><big>(</big><em>p1</em>, <em>p2</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#DummyVisualiser.drawpath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.DummyVisualiser.drawpath" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.DummyVisualiser.drawposition">
+<tt class="descname">drawposition</tt><big>(</big><em>p</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#DummyVisualiser.drawposition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.DummyVisualiser.drawposition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.DummyVisualiser.flush">
+<tt class="descname">flush</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#DummyVisualiser.flush"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.DummyVisualiser.flush" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.DummyVisualiser.init">
+<tt class="descname">init</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#DummyVisualiser.init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.DummyVisualiser.init" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.DummyVisualiser.show">
+<tt class="descname">show</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#DummyVisualiser.show"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.DummyVisualiser.show" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="opn.FixBounds">
+<em class="property">class </em><tt class="descclassname">opn.</tt><tt class="descname">FixBounds</tt><a class="reference internal" href="_modules/opn.html#FixBounds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.FixBounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Namespace for static methods of fixing bounds</p>
+<dl class="staticmethod">
+<dt id="opn.FixBounds.exceeder_random">
+<em class="property">static </em><tt class="descname">exceeder_random</tt><big>(</big><em>ob</em>, <em>pos</em><big>)</big><a class="reference internal" href="_modules/opn.html#FixBounds.exceeder_random"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.FixBounds.exceeder_random" title="Permalink to this definition">¶</a></dt>
+<dd><p>assign random values only to the
+dimensions that are out of bounds</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="opn.FixBounds.full_random">
+<em class="property">static </em><tt class="descname">full_random</tt><big>(</big><em>ob</em>, <em>pos</em><big>)</big><a class="reference internal" href="_modules/opn.html#FixBounds.full_random"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.FixBounds.full_random" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="opn.FixBounds.to_edges">
+<em class="property">static </em><tt class="descname">to_edges</tt><big>(</big><em>ob</em>, <em>pos</em><big>)</big><a class="reference internal" href="_modules/opn.html#FixBounds.to_edges"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.FixBounds.to_edges" title="Permalink to this definition">¶</a></dt>
+<dd><p>out of bounds dimensions are moved
+to edges.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="opn.GenericExperiment">
+<em class="property">class </em><tt class="descclassname">opn.</tt><tt class="descname">GenericExperiment</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#GenericExperiment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.GenericExperiment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#opn.Default" title="opn.Default"><tt class="xref py py-class docutils literal"><span class="pre">opn.Default</span></tt></a></p>
+<dl class="method">
+<dt id="opn.GenericExperiment.do">
+<tt class="descname">do</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#GenericExperiment.do"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.GenericExperiment.do" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.GenericExperiment.runonce">
+<tt class="descname">runonce</tt><big>(</big><em>algorithm</em>, <em>problem</em>, <em>trial</em><big>)</big><a class="reference internal" href="_modules/opn.html#GenericExperiment.runonce"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.GenericExperiment.runonce" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.GenericExperiment.writelog">
+<tt class="descname">writelog</tt><big>(</big><em>t</em><big>)</big><a class="reference internal" href="_modules/opn.html#GenericExperiment.writelog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.GenericExperiment.writelog" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="opn.GenericOptimizationProblem">
+<tt class="descclassname">opn.</tt><tt class="descname">GenericOptimizationProblem</tt><a class="headerlink" href="#opn.GenericOptimizationProblem" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#opn.OptimizationProblem" title="opn.OptimizationProblem"><tt class="xref py py-class docutils literal"><span class="pre">OptimizationProblem</span></tt></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="opn.OptimizationAlgorithm">
+<em class="property">class </em><tt class="descclassname">opn.</tt><tt class="descname">OptimizationAlgorithm</tt><a class="reference internal" href="_modules/opn.html#OptimizationAlgorithm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationAlgorithm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#opn.Default" title="opn.Default"><tt class="xref py py-class docutils literal"><span class="pre">opn.Default</span></tt></a></p>
+<dl class="method">
+<dt id="opn.OptimizationAlgorithm.bestcolor">
+<tt class="descname">bestcolor</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationAlgorithm.bestcolor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationAlgorithm.bestcolor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationAlgorithm.dolastlog">
+<tt class="descname">dolastlog</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationAlgorithm.dolastlog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationAlgorithm.dolastlog" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationAlgorithm.dolog">
+<tt class="descname">dolog</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationAlgorithm.dolog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationAlgorithm.dolog" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationAlgorithm.draw">
+<tt class="descname">draw</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationAlgorithm.draw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationAlgorithm.draw" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationAlgorithm.drawbest">
+<tt class="descname">drawbest</tt><big>(</big><em>pos</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationAlgorithm.drawbest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationAlgorithm.drawbest" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationAlgorithm.drawfinalpositions">
+<tt class="descname">drawfinalpositions</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationAlgorithm.drawfinalpositions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationAlgorithm.drawfinalpositions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationAlgorithm.drawpath">
+<tt class="descname">drawpath</tt><big>(</big><em>oldpos</em>, <em>newpos</em>, <em>idx=0</em>, <em>color=None</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationAlgorithm.drawpath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationAlgorithm.drawpath" title="Permalink to this definition">¶</a></dt>
+<dd><p>draw a path from old pos to new pos for the position idx</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationAlgorithm.drawpathbest">
+<tt class="descname">drawpathbest</tt><big>(</big><em>oldpos</em>, <em>newpos</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationAlgorithm.drawpathbest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationAlgorithm.drawpathbest" title="Permalink to this definition">¶</a></dt>
+<dd><p>draw paths of the best.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationAlgorithm.f">
+<tt class="descname">f</tt><big>(</big><em>poslist</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationAlgorithm.f"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationAlgorithm.f" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationAlgorithm.hillclimb">
+<tt class="descname">hillclimb</tt><big>(</big><em>i</em>, <em>hclimit=-1</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationAlgorithm.hillclimb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationAlgorithm.hillclimb" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationAlgorithm.iscontinue">
+<tt class="descname">iscontinue</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationAlgorithm.iscontinue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationAlgorithm.iscontinue" title="Permalink to this definition">¶</a></dt>
+<dd><p>decide whether we should continue searching.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationAlgorithm.prepareposcolors">
+<tt class="descname">prepareposcolors</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationAlgorithm.prepareposcolors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationAlgorithm.prepareposcolors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationAlgorithm.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationAlgorithm.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationAlgorithm.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationAlgorithm.updatebest">
+<tt class="descname">updatebest</tt><big>(</big><em>xnew</em>, <em>fnew</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationAlgorithm.updatebest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationAlgorithm.updatebest" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationAlgorithm.updateposnbest">
+<tt class="descname">updateposnbest</tt><big>(</big><em>xnew</em>, <em>fnew</em>, <em>i</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationAlgorithm.updateposnbest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationAlgorithm.updateposnbest" title="Permalink to this definition">¶</a></dt>
+<dd><p>if xnew is better than x, update x.
+if xnew is better than xbest, update xbest.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationAlgorithm.updatex">
+<tt class="descname">updatex</tt><big>(</big><em>xnew</em>, <em>fnew</em>, <em>i</em>, <em>isdraw=True</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationAlgorithm.updatex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationAlgorithm.updatex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="opn.OptimizationProblem">
+<em class="property">class </em><tt class="descclassname">opn.</tt><tt class="descname">OptimizationProblem</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#opn.Default" title="opn.Default"><tt class="xref py py-class docutils literal"><span class="pre">opn.Default</span></tt></a></p>
+<dl class="method">
+<dt id="opn.OptimizationProblem.assessmentcnt">
+<tt class="descname">assessmentcnt</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.assessmentcnt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.assessmentcnt" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.cost">
+<tt class="descname">cost</tt><big>(</big><em>position</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.cost"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.cost" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.costfun">
+<tt class="descname">costfun</tt><big>(</big><em>x</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.costfun"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.costfun" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.dims">
+<tt class="descname">dims</tt><big>(</big><big>)</big><a class="headerlink" href="#opn.OptimizationProblem.dims" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.fixbounds">
+<tt class="descname">fixbounds</tt><big>(</big><em>pos</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.fixbounds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.fixbounds" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.fixposition">
+<tt class="descname">fixposition</tt><big>(</big><em>pos</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.fixposition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.fixposition" title="Permalink to this definition">¶</a></dt>
+<dd><p>fix problems about position:
+invalid, etc.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.getdims">
+<tt class="descname">getdims</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.getdims"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.getdims" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.getrotationmatrix">
+<tt class="descname">getrotationmatrix</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.getrotationmatrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.getrotationmatrix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.getshiftvector">
+<tt class="descname">getshiftvector</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.getshiftvector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.getshiftvector" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.height">
+<tt class="descname">height</tt><big>(</big><em>position</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.height"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.heightfun">
+<tt class="descname">heightfun</tt><big>(</big><em>x</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.heightfun"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.heightfun" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.pos2str">
+<tt class="descname">pos2str</tt><big>(</big><em>pos</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.pos2str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.pos2str" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.quality">
+<tt class="descname">quality</tt><big>(</big><em>position</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.quality"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.quality" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.randpos">
+<tt class="descname">randpos</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.randpos"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.randpos" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.randposn">
+<tt class="descname">randposn</tt><big>(</big><em>nrows</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.randposn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.randposn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.resetassessmentcnt">
+<tt class="descname">resetassessmentcnt</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.resetassessmentcnt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.resetassessmentcnt" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.setup">
+<tt class="descname">setup</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.setup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.shiftNrotate">
+<tt class="descname">shiftNrotate</tt><big>(</big><em>pos</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.shiftNrotate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.shiftNrotate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.stepby">
+<tt class="descname">stepby</tt><big>(</big><em>pos</em>, <em>step</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.stepby"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.stepby" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.stepbyfun">
+<tt class="descname">stepbyfun</tt><big>(</big><em>pos</em>, <em>step</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.stepbyfun"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.stepbyfun" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.tweak">
+<tt class="descname">tweak</tt><big>(</big><em>pos</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.tweak"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.tweak" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.OptimizationProblem.tweakfun">
+<tt class="descname">tweakfun</tt><big>(</big><em>apos</em>, <em>method=None</em>, <em>submethod=None</em><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationProblem.tweakfun"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationProblem.tweakfun" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="opn.OptimizationVisualiser">
+<em class="property">class </em><tt class="descclassname">opn.</tt><tt class="descname">OptimizationVisualiser</tt><a class="reference internal" href="_modules/opn.html#OptimizationVisualiser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationVisualiser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#opn.Default" title="opn.Default"><tt class="xref py py-class docutils literal"><span class="pre">opn.Default</span></tt></a></p>
+<dl class="method">
+<dt id="opn.OptimizationVisualiser.setup">
+<tt class="descname">setup</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#OptimizationVisualiser.setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.OptimizationVisualiser.setup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="opn.SetupClass">
+<em class="property">class </em><tt class="descclassname">opn.</tt><tt class="descname">SetupClass</tt><a class="reference internal" href="_modules/opn.html#SetupClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.SetupClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#type" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">type</span></tt></a></p>
+<p>answer from :
+<a class="reference external" href="http://stackoverflow.com/questions/22261763">http://stackoverflow.com/questions/22261763</a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="opn.Table">
+<em class="property">class </em><tt class="descclassname">opn.</tt><tt class="descname">Table</tt><a class="reference internal" href="_modules/opn.html#Table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.Table" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="opn.Table.add">
+<tt class="descname">add</tt><big>(</big><em>col</em>, <em>content</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#Table.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.Table.add" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.Table.dlt">
+<tt class="descname">dlt</tt><big>(</big><em>astr</em><big>)</big><a class="reference internal" href="_modules/opn.html#Table.dlt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.Table.dlt" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.Table.hesc">
+<tt class="descname">hesc</tt><big>(</big><em>astr</em><big>)</big><a class="reference internal" href="_modules/opn.html#Table.hesc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.Table.hesc" title="Permalink to this definition">¶</a></dt>
+<dd><p>escape special characters like #</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="opn.Table.latex_alignments_tabulary">
+<tt class="descname">latex_alignments_tabulary</tt><big>(</big><em>fid</em><big>)</big><a class="reference internal" href="_modules/opn.html#Table.latex_alignments_tabulary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.Table.latex_alignments_tabulary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.Table.latex_data">
+<tt class="descname">latex_data</tt><big>(</big><em>fid</em><big>)</big><a class="reference internal" href="_modules/opn.html#Table.latex_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.Table.latex_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>fid: file or similar. E.g. file or StringIO or ... any object
+that defines a proper write() method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="opn.Table.latex_header">
+<tt class="descname">latex_header</tt><big>(</big><em>fid</em><big>)</big><a class="reference internal" href="_modules/opn.html#Table.latex_header"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.Table.latex_header" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.Table.latex_tabulary">
+<tt class="descname">latex_tabulary</tt><big>(</big><em>fid</em><big>)</big><a class="reference internal" href="_modules/opn.html#Table.latex_tabulary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.Table.latex_tabulary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.Table.row">
+<tt class="descname">row</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#Table.row"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.Table.row" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="opn.TwoDFunVisualiser">
+<tt class="descclassname">opn.</tt><tt class="descname">TwoDFunVisualiser</tt><a class="headerlink" href="#opn.TwoDFunVisualiser" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#opn.TwoDFunVisualiser3D" title="opn.TwoDFunVisualiser3D"><tt class="xref py py-class docutils literal"><span class="pre">TwoDFunVisualiser3D</span></tt></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="opn.TwoDFunVisualiser3D">
+<em class="property">class </em><tt class="descclassname">opn.</tt><tt class="descname">TwoDFunVisualiser3D</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#TwoDFunVisualiser3D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.TwoDFunVisualiser3D" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#opn.OptimizationVisualiser" title="opn.OptimizationVisualiser"><tt class="xref py py-class docutils literal"><span class="pre">opn.OptimizationVisualiser</span></tt></a></p>
+<dl class="method">
+<dt id="opn.TwoDFunVisualiser3D.drawbest">
+<tt class="descname">drawbest</tt><big>(</big><em>p</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#TwoDFunVisualiser3D.drawbest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.TwoDFunVisualiser3D.drawbest" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.TwoDFunVisualiser3D.drawpath">
+<tt class="descname">drawpath</tt><big>(</big><em>p1</em>, <em>p2</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#TwoDFunVisualiser3D.drawpath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.TwoDFunVisualiser3D.drawpath" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.TwoDFunVisualiser3D.drawpathbest">
+<tt class="descname">drawpathbest</tt><big>(</big><em>p1</em>, <em>p2</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#TwoDFunVisualiser3D.drawpathbest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.TwoDFunVisualiser3D.drawpathbest" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.TwoDFunVisualiser3D.drawposition">
+<tt class="descname">drawposition</tt><big>(</big><em>p</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#TwoDFunVisualiser3D.drawposition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.TwoDFunVisualiser3D.drawposition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.TwoDFunVisualiser3D.flush">
+<tt class="descname">flush</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#TwoDFunVisualiser3D.flush"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.TwoDFunVisualiser3D.flush" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.TwoDFunVisualiser3D.init">
+<tt class="descname">init</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#TwoDFunVisualiser3D.init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.TwoDFunVisualiser3D.init" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="opn.TwoDFunVisualiserColors">
+<em class="property">class </em><tt class="descclassname">opn.</tt><tt class="descname">TwoDFunVisualiserColors</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#TwoDFunVisualiserColors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.TwoDFunVisualiserColors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#opn.OptimizationVisualiser" title="opn.OptimizationVisualiser"><tt class="xref py py-class docutils literal"><span class="pre">opn.OptimizationVisualiser</span></tt></a></p>
+<dl class="method">
+<dt id="opn.TwoDFunVisualiserColors.drawbest">
+<tt class="descname">drawbest</tt><big>(</big><em>pt</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#TwoDFunVisualiserColors.drawbest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.TwoDFunVisualiserColors.drawbest" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.TwoDFunVisualiserColors.drawpath">
+<tt class="descname">drawpath</tt><big>(</big><em>pt1</em>, <em>pt2</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#TwoDFunVisualiserColors.drawpath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.TwoDFunVisualiserColors.drawpath" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.TwoDFunVisualiserColors.drawpathbest">
+<tt class="descname">drawpathbest</tt><big>(</big><em>pt1</em>, <em>pt2</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#TwoDFunVisualiserColors.drawpathbest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.TwoDFunVisualiserColors.drawpathbest" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.TwoDFunVisualiserColors.drawposition">
+<tt class="descname">drawposition</tt><big>(</big><em>pt</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#TwoDFunVisualiserColors.drawposition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.TwoDFunVisualiserColors.drawposition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.TwoDFunVisualiserColors.drawrange">
+<tt class="descname">drawrange</tt><big>(</big><em>pt</em>, <em>halfrange</em><big>)</big><a class="reference internal" href="_modules/opn.html#TwoDFunVisualiserColors.drawrange"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.TwoDFunVisualiserColors.drawrange" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.TwoDFunVisualiserColors.flush">
+<tt class="descname">flush</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#TwoDFunVisualiserColors.flush"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.TwoDFunVisualiserColors.flush" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="opn.TwoDFunVisualiserColors.init">
+<tt class="descname">init</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#TwoDFunVisualiserColors.init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.TwoDFunVisualiserColors.init" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="opn.connectbycurve">
+<tt class="descclassname">opn.</tt><tt class="descname">connectbycurve</tt><big>(</big><em>p1</em>, <em>p2</em>, <em>adder=None</em><big>)</big><a class="reference internal" href="_modules/opn.html#connectbycurve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.connectbycurve" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="opn.dprint">
+<tt class="descclassname">opn.</tt><tt class="descname">dprint</tt><big>(</big><em>msg</em><big>)</big><a class="reference internal" href="_modules/opn.html#dprint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.dprint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="opn.fig_flush">
+<tt class="descclassname">opn.</tt><tt class="descname">fig_flush</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#fig_flush"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.fig_flush" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="opn.getcurveadder">
+<tt class="descclassname">opn.</tt><tt class="descname">getcurveadder</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#getcurveadder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.getcurveadder" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="opn.getlogger">
+<tt class="descclassname">opn.</tt><tt class="descname">getlogger</tt><big>(</big><em>filepath='../tmp/log.txt'</em>, <em>appname='PM'</em><big>)</big><a class="reference internal" href="_modules/opn.html#getlogger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.getlogger" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="opn.main">
+<tt class="descclassname">opn.</tt><tt class="descname">main</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/opn.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="opn.maxval">
+<tt class="descclassname">opn.</tt><tt class="descname">maxval</tt><big>(</big><em>a</em>, <em>b</em><big>)</big><a class="reference internal" href="_modules/opn.html#maxval"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.maxval" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="opn.minval">
+<tt class="descclassname">opn.</tt><tt class="descname">minval</tt><big>(</big><em>a</em>, <em>b</em><big>)</big><a class="reference internal" href="_modules/opn.html#minval"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.minval" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="opn.mkdirfor">
+<tt class="descclassname">opn.</tt><tt class="descname">mkdirfor</tt><big>(</big><em>path</em><big>)</big><a class="reference internal" href="_modules/opn.html#mkdirfor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.mkdirfor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="opn.nparray">
+<tt class="descclassname">opn.</tt><tt class="descname">nparray</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/opn.html#nparray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.nparray" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unless dtype is specified, makesure new array has float type</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="opn.overwrite">
+<tt class="descclassname">opn.</tt><tt class="descname">overwrite</tt><big>(</big><em>orig</em>, <em>**options</em><big>)</big><a class="reference internal" href="_modules/opn.html#overwrite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.overwrite" title="Permalink to this definition">¶</a></dt>
+<dd><p>overwrite already-existing/default values in the original
+dictionary with the ones in the options dictionary.
+if the options dictionary has keys that are not in orig, they
+are not assigned to orig. This function is intended for
+easy, safe option assignments in places like __init__()
+functions</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="opn.randdiv">
+<tt class="descclassname">opn.</tt><tt class="descname">randdiv</tt><big>(</big><em>amount</em>, <em>cnt</em><big>)</big><a class="reference internal" href="_modules/opn.html#randdiv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.randdiv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Divides the AMOUNT into CNT random parts and returns those
+parts in a numpy array. CNT must not be bigger than AMOUNT.
+Both CNT and AMOUNT must be integers.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">randdiv</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<span class="go">array([ 5,  6,  9,  8, 11, 15,  8,  9, 17, 12])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="opn.randin">
+<tt class="descclassname">opn.</tt><tt class="descname">randin</tt><big>(</big><em>lb</em>, <em>ub</em><big>)</big><a class="reference internal" href="_modules/opn.html#randin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.randin" title="Permalink to this definition">¶</a></dt>
+<dd><p>return random array with elements between the
+elements of lb and ub. ub is not included.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="opn.randintbetween">
+<tt class="descclassname">opn.</tt><tt class="descname">randintbetween</tt><big>(</big><em>mat1</em>, <em>mat2</em><big>)</big><a class="reference internal" href="_modules/opn.html#randintbetween"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.randintbetween" title="Permalink to this definition">¶</a></dt>
+<dd><p>return a matrix with random elements between
+elements of corresponding  mat1 and mat2 elements.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="opn.rotationmatrix">
+<tt class="descclassname">opn.</tt><tt class="descname">rotationmatrix</tt><big>(</big><em>D</em>, <em>c</em><big>)</big><a class="reference internal" href="_modules/opn.html#rotationmatrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.rotationmatrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Translated from the Matlab function rot_matrix of P. N. Suganthan</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="opn.rotationmatrixsuganthan">
+<tt class="descclassname">opn.</tt><tt class="descname">rotationmatrixsuganthan</tt><big>(</big><em>D</em>, <em>c</em>, <em>rotmatspath</em><big>)</big><a class="reference internal" href="_modules/opn.html#rotationmatrixsuganthan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#opn.rotationmatrixsuganthan" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 </div>
 
@@ -121,7 +690,7 @@
   <ul>
 <li><a class="reference internal" href="#">opn package</a><ul>
 <li><a class="reference internal" href="#subpackages">Subpackages</a></li>
-<li><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li><a class="reference internal" href="#module-opn">Module contents</a></li>
 </ul>
 </li>
 </ul>
