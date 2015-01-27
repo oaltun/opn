@@ -3,13 +3,16 @@ from __future__ import division
 
 def main():
 	# DO NECESSARY IMPORTS------------------------------------
-	# Arrangements for using pyqt4 as backend
-	import sip
-	sip.setapi('QString', 2)
-	sip.setapi('QVariant', 2)
-	import matplotlib
-	matplotlib.use('qt4agg')
 	
+	#this tries to solve a bug in matplotlib while importing qt
+	try:
+		import sip
+		sip.setapi('QString', 2)
+		sip.setapi('QVariant', 2)
+	except Exception as e:
+		print e
+		
+
 	# Import necessary libraries
 	import matplotlib.pyplot as plt		
 	import os, sys
@@ -21,7 +24,7 @@ def main():
 	print "Starting in directory below:\n", filedir, "\n"
 	os.chdir(filedir)
 	
-	# Arrange paths for importing opn	
+	# Arrange paths for importing opn. This is not needed if you install opn through pip or setup.py
 	import sys
 	path_to_opn = '../..'
 	sys.path.extend(['.',path_to_opn])	

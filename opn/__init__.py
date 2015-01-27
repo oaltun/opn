@@ -6,11 +6,16 @@ REFERENCES
     June, 2013
 """
 from __future__ import division
-import sip
-sip.setapi('QString', 2)
-sip.setapi('QVariant', 2)
-import matplotlib
-matplotlib.use('qt4agg')
+
+
+	# import sip
+	# sip.setapi('QString', 2)
+	# sip.setapi('QVariant', 2)
+	# import matplotlib
+	# matplotlib.use('qt4agg')
+
+
+
 
 import re
 import matplotlib.pyplot as plt
