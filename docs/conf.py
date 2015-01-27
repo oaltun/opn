@@ -12,6 +12,19 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
+
+#[ozi]:mocking support. see
+# http://docs.readthedocs.org/en/latest/faq.html#i-get-import-errors-on-libraries-that-depend-on-c-modules
+import sys
+from mock import Mock as MagicMock
+class Mock(MagicMock):
+	@classmethod
+	def __getattr__(cls,name):
+		return Mock()
+MOCK_MODULES = ['sip','mayavi','numpy','matplotlib','matplotlib.pyplot','matplotlib.path','matplotlib.patches','scipy']
+sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
+
+
 import sys
 import os
 
