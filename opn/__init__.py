@@ -6,11 +6,19 @@ REFERENCES
     June, 2013
 """
 from __future__ import division
-import sip
-sip.setapi('QString', 2)
-sip.setapi('QVariant', 2)
-import matplotlib
-matplotlib.use('qt4agg')
+
+#this tries to solve a bug in matplotlib while importing qt
+try:
+	import sip
+	sip.setapi('QString', 2)
+	sip.setapi('QVariant', 2)
+except Exception as e:
+	print e
+
+
+
+
+
 
 import re
 import matplotlib.pyplot as plt

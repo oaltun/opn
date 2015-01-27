@@ -1,17 +1,17 @@
-examples package
-================
+bin.examples package
+====================
 
 Submodules
 ----------
 
 .. toctree::
 
-   examples.simple
+   bin.examples.simple
 
 Module contents
 ---------------
 
-.. automodule:: examples
+.. automodule:: bin.examples
     :members:
     :undoc-members:
     :show-inheritance:

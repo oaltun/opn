@@ -1,8 +1,6 @@
 opn package
 ===========
 
-.. inheritance-diagram:: opn
-
 Subpackages
 -----------
 

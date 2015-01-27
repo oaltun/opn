@@ -4,4 +4,7 @@ opn
 .. toctree::
    :maxdepth: 1000
 
-   examples
+   TODO
+   bin
+   opn
+   setup

@@ -40,7 +40,7 @@ Documentation
 =============
 The :doc:`API <opn>` page has the automatically generated documentation.
 
-Also see :doc:`examples <examples>`.
+Also see :doc:`examples <bin.examples>`.
 
 Algorithms
 ==================
@@ -77,11 +77,11 @@ Indices and tables
 
 
 Documentation Contents
-========
+======================
 .. toctree::
 	
-	Examples <examples>
-	API <opn>
+	Examples <bin>
+	opn <opn>
 
 
 
