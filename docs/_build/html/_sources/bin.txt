@@ -1,4 +1,4 @@
-opn package
+bin package
 ===========
 
 Subpackages
@@ -6,15 +6,12 @@ Subpackages
 
 .. toctree::
 
-    opn.algorithm
-    opn.problem
-    opn.utils
-    opn.visualiser
+    bin.examples
 
 Module contents
 ---------------
 
-.. automodule:: opn
+.. automodule:: bin
     :members:
     :undoc-members:
     :show-inheritance:
