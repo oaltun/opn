@@ -20,11 +20,11 @@ http://nvie.com/posts/a-successful-git-branching-model/
 
 Installation & Dependencies
 ===========================
-For installation, currently you need to download the zip, extract the files, and add 'opn' directory to your pythonpath. 
+For installation, currently you need to download the zip from repository, extract the files, and either add 'opn' directory to your pythonpath, or run `python setup.py install` in the directory that has the setup.py script.
 
-We have been using this software on Python 2.7.x and 64 bit Windows 7. 
+We have been using this software on Python 2.7.x and 64 bit Windows 7. You may have different luck with others.
 
-You need to install following Python libraries before using opn: pyqt4, numpy, mayavi, and matplotlib.
+You need to install following Python libraries before using opn: pyqt4 (or at least wxpython), numpy, mayavi, and matplotlib.
 
 .. Notes on code
 .. ==================
@@ -40,7 +40,7 @@ Documentation
 =============
 The :doc:`API <opn>` page has the automatically generated documentation.
 
-Also see :doc:`examples <bin.examples>`.
+Also see :doc:`examples directory <bin.examples>`.
 
 Algorithms
 ==================
