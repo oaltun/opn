@@ -7,7 +7,7 @@ REFERENCES
 """
 from __future__ import division
 
- 
+
 #this tries to solve a bug in matplotlib while importing qt
 try:
 	import sip
@@ -24,6 +24,7 @@ import matplotlib.pyplot as plt
 from matplotlib.pyplot import gcf
 from matplotlib.path import Path
 import matplotlib.patches as patches
+import numpy as np
 
 from random import randint
 import numbers
@@ -43,7 +44,7 @@ import matplotlib.cm as cm
 def fig_flush():
     #fig_flush()
     gcf().canvas.flush_events()
-    
+
 def mkdirfor(path):
     dn = os.path.dirname(path)
     if not os.path.isdir(dn):
@@ -405,16 +406,16 @@ def connectbycurve(p1, p2, adder = None):
 #         self.isanimate = False
 #         self.problem = None
 #         self.__dict__.update(**kwargs)  # overwrite
-# 
-# 
+#
+#
 #         self.fig = None
 #         self.ax = None
 #         self.im = None
 #         self.cb = None
-# 
-# 
-# 
-# 
+#
+#
+#
+#
 #     def init(self, **kwargs):
 #         #### shorter names
 #         lb = self.lb;
@@ -975,10 +976,10 @@ class OptimizationAlgorithm(Default):
 
     def drawpath(self, oldpos, newpos, idx=0,color=None):
         """ draw a path from old pos to new pos for the position idx """
-        
+
         if color is None:
             color = self.poscolors[idx]
-            
+
         if self.isdraw:
             self.problem.visualiser.drawpath(oldpos, newpos,color = color)
 
@@ -1170,7 +1171,7 @@ class OptimizationProblem(Default):
     def tweakfun(self, apos, method = None, submethod = None):
         # TODO: instead of if method == ... use different methods. it is easier
         # to debug.
-        
+
         pos = None
 
         ## handle args
@@ -1244,7 +1245,7 @@ class OptimizationProblem(Default):
 
         else:
             raise Exception('Unknown method')
-        
+
         return pos
 
     def stepby(self, pos, step):
@@ -1286,7 +1287,7 @@ class OptimizationProblem(Default):
             pos = pos.dot(self.rotationmatrix)
 
         return pos
-    
+
 # for backward compatibility:
 GenericOptimizationProblem = OptimizationProblem
 
@@ -1328,8 +1329,8 @@ class GenericExperiment(Default):
 
         #### run multitrials for each problem-algorithm triple
 
-        for probleminfo in self.problemlist:
-            for algorithminfo in self.algorithmlist:
+        for probid,probleminfo in enumerate(self.problemlist):
+            for algoid, algorithminfo in enumerate(self.algorithmlist):
                 for trial in range(self.ntrials):
 
                     problem = probleminfo['class'](ndims = self.ndims, **probleminfo)
@@ -1337,7 +1338,7 @@ class GenericExperiment(Default):
                     algorithm = algorithminfo['class'](**algorithminfo)
                     algorithm.isdrawupdatex = self.isdrawupdatex
 
-                    log = self.runonce(algorithm, problem, trial)
+                    log = self.runonce(algorithm, problem, trial,algoid,probid)
 
 
                     trialinfo = dict(algorithm = algorithm, problem = problem,
@@ -1351,7 +1352,7 @@ class GenericExperiment(Default):
         return results
 
 
-    def runonce(self, algorithm, problem, trial):
+    def runonce(self, algorithm, problem, trial,algoid,probid):
 
         graphtitle = (problem.name + ' - ' + algorithm.name + ' - trial' + str(trial))
         if self.isdebug:
@@ -1367,7 +1368,19 @@ class GenericExperiment(Default):
 
         algorithm.isdraw = self.isdraw
         algorithm.problem = problem
-        algorithm.positions = problem.randposn(algorithm.npositions)
+
+        # if needed, we want to be able to start from same initial positions for each algorithm.
+#         if self.iscommoninit:
+#             np.random.seed(1234)
+#         elif self.istrialcommoninit:
+#             np.random.seed(probid*100+trial*1000)
+#         algorithm.positions = problem.randposn(algorithm.npositions)
+#         np.random.seed(trial*10000) #
+        if self.iscommoninit: # if needed, we want to be able to start from same initial positions for each algorithm.
+            np.random.seed(1)
+            algorithm.positions = problem.randposn(algorithm.npositions)
+            np.random.seed((trial+1)*100000) # we control the stream. All trials will have a fixed but different stream start point.
+
         algorithm.stop = self.stop
         algorithm.isdebug = self.isdebug
         log = algorithm.run()
@@ -1381,7 +1394,7 @@ class GenericExperiment(Default):
 
         shortname = prob.name+'_'+algo.name+'_'+str(t['trial'])+'.json.txt'
         filename = self.logdir+'/'+shortname
-        
+
         print('Logging to {}: {}'.format(shortname,filename))
         mkdirfor(filename)
         with open(filename, 'wb') as fd:
