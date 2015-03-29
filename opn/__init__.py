@@ -879,7 +879,19 @@ class OptimizationAlgorithm(Default):
 
     def iscontinue(self):
         """ decide whether we should continue searching. """
-        return self.problem.assessmentcnt() < self.stop['assessmentcnt']
+
+        ismaxfes =  self.problem.assessmentcnt() >= self.stop['assessmentcnt']
+
+        isminerr = False
+        try:
+            mybest = self.fbest
+            if not(self.minimize==self.problem.minimize):
+                mybest = - mybest
+            isminerr =  np.abs(self.problem.optimum - mybest) < self.stop['error']
+        except:
+            pass
+
+        return (not ismaxfes) and (not isminerr)
 
 
     def updatex(self, xnew, fnew, i,isdraw=True):
@@ -1331,7 +1343,7 @@ class GenericExperiment(Default):
 
         for probid,probleminfo in enumerate(self.problemlist):
             for algoid, algorithminfo in enumerate(self.algorithmlist):
-                for trial in range(self.ntrials):
+                for trial in range(1,self.ntrials+1):
 
                     problem = probleminfo['class'](ndims = self.ndims, **probleminfo)
 
@@ -1391,9 +1403,10 @@ class GenericExperiment(Default):
     def writelog(self, t):
         algo = t['algorithm']
         prob = t['problem']
+        dim = t['problem'].dims()
 
-        shortname = prob.name+'_'+algo.name+'_'+str(t['trial'])+'.json.txt'
-        filename = self.logdir+'/'+shortname
+        shortname = prob.name+'__'+str(dim)+'__'+algo.name+'__'+str(t['trial'])+'.json.txt'
+        filename = self.logdir+'/'+'dim'+str(dim)+'/'+algo.name+'/'+shortname
 
         print('Logging to {}: {}'.format(shortname,filename))
         mkdirfor(filename)
@@ -1405,6 +1418,7 @@ class GenericExperiment(Default):
             logdict['elapsed_time']=algo.stopclock-algo.startclock
             logdict['algorithm_minimize']=algo.minimize
             logdict['problem_minimize']=prob.minimize
+            logdict['dimension']=dim
 
             try:logdict['problem_optimum']=prob.optimum
             except:pass
@@ -1418,7 +1432,7 @@ class GenericExperiment(Default):
             try:logdict['algorithm_stop_assessmentcnt']=algo.stop['assessmentcnt']
             except: pass
 
-            json.dump(logdict, fd)
+            json.dump(logdict, fd,sort_keys=True,indent=4)
 
 
 def main():
