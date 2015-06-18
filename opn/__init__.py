@@ -940,7 +940,7 @@ class OptimizationAlgorithm(Default):
 
         #### do actual updating
         self.xbest = xnew.copy()
-        self.fbest = fnew.copy()
+        self.fbest = fnew
 
         #### the best changed. we should log
         self.dolog()
